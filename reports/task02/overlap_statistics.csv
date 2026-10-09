@@ -1,0 +1,13 @@
+stage,kind,scope,groups,left_rows,right_rows,row_pairs,conflicting_sentiment_groups,conflicting_sentiment_pairs
+reconstructed_task01,exact_text,train_validation,18,18,19,19,10,10
+reconstructed_task01,exact_text,train_test,2,2,2,2,0,0
+reconstructed_task01,exact_text,validation_test,0,0,0,0,0,0
+reconstructed_task01,canonical_text,train_validation,18,18,19,19,10,10
+reconstructed_task01,canonical_text,train_test,2,2,2,2,0,0
+reconstructed_task01,canonical_text,validation_test,0,0,0,0,0,0
+task02,exact_text,train_validation,0,0,0,0,0,0
+task02,exact_text,train_test,0,0,0,0,0,0
+task02,exact_text,validation_test,0,0,0,0,0,0
+task02,canonical_text,train_validation,0,0,0,0,0,0
+task02,canonical_text,train_test,0,0,0,0,0,0
+task02,canonical_text,validation_test,0,0,0,0,0,0

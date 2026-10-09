@@ -1,1 +1,121 @@
-# -
+# ArSarcasm-v2: leakage-safe splitting (Task 02)
+
+This module prepares reproducible dataset/evaluation manifests, not models.
+Official source: <https://github.com/iabufarha/ArSarcasm-v2>, pinned commit
+`eb85513e133cfc67e30aca4968fadbe2594fcb42`. The official CSV bytes are verified
+against fixed SHA-256 checksums before use. No source CSVs are rewritten.
+See the upstream LICENSE and README for terms and attribution. Cite Abu Farha,
+Zaghouani and Magdy, *Overview of the WANLP 2021 Shared Task on Sarcasm and
+Sentiment Detection in Arabic*.
+
+## Reproduce
+
+From the repository root, using Python 3.12:
+
+```bash
+python -m venv .venv
+.venv/bin/python -m pip install --no-cache-dir -r requirements.txt
+.venv/bin/python -m pytest -q
+.venv/bin/python -m arsarcasm_audit fetch --destination data/raw
+.venv/bin/python -m arsarcasm_audit split \
+  --training data/raw/training_data.csv \
+  --testing data/raw/testing_data.csv \
+  --output reports/reproduced-task02 \
+  --seed 42 --validation-fraction 0.2
+```
+
+Use a new/empty output directory for each run. The CLI refuses nonempty output
+paths and invalid/unpinned data, and exits with status 2. Installation and fetching
+require Internet access; splitting and tests run locally afterward. Dependencies
+(including transitives) are pinned in requirements.txt. Use the existing checkout;
+no Git worktree is needed. The data and virtual environment are ignored by Git.
+The checked-in report artifacts contain IDs/hashes/labels, not tweet text.
+
+## Recovery disclosure
+
+The restarted workspace contained only the initial README, with no earlier Task
+01 source, tests, audit reports or manifests. This implementation recovers the
+previously pinned dataset/checksums from the session and reconstructs the
+previously documented baseline: sentiment-stratified `train_test_split`, seed
+42, validation fraction 0.2. `baseline_manifest.csv` is a newly generated
+reconstruction, not a recovered original artifact. All reported overlaps are
+measured from this reconstruction and the downloaded source files. The old
+full audit CLI and its original test suite were not recovered; the strict source
+loader and new tests here cover the Task 02 workflow.
+
+## Policies
+
+Canonical text removes U+0640 tatweel, applies **NFC**, collapses Unicode whitespace
+and strips boundary whitespace. Removing tatweel before NFC keeps normalization
+idempotent when tatweel separates a letter from a combining mark. It does not
+apply NFKC or casefold, strip diacritics, fold hamza/alef/ya/ta marbuta, or remove
+negation, sentiment terms, punctuation or URLs. Raw tweets are never changed.
+
+Every training group present in official test text is quarantined from fitting
+and validation. Test **text only** controls quarantine. Remaining training groups
+are indivisible: 512 seeded `GroupShuffleSplit` candidates are ranked using only
+eligible training sentiment labels and row counts. Balance is approximate;
+the methodology describes the objective and limitations. Test labels, metrics,
+and near-duplicate findings do not influence split selection. Conflicting labels
+are reported and retained unchanged; no majority vote or relabeling is applied.
+
+The official test manifest retains every one of the 3,000 source rows in order.
+The secondary test evaluation manifest flags original-training overlap and
+within-test canonical repeats. `unique_nonoverlap` selects the first row of each
+canonical test group absent from original training. These are predeclared audit
+slices, not model-selection data. Use validation alone for model selection;
+freeze choices before any full or secondary test evaluation.
+
+Near-duplicates are char TF-IDF 3–5 gram cosine candidates at threshold 0.9,
+flagged for inspection only. They are never merged or used to change eligibility
+or assignments. The audit compares all source text, but no test-derived features
+are supplied to a model. Canonical disjointness does not imply semantic
+independence. Short texts and semantic paraphrases may evade candidate detection.
+
+For future fitting and validation, use the row IDs in the active manifests:
+
+```python
+import pandas as pd
+from arsarcasm_audit.audit import load_csv
+
+raw = load_csv('data/raw/training_data.csv')
+fit_ids = pd.read_csv('reports/task02/train_manifest.csv').row_id.to_numpy()
+val_ids = pd.read_csv('reports/task02/validation_manifest.csv').row_id.to_numpy()
+fitting_data = raw.iloc[fit_ids].copy()
+validation_data = raw.iloc[val_ids].copy()
+```
+
+Only those selected records are eligible for fitting/validation. Reading the
+whole official training CSV does not apply quarantine. Read annotations as
+literal strings (the provided loader does this); pandas may otherwise infer
+`FALSE`/`TRUE` as booleans.
+
+## Outputs
+
+The actual official-data run is in `reports/task02`; start with
+[the methodology report](reports/task02/methodology.md).
+
+| Artifact | Purpose |
+| --- | --- |
+| `metadata.json` | Source revision/checksums, seed, method, balance objective, versions and CSV artifact checksums |
+| `split_manifest.csv` | All source rows: active train, validation, immutable test, or quarantine |
+| `train_manifest.csv`, `validation_manifest.csv`, `test_manifest.csv` | Partition-specific manifests |
+| `baseline_manifest.csv` | Reconstructed Task 01 assignments for comparison |
+| `quarantine_manifest.csv` | Every excluded training record and exact/canonical-only reason |
+| `training_deviations.csv` | Every official training row's baseline/new assignment and reason |
+| `test_evaluation_manifest.csv` | All official test rows with overlap, canonical representative and unique-slice flags |
+| `group_members.csv` | Every row's stable group ID and assignment |
+| `duplicate_groups.csv` | Exact/canonical duplicate groups, member IDs, label sets and conflicts |
+| `overlap_statistics.csv`, `overlap_members.csv` | Exact/canonical train-validation, train-test, validation-test overlaps before/after, with conflicting-label counts |
+| `distributions.csv` | Sentiment, dialect and sarcasm counts/proportions, including quarantine |
+| `near_duplicate_review.csv` | Review-only candidates with row/group IDs and cosine scores |
+| `methodology.md` | Methods, actual counts, distributions, conflicts, limitations and deviations |
+
+Source row IDs combine official source partition with a zero-based CSV record
+position (not a physical line number). File checksums anchor those IDs. Group IDs
+are `ct1_` plus full SHA-256 of canonical UTF-8 text. Text hashes refer to raw UTF-8
+text. All duplicate training records are retained unless their canonical text is
+in test; group assignment prevents splitting those records across train/validation.
+No source rows are deleted; exclusions and reassignment exist only in manifests.
+The API supports small unpinned test fixtures with `require_official=False`; the
+CLI always requires pinned official bytes and exactly 12,548/3,000 source rows.
