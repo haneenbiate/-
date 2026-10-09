@@ -1,0 +1,15 @@
+{
+  "status": "verified",
+  "repo_id": "UBC-NLP/MARBERT",
+  "revision": "88e1fa192dd723cf0b3563500aec46209762eb22",
+  "source": "official Hub exact revision",
+  "snapshot": "/content/nasn-task03b-cache/models--UBC-NLP--MARBERT/snapshots/88e1fa192dd723cf0b3563500aec46209762eb22",
+  "files_sha256": {
+    "config.json": "cd2a25895e0e243e5475e241db2a61f5721b4b380ea175e9cafcbf4f0359b1f1",
+    "pytorch_model.bin": "801862ace5fc9e6b135b19476dbda5c7de1e8673b5b9d55db08d79e2c30b9dca",
+    "special_tokens_map.json": "303df45a03609e4ead04bc3dc1536d0ab19b5358db685b6f3da123d05ec200e3",
+    "tokenizer_config.json": "16c98e576cebd77e6ea1c16ef01fc839af38606bbbb8dcc769b9a50f328ac54b",
+    "vocab.txt": "4cbe17fdb035ba4afb5eb9889657b0f9895e2c6bd26574409cf9f8bdf75e2542"
+  },
+  "encoder_load_verified": false
+}

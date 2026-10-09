@@ -1,0 +1,8 @@
+{
+  "status": "no_local_cuda_gpu",
+  "cuda_available": false,
+  "torch": "2.8.0+cpu",
+  "torch_cuda_build": null,
+  "checkpoint_path_exists": false,
+  "robustness_inference_performed": false
+}

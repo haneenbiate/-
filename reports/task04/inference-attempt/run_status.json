@@ -1,0 +1,11 @@
+{
+  "status": "blocked_or_failed",
+  "training_performed": false,
+  "test_text_read": false,
+  "test_evaluated": false,
+  "seed": 42,
+  "gpu": null,
+  "metrics": null,
+  "reason": "DataValidationError: Selected trained checkpoint directory unavailable",
+  "duration_seconds": 0.4195406610001555
+}

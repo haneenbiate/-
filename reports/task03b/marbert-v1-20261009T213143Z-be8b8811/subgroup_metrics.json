@@ -1,0 +1,234 @@
+[
+  {
+    "field": "sarcasm",
+    "value": "FALSE",
+    "n": 2049,
+    "minimum_sample_size": 30,
+    "status": "computed",
+    "accuracy": 0.7447535383113714,
+    "macro_f1": 0.7320236255317392,
+    "weighted_f1": 0.7475063735684513,
+    "present_gold_classes": 3,
+    "per_class": [
+      {
+        "label": "NEG",
+        "label_id": 0,
+        "precision": 0.6325301204819277,
+        "recall": 0.8235294117647058,
+        "f1": 0.7155025553662692,
+        "support": 510
+      },
+      {
+        "label": "NEU",
+        "label_id": 1,
+        "precision": 0.850635593220339,
+        "recall": 0.7201793721973094,
+        "f1": 0.7799902865468674,
+        "support": 1115
+      },
+      {
+        "label": "POS",
+        "label_id": 2,
+        "precision": 0.6870748299319728,
+        "recall": 0.714622641509434,
+        "f1": 0.7005780346820809,
+        "support": 424
+      }
+    ]
+  },
+  {
+    "field": "sarcasm",
+    "value": "TRUE",
+    "n": 460,
+    "minimum_sample_size": 30,
+    "status": "computed",
+    "accuracy": 0.8565217391304348,
+    "macro_f1": 0.5069676700111483,
+    "weighted_f1": 0.8615366438854152,
+    "present_gold_classes": 3,
+    "per_class": [
+      {
+        "label": "NEG",
+        "label_id": 0,
+        "precision": 0.9310344827586207,
+        "recall": 0.9152542372881356,
+        "f1": 0.9230769230769231,
+        "support": 413
+      },
+      {
+        "label": "NEU",
+        "label_id": 1,
+        "precision": 0.34285714285714286,
+        "recall": 0.35294117647058826,
+        "f1": 0.34782608695652173,
+        "support": 34
+      },
+      {
+        "label": "POS",
+        "label_id": 2,
+        "precision": 0.21052631578947367,
+        "recall": 0.3076923076923077,
+        "f1": 0.25,
+        "support": 13
+      }
+    ]
+  },
+  {
+    "field": "dialect",
+    "value": "egypt",
+    "n": 537,
+    "minimum_sample_size": 30,
+    "status": "computed",
+    "accuracy": 0.7541899441340782,
+    "macro_f1": 0.7037632546841482,
+    "weighted_f1": 0.7453711076982692,
+    "present_gold_classes": 3,
+    "per_class": [
+      {
+        "label": "NEG",
+        "label_id": 0,
+        "precision": 0.7872340425531915,
+        "recall": 0.9119718309859155,
+        "f1": 0.8450244698205547,
+        "support": 284
+      },
+      {
+        "label": "NEU",
+        "label_id": 1,
+        "precision": 0.7543859649122807,
+        "recall": 0.5477707006369427,
+        "f1": 0.6346863468634686,
+        "support": 157
+      },
+      {
+        "label": "POS",
+        "label_id": 2,
+        "precision": 0.6382978723404256,
+        "recall": 0.625,
+        "f1": 0.631578947368421,
+        "support": 96
+      }
+    ]
+  },
+  {
+    "field": "dialect",
+    "value": "gulf",
+    "n": 124,
+    "minimum_sample_size": 30,
+    "status": "computed",
+    "accuracy": 0.7338709677419355,
+    "macro_f1": 0.7291532808980467,
+    "weighted_f1": 0.7249416624677937,
+    "present_gold_classes": 3,
+    "per_class": [
+      {
+        "label": "NEG",
+        "label_id": 0,
+        "precision": 0.734375,
+        "recall": 0.8703703703703703,
+        "f1": 0.7966101694915254,
+        "support": 54
+      },
+      {
+        "label": "NEU",
+        "label_id": 1,
+        "precision": 0.7714285714285715,
+        "recall": 0.54,
+        "f1": 0.6352941176470588,
+        "support": 50
+      },
+      {
+        "label": "POS",
+        "label_id": 2,
+        "precision": 0.68,
+        "recall": 0.85,
+        "f1": 0.7555555555555555,
+        "support": 20
+      }
+    ]
+  },
+  {
+    "field": "dialect",
+    "value": "levant",
+    "n": 112,
+    "minimum_sample_size": 30,
+    "status": "computed",
+    "accuracy": 0.8035714285714286,
+    "macro_f1": 0.7816527133436427,
+    "weighted_f1": 0.8013103617706882,
+    "present_gold_classes": 3,
+    "per_class": [
+      {
+        "label": "NEG",
+        "label_id": 0,
+        "precision": 0.8305084745762712,
+        "recall": 0.8909090909090909,
+        "f1": 0.8596491228070176,
+        "support": 55
+      },
+      {
+        "label": "NEU",
+        "label_id": 1,
+        "precision": 0.7741935483870968,
+        "recall": 0.75,
+        "f1": 0.7619047619047619,
+        "support": 32
+      },
+      {
+        "label": "POS",
+        "label_id": 2,
+        "precision": 0.7727272727272727,
+        "recall": 0.68,
+        "f1": 0.723404255319149,
+        "support": 25
+      }
+    ]
+  },
+  {
+    "field": "dialect",
+    "value": "magreb",
+    "n": 8,
+    "minimum_sample_size": 30,
+    "status": "insufficient_sample_size",
+    "accuracy": null,
+    "macro_f1": null,
+    "weighted_f1": null
+  },
+  {
+    "field": "dialect",
+    "value": "msa",
+    "n": 1728,
+    "minimum_sample_size": 30,
+    "status": "computed",
+    "accuracy": 0.7696759259259259,
+    "macro_f1": 0.7540687753713263,
+    "weighted_f1": 0.7709175020030451,
+    "present_gold_classes": 3,
+    "per_class": [
+      {
+        "label": "NEG",
+        "label_id": 0,
+        "precision": 0.719672131147541,
+        "recall": 0.8346007604562737,
+        "f1": 0.772887323943662,
+        "support": 526
+      },
+      {
+        "label": "NEU",
+        "label_id": 1,
+        "precision": 0.8485607008760951,
+        "recall": 0.7466960352422908,
+        "f1": 0.7943760984182777,
+        "support": 908
+      },
+      {
+        "label": "POS",
+        "label_id": 2,
+        "precision": 0.6677115987460815,
+        "recall": 0.7244897959183674,
+        "f1": 0.6949429037520392,
+        "support": 294
+      }
+    ]
+  }
+]

@@ -1,0 +1,20 @@
+{
+  "device": "cuda",
+  "gpu": "Tesla T4",
+  "cuda_available": true,
+  "cpu_count": 2,
+  "cpu_quota": "max 100000",
+  "memory_limit_bytes": "max",
+  "library_versions": {
+    "python": "3.12.14",
+    "pandas": "2.2.3",
+    "numpy": "2.3.5",
+    "scikit-learn": "1.8.0",
+    "torch": "2.8.0+cu126",
+    "transformers": "4.57.3",
+    "huggingface-hub": "0.36.0",
+    "tokenizers": "0.22.1",
+    "safetensors": "0.7.0",
+    "pytest": "9.1.1"
+  }
+}

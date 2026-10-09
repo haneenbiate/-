@@ -1,0 +1,31 @@
+{
+  "source_archive_name": "marbert-v1-20261009T213143Z-be8b8811-reports.zip",
+  "source_archive_sha256": "8b2b294400df6f80813f2af61b10f8cf053edcaa81cc06553ac6fe638cf0426a",
+  "status": "all_report_bytes_verified",
+  "checkpoint_bytes_in_archive": false,
+  "files": {
+    "checkpoint_hashes.json": "df46c2608d3fafbfde0f00c3e26994a5fda8261280e5e65f87f33839bdf9a67b",
+    "confusion_matrix.csv": "299c9932b1db81e846396fff9fb438f4d9554dbc984d5107cd82283dbf2e22e6",
+    "dependency_check.txt": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+    "dependency_freeze.txt": "a7e99d16ce84cf22af6322115ffac0bf08c0b652c8792f601e837deea2f80dc3",
+    "encoder_verification.json": "a3607888c87327b3bc15b231dc2b6bf428c13b5dd8af4f8b4dae638ca8704632",
+    "environment.json": "6e0172ffd04f02e36c324dbe2498aaca4f0515e79a475bb36b1bffb0deca65cf",
+    "epoch_history.csv": "521fb1e620224136ae7106d6e695d6b3e2f3b4aac98bf1c407196149e2336978",
+    "gpu_runtime.json": "25bfc72febb6438a2825b16746324e7f4607e6764f992bd906ba49df4f5c218a",
+    "manual_review_queue.csv": "665efd7ffdadfab3a0293a2bfe3982097a0347c3089acbdff21a9dc6bc8ff30c",
+    "methodology.md": "9af1f6e312ec979da6cbc38fb02ab0784e02e95d21067ec1d75df3704a1b6f4c",
+    "model_loading_info.json": "c5728ff699cb8d729b1a0941a7f63111566c9cf54a8d1d3e52c4c46dfb71dc59",
+    "near_duplicate_audit.csv": "80f5661acb2fe9ea100dc219b2dbabd7f757776007c7e1921068271783e1faf3",
+    "near_duplicate_summary.csv": "1da147f8a857f1a4fe7de11ab6f13632dc27232db5b9ca9e477109df1399dbd0",
+    "per_class_results.csv": "2f33d0c069f425211a82226972d10d1d0cd9c0babd63720cc58cd63c17708af5",
+    "preflight.json": "b5bdd9f8ffff0c0bac25054ec958b83eed16fb0d34e9b0f4bcc6a9fed6731800",
+    "resolved_training_config.json": "cddc38162278ff13bcf1b0bdbfb7177726b050b6b4fc43f7ea251f980d78ec2a",
+    "run_status.json": "f12054d3ad16b27e0d89619d3888588158231ce5b593b04bbecbc92a246cf75b",
+    "runtime_provenance.json": "e64e6aeb6a2c5c35f4f5c7a2007882261febbb5128576115221b3998dd5650cd",
+    "snapshot_verification.json": "d31f4c1f6f4080eb35ba9867fc3786405061e997bd357a26fe4af0e412bb866b",
+    "subgroup_metrics.json": "5e3c207817e90840719ce5dda5495b66a9e66f94527921e5a5ea4833d215ff7d",
+    "training_config.json": "8f34b090a84de89948c356d76b6857fb64f6ffc947c2c54a25fbc88496409da9",
+    "validation_metrics.json": "ad77de6260646e19c2f061c3a31db399a63258ae2a311f3e1cf8cd15a0cbdfac",
+    "validation_predictions.csv": "b7016031743176d9b1e1c22158d0d2238c39f20573bc26f0b316cd33661e85bc"
+  }
+}

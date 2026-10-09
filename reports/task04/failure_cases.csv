@@ -1,0 +1,15 @@
+rule,intensity,failure_reason,n
+alef_allowlist,1,allowlisted_alef_word_absent,2442
+alef_allowlist,1,no_arabic_tokens,2
+elongation,1,candidate_tokens_protected_or_attached,24
+elongation,1,no_arabic_tokens,2
+elongation,1,no_unmarked_eligible_token,9
+elongation,2,candidate_tokens_protected_or_attached,24
+elongation,2,no_arabic_tokens,2
+elongation,2,no_unmarked_eligible_token,9
+tatweel,1,candidate_tokens_protected_or_attached,24
+tatweel,1,no_arabic_tokens,2
+tatweel,1,no_unmarked_eligible_token,9
+tatweel,2,candidate_tokens_protected_or_attached,24
+tatweel,2,no_arabic_tokens,2
+tatweel,2,no_unmarked_eligible_token,9

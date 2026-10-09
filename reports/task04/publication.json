@@ -1,0 +1,11 @@
+{
+  "raw_text_committed": false,
+  "model_weights_committed": false,
+  "full_text_manifests": "runs/task04-release-preparation",
+  "full_text_error_queue": "runs/task04-release-analysis/error_review_queue.csv",
+  "instruction": "Regenerate full-text review queues using prepare/analyze; text-free queues are not human validation",
+  "source_artifact_registries": {
+    "runs/task04-release-preparation": "75f6e3d2fe742517a96560799b7903a86568b896b9b423752adcac3d67e5f134",
+    "runs/task04-release-analysis": "3ce883ea4c1d9bcd7d698198ce822382ccd0e4e3e2c69c8a1052b16d023ad736"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "status": "completed",
+  "checkpoint_epoch": 2,
+  "validation_loss": 0.6462306919926759,
+  "accuracy": 0.7652451175767238,
+  "macro_f1": 0.7504280517795497,
+  "weighted_f1": 0.7645983584344926,
+  "n": 2509
+}

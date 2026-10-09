@@ -1,0 +1,62 @@
+{
+  "seed": 42,
+  "repetitions": 2000,
+  "method": "original-ID percentile bootstrap 95%",
+  "scope": "saved clean validation predictions only; no perturbed predictions exist here",
+  "intervals": {
+    "all_validation": {
+      "clean_accuracy": {
+        "estimate": 0.7652451175767238,
+        "ci_low": 0.7489039457951375,
+        "ci_high": 0.7811877241929055
+      },
+      "clean_macro_f1": {
+        "estimate": 0.7504280517795497,
+        "ci_low": 0.7316584603539112,
+        "ci_high": 0.7678744476310249
+      },
+      "clean_NEG_f1": {
+        "estimate": 0.8008028098344204,
+        "ci_low": 0.7815674598650934,
+        "ci_high": 0.8192065505090178
+      },
+      "clean_NEU_f1": {
+        "estimate": 0.7659774436090225,
+        "ci_low": 0.7464114832535885,
+        "ci_high": 0.7856510540328504
+      },
+      "clean_POS_f1": {
+        "estimate": 0.6845039018952063,
+        "ci_low": 0.6475706056364409,
+        "ci_high": 0.7188998010626778
+      }
+    },
+    "exclude_high_risk": {
+      "clean_accuracy": {
+        "estimate": 0.7688777638715061,
+        "ci_low": 0.7521902377972466,
+        "ci_high": 0.7855652899457656
+      },
+      "clean_macro_f1": {
+        "estimate": 0.7542293248677829,
+        "ci_low": 0.7353789731967333,
+        "ci_high": 0.7726539643351359
+      },
+      "clean_NEG_f1": {
+        "estimate": 0.8070539419087137,
+        "ci_low": 0.787646729082985,
+        "ci_high": 0.8250910507738077
+      },
+      "clean_NEU_f1": {
+        "estimate": 0.7666166916541729,
+        "ci_low": 0.7464312927398468,
+        "ci_high": 0.7871526460944805
+      },
+      "clean_POS_f1": {
+        "estimate": 0.6890173410404624,
+        "ci_low": 0.6523112530106049,
+        "ci_high": 0.724359756097561
+      }
+    }
+  }
+}

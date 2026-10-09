@@ -130,6 +130,17 @@ Open [the pinned MARBERT Colab notebook](https://colab.research.google.com/githu
 and follow [the GPU runtime instructions](docs/task03b_colab.md). It clones the
 exact Task 03 baseline commit, verifies the existing splits and pretrained bytes,
 uses the original training CLI and saves checkpoints directly to Google Drive.
-See [the execution blocker report](reports/task03b/blocker_report.md) for checks
-actually performed here. The notebook has not yet run on an external GPU; no
-Task 03B training results are claimed.
+See [the historical execution blocker report](reports/task03b/blocker_report.md)
+for the original local preparation checks. A completed external Tesla T4 run was
+subsequently supplied in a report ZIP and its hashes and validation metrics were
+verified: [Task 03B run evidence](reports/task03b/marbert-v1-20261009T213143Z-be8b8811).
+The selected checkpoint remains in the user's Drive and is not committed.
+
+## Task 04: validation errors and orthographic feasibility
+
+[Actual results and limitations](reports/task04/methodology.md) cover validation
+errors, dialect/sarcasm strata and near-duplicate sensitivity. Deterministic
+perturbation manifests and pending review queues are prepared; no perturbed
+inference results are claimed while the checkpoint/GPU are unavailable locally.
+Follow [the reproduction and semantic-review instructions](docs/task04.md).
+The official test text is never opened by the Task 04 implementation.

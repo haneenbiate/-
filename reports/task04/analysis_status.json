@@ -1,0 +1,7 @@
+{
+  "status": "actual_saved_prediction_analysis_completed",
+  "checkpoint_bytes_verified_here": false,
+  "robustness_inference": "blocked_missing_checkpoint_and_gpu",
+  "test_text_read": false,
+  "test_evaluated": false
+}

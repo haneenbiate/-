@@ -1,0 +1,13 @@
+{
+  "status": "completed",
+  "best_checkpoint": "/content/drive/MyDrive/NASN/task03b/marbert-v1-20261009T213143Z-be8b8811/experiment/best_checkpoint",
+  "checkpoint_reload_verified": true,
+  "training_duration_seconds": 1212.7425137720002,
+  "test_evaluated": false,
+  "device": "cuda",
+  "peak_gpu_allocated_bytes": 3333181440,
+  "peak_gpu_reserved_bytes": 3563061248,
+  "best_epoch": 2,
+  "model_revision": "88e1fa192dd723cf0b3563500aec46209762eb22",
+  "epochs_completed": 4
+}
