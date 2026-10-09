@@ -288,9 +288,26 @@ def test_published_artifacts_are_anchored_and_text_free():
     registry=json.loads((directory/'artifact_hashes.json').read_text())
     for name,digest in registry.items():assert sha256(directory/name)==digest
     for name in ['perturbation_manifest.csv','human_review_queue.csv']:
-        frame=pd.read_csv(directory/name,keep_default_na=False)
+        frame=pd.read_csv(directory/name,dtype={'sarcasm':str},keep_default_na=False)
         assert 'original_text' not in frame and 'perturbed_text' not in frame
         assert not frame.variant_id.duplicated().any()
         assert 'confirmed' not in set(frame.semantic_status)
+        assert set(frame.sarcasm)<={'FALSE','TRUE'}
     preparation=json.loads((directory/'preparation.json').read_text())
     assert preparation['confirmed_variants']==0 and preparation['human_review_completed'] is False
+
+
+def test_task04_notebook_is_pinned_unexecuted_and_inference_only():
+    import ast,nbformat
+    notebook=nbformat.read('notebooks/task04_robustness_colab.ipynb',as_version=4)
+    nbformat.validate(notebook)
+    source='\n'.join(c.source for c in notebook.cells if c.cell_type=='code')
+    assert '0a9259bef128f224bb2a50083e94d57ebadf9fdb' in source
+    assert "'nasn.task04','evaluate'" in source
+    assert 'nasn.marbert' not in source and 'testing_data.csv' not in source
+    assert 'AutoModel' not in source and '.fit(' not in source and 'torch.optim' not in source
+    assert 'checkpoint_access.json' in source and 'gpu_runtime.json' in source
+    for cell in notebook.cells:
+        if cell.cell_type=='code':
+            assert cell.execution_count is None and cell.outputs==[]
+            ast.parse(cell.source)

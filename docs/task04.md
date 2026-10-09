@@ -119,6 +119,13 @@ examples remain pending, and all generated changes remain provisional.
 
 ## GPU inference using the selected checkpoint
 
+Open [the Task 04 GPU notebook](https://colab.research.google.com/github/haneenbiate/-/blob/main/notebooks/task04_robustness_colab.ipynb).
+It is unexecuted and pins Task 04 code to
+`0a9259bef128f224bb2a50083e94d57ebadf9fdb`. It restores only training text,
+mounts the same Drive, checks the existing checkpoint and CUDA, invokes the CLI,
+and exports text-free lightweight results after completion. The current notebook
+uses the exact Task 03B run ID from the uploaded report; do not switch checkpoints.
+
 The external checkpoint reported by the uploaded run is:
 
 ```text
@@ -129,6 +136,14 @@ Mount the same Drive in a GPU Colab runtime. Use the Task 03B-managed Python
 3.12.14 venv and torch 2.8.0+cu126, or repeat its isolated interpreter/dependency
 setup. Use this Task 04 checkout, not the older baseline commit, for the CLI;
 the original training implementation and Task 02 splits remain unchanged.
+For an exact code checkout:
+
+```bash
+git clone https://github.com/haneenbiate/-.git nasn-task04
+cd nasn-task04
+git checkout --detach 0a9259bef128f224bb2a50083e94d57ebadf9fdb
+```
+
 Record and retain the exact Task 04 commit (`git rev-parse HEAD`) and code hashes.
 The selected weights must remain exactly those registered in the uploaded report;
 never download the base encoder as a replacement for the trained classifier.

@@ -1,6 +1,6 @@
 {
   "pytest_passed": 136,
-  "pytest_duration_seconds": 11.68,
+  "pytest_duration_seconds": 11.27,
   "pip_check": "No broken requirements found",
   "versions": {
     "python": "3.12.14",
@@ -19,5 +19,8 @@
   "task02_splits_changed": false,
   "model_weights_accessed_locally": false,
   "perturbed_predictions_generated": false,
-  "human_review_completed": false
+  "human_review_completed": false,
+  "task04_code_ref": "0a9259bef128f224bb2a50083e94d57ebadf9fdb",
+  "notebook_execution": "not_executed",
+  "notebook_sha256": "9bd989e53c6a569fe3992a9f9fc35f56fd4776ff924b352468e76534462ac3a8"
 }

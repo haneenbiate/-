@@ -143,4 +143,6 @@ errors, dialect/sarcasm strata and near-duplicate sensitivity. Deterministic
 perturbation manifests and pending review queues are prepared; no perturbed
 inference results are claimed while the checkpoint/GPU are unavailable locally.
 Follow [the reproduction and semantic-review instructions](docs/task04.md).
+The [Task 04 Colab notebook](https://colab.research.google.com/github/haneenbiate/-/blob/main/notebooks/task04_robustness_colab.ipynb)
+loads the existing Drive checkpoint and runs inference through the documented CLI.
 The official test text is never opened by the Task 04 implementation.
