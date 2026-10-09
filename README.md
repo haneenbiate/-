@@ -123,3 +123,13 @@ in test; group assignment prevents splitting those records across train/validati
 No source rows are deleted; exclusions and reassignment exist only in manifests.
 The API supports small unpinned test fixtures with `require_official=False`; the
 CLI always requires pinned official bytes and exactly 12,548/3,000 source rows.
+
+## Task 03B: external GPU recovery
+
+Open [the pinned MARBERT Colab notebook](https://colab.research.google.com/github/haneenbiate/-/blob/main/notebooks/marbert_baseline_colab.ipynb)
+and follow [the GPU runtime instructions](docs/task03b_colab.md). It clones the
+exact Task 03 baseline commit, verifies the existing splits and pretrained bytes,
+uses the original training CLI and saves checkpoints directly to Google Drive.
+See [the execution blocker report](reports/task03b/blocker_report.md) for checks
+actually performed here. The notebook has not yet run on an external GPU; no
+Task 03B training results are claimed.

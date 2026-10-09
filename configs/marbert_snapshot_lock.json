@@ -1,0 +1,37 @@
+{
+  "repo_id": "UBC-NLP/MARBERT",
+  "revision": "88e1fa192dd723cf0b3563500aec46209762eb22",
+  "metadata_source": "https://huggingface.co/api/models/UBC-NLP/MARBERT/revision/88e1fa192dd723cf0b3563500aec46209762eb22?blobs=true",
+  "files": {
+    "config.json": {
+      "sha256": "cd2a25895e0e243e5475e241db2a61f5721b4b380ea175e9cafcbf4f0359b1f1",
+      "size": 701,
+      "git_blob_id": "67cea772d1e9b68a1c8ea80c85aa3efc7c362b39",
+      "verification_basis": "downloaded from immutable revision; Git blob identity and size verified"
+    },
+    "pytorch_model.bin": {
+      "sha256": "801862ace5fc9e6b135b19476dbda5c7de1e8673b5b9d55db08d79e2c30b9dca",
+      "size": 654186400,
+      "git_blob_id": "08fb7eefadf05e653c093f29f99dd877b94c1432",
+      "verification_basis": "official Hub LFS metadata; file bytes not downloaded in Task 03B development"
+    },
+    "special_tokens_map.json": {
+      "sha256": "303df45a03609e4ead04bc3dc1536d0ab19b5358db685b6f3da123d05ec200e3",
+      "size": 112,
+      "git_blob_id": "e7b0375001f109a6b8873d756ad4f7bbb15fbaa5",
+      "verification_basis": "downloaded from immutable revision; Git blob identity and size verified"
+    },
+    "tokenizer_config.json": {
+      "sha256": "16c98e576cebd77e6ea1c16ef01fc839af38606bbbb8dcc769b9a50f328ac54b",
+      "size": 376,
+      "git_blob_id": "9542287136eed6f2ddaa765fb79b40a32bb50876",
+      "verification_basis": "downloaded from immutable revision; Git blob identity and size verified"
+    },
+    "vocab.txt": {
+      "sha256": "4cbe17fdb035ba4afb5eb9889657b0f9895e2c6bd26574409cf9f8bdf75e2542",
+      "size": 1099714,
+      "git_blob_id": "d343b7b9b8071d9b7c43ba430feb53491b7fb5e9",
+      "verification_basis": "downloaded from immutable revision; Git blob identity and size verified"
+    }
+  }
+}

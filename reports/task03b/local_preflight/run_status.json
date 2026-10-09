@@ -1,0 +1,8 @@
+{
+  "status": "preflight_only",
+  "best_checkpoint": null,
+  "checkpoint_reload_verified": false,
+  "training_duration_seconds": null,
+  "test_evaluated": false,
+  "reason": "Training not requested in this invocation"
+}

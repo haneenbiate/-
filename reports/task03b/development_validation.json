@@ -1,0 +1,51 @@
+{
+  "recorded_at_utc": "2026-10-09T21:28:35.852196+00:00",
+  "reference_commit": "c8dc698780cb06c8838c557f159bdaed7507aeda",
+  "status": "preparation_verified_external_training_blocked",
+  "training_executed": false,
+  "training_completed": false,
+  "test_evaluated": false,
+  "gpu_type": null,
+  "training_duration_seconds": null,
+  "validation_metrics": null,
+  "best_checkpoint": null,
+  "development_checks": {
+    "pytest_passed": 71,
+    "pytest_duration_seconds": 9.09,
+    "pip_check": "No broken requirements found",
+    "notebook_schema_and_syntax": "passed in pytest",
+    "managed_python_bootstrap": "uv 0.13.0 installed and located CPython 3.12.14",
+    "task02_preflight": "passed; reports/task03b/local_preflight/preflight.json",
+    "download_integrity": "all five official files passed SHA-256 and size checks; encoder load not performed",
+    "gpu_gate": "blocked; torch 2.8.0+cpu has no CUDA"
+  },
+  "local_library_versions": {
+    "torch": "2.8.0+cpu",
+    "transformers": "4.57.3",
+    "huggingface-hub": "0.36.0",
+    "tokenizers": "0.22.1",
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "scikit-learn": "1.8.0",
+    "pytest": "9.1.1",
+    "nbformat": "5.10.4"
+  },
+  "external_dependencies": {
+    "python": "3.12.14",
+    "torch": "2.8.0+cu126",
+    "torch_index": "https://download.pytorch.org/whl/cu126",
+    "torch_pin_accepts_cuda_local_build": true,
+    "cp312_linux_wheel_found": "https://download-r2.pytorch.org/whl/cu126/torch-2.8.0%2Bcu126-cp312-cp312-manylinux_2_28_x86_64.whl",
+    "cuda_installation_verified": false,
+    "cuda_kernel_verified": false,
+    "external_encoder_load_verified": false,
+    "remaining_packages": "original pinned requirements-marbert.txt at baseline commit"
+  },
+  "artifact_sha256": {
+    "tools/colab_runtime.py": "2c3672386d517773f8b19fb586d3eecd9accf195f3595a5aa9022789de299918",
+    "configs/marbert_snapshot_lock.json": "3aae95e863353f0cc821311d0601b1d3fc8374b1d42acf408fe5ec6d450a3ba2",
+    "notebooks/marbert_baseline_colab.ipynb": "19356ea247add52bf6af93e2500843806ff9d8a015db0daae30bf1279d442934"
+  },
+  "actual_training_deviations": [],
+  "remaining_blocker": "No CUDA GPU or connected external Colab execution runtime"
+}
