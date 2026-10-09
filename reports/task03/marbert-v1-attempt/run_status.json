@@ -1,0 +1,10 @@
+{
+  "status": "blocked_or_failed",
+  "best_checkpoint": null,
+  "checkpoint_reload_verified": false,
+  "training_duration_seconds": null,
+  "test_evaluated": false,
+  "reason": "ProxyError: (MaxRetryError(\"HTTPSConnectionPool(host='us.aws.cdn.hf.co', port=443): Max retries exceeded with url: /xet-bridge-us/621ffdc136468d709f1779f0/5eab7d5e5eb4c28a79f981a2a49e7e293b6a8bfc1e0a43111e62b3eb9650b820?[query omitted] (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connection failed: 403 Forbidden')))\"), '(Request ID: b52eb6fd-a488-49ae-935e-eb1e1edf7158)')",
+  "attempt_duration_seconds": 30.896325941000214,
+  "model_revision": "88e1fa192dd723cf0b3563500aec46209762eb22"
+}

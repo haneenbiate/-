@@ -1,0 +1,16 @@
+{
+  "model": "UBC-NLP/MARBERT",
+  "revision": "88e1fa192dd723cf0b3563500aec46209762eb22",
+  "tokenizer_class": "BertTokenizerFast",
+  "vocab_size": 100000,
+  "is_fast": true,
+  "official_normalizer": {
+    "type": "BertNormalizer",
+    "clean_text": true,
+    "handle_chinese_chars": true,
+    "strip_accents": null,
+    "lowercase": true
+  },
+  "custom_text_processing": false,
+  "weights_loaded": false
+}

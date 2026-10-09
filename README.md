@@ -1,5 +1,9 @@
 # ArSarcasm-v2: leakage-safe splitting (Task 02)
 
+Task 03, MARBERT Baseline v1.0, is documented in [docs/task03.md](docs/task03.md).
+Its actual preflight and blocked training attempts are saved in `reports/task03/`.
+No MARBERT training results are claimed while pretrained-weight access remains blocked.
+
 This module prepares reproducible dataset/evaluation manifests, not models.
 Official source: <https://github.com/iabufarha/ArSarcasm-v2>, pinned commit
 `eb85513e133cfc67e30aca4968fadbe2594fcb42`. The official CSV bytes are verified

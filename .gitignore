@@ -2,3 +2,6 @@
 __pycache__/
 .pytest_cache/
 data/
+**/best_checkpoint/
+runs/
+reports/task03/*-new/
