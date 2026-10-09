@@ -1,0 +1,2 @@
+# Preserve generated SVG geometry bytes; Matplotlib emits whitespace in path data.
+reports/task04/*.svg -whitespace

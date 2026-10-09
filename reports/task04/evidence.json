@@ -32,7 +32,7 @@
   "test_text_read": false,
   "test_evaluated": false,
   "code_sha256": {
-    "task04.py": "331d8d1d036eece7f9c9c33fdf2cc1b34a8ebd254a9520a8a0db90838217cbe9",
+    "task04.py": "a0c8808763e8d8a7e6333258bdd360be32269a47c3da951416e0daa8c4800170",
     "orthography.py": "45e5fbafb084b03b24ddaef53d63cee437afdca9ced71afeeb9957ca3eb93c09",
     "marbert.py": "9b1d91e3026a6861c8a396f14872451f2393028c184f86355a648ce3ad79ca2f",
     "metrics.py": "74a87e25f14a35f98ea54cac611e305d717cac484e2fa0951d653077ef8d4a8e",

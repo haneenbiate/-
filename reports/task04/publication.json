@@ -1,11 +1,11 @@
 {
   "raw_text_committed": false,
   "model_weights_committed": false,
-  "full_text_manifests": "runs/task04-release-preparation",
-  "full_text_error_queue": "runs/task04-release-analysis/error_review_queue.csv",
+  "full_text_manifests": "runs/task04-final-v2-preparation",
+  "full_text_error_queue": "runs/task04-final-v2-analysis/error_review_queue.csv",
   "instruction": "Regenerate full-text review queues using prepare/analyze; text-free queues are not human validation",
   "source_artifact_registries": {
-    "runs/task04-release-preparation": "75f6e3d2fe742517a96560799b7903a86568b896b9b423752adcac3d67e5f134",
-    "runs/task04-release-analysis": "3ce883ea4c1d9bcd7d698198ce822382ccd0e4e3e2c69c8a1052b16d023ad736"
+    "runs/task04-final-v2-preparation": "ada3113c583ff0ba2c69c815d8f680743658668453d65fd9515ef68a3102ddd8",
+    "runs/task04-final-v2-analysis": "a215acaf3be837a6900d53a8ec01f59e62f399efbf179c2d3807b6b62c8caaaa"
   }
 }

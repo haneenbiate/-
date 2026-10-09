@@ -318,7 +318,7 @@ def publish(preparation, analysis, output):
             require(Path(name).name==name and sha256(directory/name)==value,'Generated artifact changed before publication')
     output=fresh(output)
     for name in ['perturbation_manifest.csv','human_review_queue.csv']:
-        frame=pd.read_csv(preparation/name,keep_default_na=False)
+        frame=pd.read_csv(preparation/name,dtype={'sarcasm':str,'row_id':str},keep_default_na=False)
         require({'original_text','perturbed_text'}<=set(frame),'Full-text preparation manifest missing')
         frame=frame.drop(columns=['original_text','perturbed_text'])
         frame.to_csv(output/name,index=False)
