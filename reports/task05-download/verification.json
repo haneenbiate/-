@@ -1,0 +1,29 @@
+{
+  "status": "local_cpu_workflow_verified_colab_unexecuted",
+  "verified_at_utc": "2026-10-10T09:39:57.277674+00:00",
+  "code_ref": "8bc384eb8dab6b0266825b3cae3f1d8c7aa96ebb",
+  "python": "3.12.14",
+  "dependencies": "requirements-review.txt",
+  "pip_check": "No broken requirements found.",
+  "model_dependencies_installed": false,
+  "checkpoint_loaded": false,
+  "official_test_text_read": false,
+  "training_performed": false,
+  "queue_n": 404,
+  "original_queue_identity_and_hash_match": true,
+  "reviewer_archive_sha256": {
+    "reviewer_a.zip": "379247fd9fc107518f741ecf8112e3419180207dac55a40c05311bcdf0157404",
+    "reviewer_b.zip": "bb6fb11affc4dcfbb62cb9ea5450c1bc60bca45db34898fb1d2c08f04634fc35"
+  },
+  "archives_identical_to_original_task05_export": true,
+  "notebook_schema_and_ast_tests_passed": 1,
+  "human_decisions": 0,
+  "confirmed_metrics": null,
+  "resolved_setup_issue": "Jinja2 and MarkupSafe required for pandas LaTeX export; explicitly pinned in review-only dependencies.",
+  "artifact_sha256": {
+    "notebooks/task05_review_download.ipynb": "418cd2155e062fcff15be3a9d6fc86ec4578032d5e1505908f88047da88161e9",
+    "tools/build_review_download_notebook.py": "59c2fd17b6c74b07eefd200139212e978d55e9225c90167c3413d00e1e7b1178",
+    "requirements-review.txt": "3fe1c204ad27aa718bec766a28ab314fe153daefac24d7b31101ec52f01c5ae7",
+    "tests/test_review_download.py": "ac0645ca4d2a6abc5961afbcc2e8dc2a394457f7e483ec23234803a3e13b6b86"
+  }
+}

@@ -14,6 +14,22 @@ Public evidence: [reports/task05](../reports/task05). Private full-text export:
 to durable storage such as the existing NASN Google Drive before leaving a
 temporary runtime. The trained checkpoint is unchanged and remains on Drive.
 
+## Download without workspace file links
+
+Workspace file links may not download in the chat client. Open the
+[review-download Colab notebook](https://colab.research.google.com/github/haneenbiate/-/blob/main/notebooks/task05_review_download.ipynb),
+use a normal CPU runtime, choose **Run all**, and authorize your own Drive mount.
+Click the two download buttons at the end, or download the ZIPs directly from
+the printed Drive path. No checkpoint or model dependencies are needed.
+The notebook uses Python 3.12.14 and minimal pinned review dependencies, explicitly
+prepares deterministic candidates from existing Task 02 manifests, then compares
+all 404 IDs/text hashes/rules/intensities with the original published Task 04
+queue. It never regenerates splits, loads models or fetches official test text.
+It uses a new directory for each run so existing checkouts are preserved.
+The notebook is unexecuted in Colab here; local CPU dependency/CLI checks are
+recorded separately. Public download links do not contain raw tweets; full-text
+ZIPs are generated and saved in the user's private Drive.
+
 ## Reproduce preparation
 
 Use Python **3.12.14** and the existing checkout. Install the unchanged Task 04
