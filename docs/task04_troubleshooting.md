@@ -3,14 +3,20 @@
 `CalledProcessError` with exit status 2 identifies a failed CLI command; it does
 not identify the validation or dependency error. The line containing `call(...)`
 is also the invocation, not the cause. Look for `ERROR:` or inspect captured stderr.
-The reported 2026-10-10 failure has not supplied that stderr, so its specific
-cause remains unconfirmed. The same saved-report analysis succeeds locally.
+The subsequently supplied 2026-10-10 stderr identifies an inherited Colab
+`MPLBACKEND=module://matplotlib_inline.backend_inline` setting. The isolated
+CLI environment cannot resolve that notebook backend. Set `ENV['MPLBACKEND'] =
+'Agg'` before retrying the analysis cell; this backend writes the same PDF/SVG
+figures without requiring a notebook display. The updated notebook explicitly
+sets this variable for subprocesses. This changes rendering configuration only.
+The same saved-report analysis succeeds locally.
 
 Run this **new diagnostic cell** in the existing Colab session. It uses a fresh
 output directory and preserves your earlier outputs, benchmark and checkpoint:
 
 ```python
 import subprocess, uuid
+ENV['MPLBACKEND'] = 'Agg'
 diagnostic = ROOT / ('analysis-diagnostic-' + uuid.uuid4().hex[:8])
 result = subprocess.run(
     [str(PY), '-m', 'nasn.task04', 'analyze', '--run', str(BASELINE_REPORTS),

@@ -74,7 +74,7 @@ call([PY,'-m','pip','install','--no-cache-dir','-r',REPO/'requirements-task04.tx
 check=call([PY,'-m','pip','check'],capture_output=True,text=True)
 (ROOT/'dependency_check.txt').write_text(check.stdout+check.stderr)
 (ROOT/'dependency_freeze.txt').write_text(subprocess.check_output([str(PY),'-m','pip','freeze'],text=True))
-ENV={**os.environ,'PYTHONPATH':str(REPO),'CUBLAS_WORKSPACE_CONFIG':':4096:8','HF_HUB_OFFLINE':'1','TRANSFORMERS_OFFLINE':'1','MPLCONFIGDIR':'/tmp/nasn-matplotlib','XDG_CACHE_HOME':'/tmp/nasn-cache'}
+ENV={**os.environ,'PYTHONPATH':str(REPO),'CUBLAS_WORKSPACE_CONFIG':':4096:8','HF_HUB_OFFLINE':'1','TRANSFORMERS_OFFLINE':'1','MPLBACKEND':'Agg','MPLCONFIGDIR':'/tmp/nasn-matplotlib','XDG_CACHE_HOME':'/tmp/nasn-cache'}
 call([PY,REPO/'tools/colab_runtime.py','gpu','--report',ROOT/'gpu_runtime.json'],cwd=REPO,env=ENV)
 ''')
 code('''# Restore ONLY pinned official training CSV; no official test CSV fetch/read.

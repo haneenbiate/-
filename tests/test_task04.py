@@ -333,6 +333,7 @@ def test_task04_notebook_is_pinned_unexecuted_and_inference_only():
     assert 'nasn.marbert' not in source and 'testing_data.csv' not in source
     assert 'AutoModel' not in source and '.fit(' not in source and 'torch.optim' not in source
     assert 'checkpoint_access.json' in source and 'gpu_runtime.json' in source
+    assert "'MPLBACKEND':'Agg'" in source
     for cell in notebook.cells:
         if cell.cell_type=='code':
             assert cell.execution_count is None and cell.outputs==[]
