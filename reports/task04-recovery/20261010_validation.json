@@ -18,5 +18,10 @@
     "macro_f1": 0.7504280517795497,
     "weighted_f1": 0.7645983584344926,
     "n": 2509
-  }
+  },
+  "pytest_total_passed": 139,
+  "pytest_total_duration_seconds": 11.66,
+  "notebook_execution": "not_executed",
+  "notebook_code_ref": "bde827f741a625e5b8b4ceaca7c6dd6bc36901a6",
+  "notebook_sha256": "62b857e315847379292721bec8ef143ba1bef17bc2a6334a6438c2a2f8b141e5"
 }

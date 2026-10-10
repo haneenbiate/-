@@ -7,6 +7,9 @@ unavailable selected checkpoint and CUDA GPU; no perturbed metrics are claimed.
 Read `reports/task04/methodology.md` for actual results and evidence limitations.
 No NASN method is implemented. No training or checkpoint reselection occurs.
 
+For Colab `CalledProcessError` and failed analysis retries, follow
+[the diagnostic and recovery instructions](task04_troubleshooting.md).
+
 ## Reproduce local preparation and actual saved-prediction analysis
 
 Use Python **3.12.14**, as required by Task 02. In the project checkout:
@@ -121,7 +124,7 @@ examples remain pending, and all generated changes remain provisional.
 
 Open [the Task 04 GPU notebook](https://colab.research.google.com/github/haneenbiate/-/blob/main/notebooks/task04_robustness_colab.ipynb).
 It is unexecuted and pins Task 04 code to
-`0a9259bef128f224bb2a50083e94d57ebadf9fdb`. It restores only training text,
+`bde827f741a625e5b8b4ceaca7c6dd6bc36901a6`. It restores only training text,
 mounts the same Drive, checks the existing checkpoint and CUDA, invokes the CLI,
 and exports text-free lightweight results after completion. The current notebook
 uses the exact Task 03B run ID from the uploaded report; do not switch checkpoints.
@@ -141,7 +144,7 @@ For an exact code checkout:
 ```bash
 git clone https://github.com/haneenbiate/-.git nasn-task04
 cd nasn-task04
-git checkout --detach 0a9259bef128f224bb2a50083e94d57ebadf9fdb
+git checkout --detach bde827f741a625e5b8b4ceaca7c6dd6bc36901a6
 ```
 
 Record and retain the exact Task 04 commit (`git rev-parse HEAD`) and code hashes.

@@ -328,7 +328,7 @@ def test_task04_notebook_is_pinned_unexecuted_and_inference_only():
     notebook=nbformat.read('notebooks/task04_robustness_colab.ipynb',as_version=4)
     nbformat.validate(notebook)
     source='\n'.join(c.source for c in notebook.cells if c.cell_type=='code')
-    assert '0a9259bef128f224bb2a50083e94d57ebadf9fdb' in source
+    assert 'bde827f741a625e5b8b4ceaca7c6dd6bc36901a6' in source
     assert "'nasn.task04','evaluate'" in source
     assert 'nasn.marbert' not in source and 'testing_data.csv' not in source
     assert 'AutoModel' not in source and '.fit(' not in source and 'torch.optim' not in source
@@ -337,3 +337,22 @@ def test_task04_notebook_is_pinned_unexecuted_and_inference_only():
         if cell.cell_type=='code':
             assert cell.execution_count is None and cell.outputs==[]
             ast.parse(cell.source)
+
+
+def test_notebook_command_failure_exposes_stderr(tmp_path,capsys):
+    import ast,subprocess,sys,uuid,nbformat
+    notebook=nbformat.read('notebooks/task04_robustness_colab.ipynb',as_version=4)
+    cell=next(c for c in notebook.cells if c.cell_type=='code' and 'def call(' in c.source)
+    function=next(node for node in ast.parse(cell.source).body if isinstance(node,ast.FunctionDef) and node.name=='call')
+    scope={'subprocess':subprocess,'json':json,'uuid':uuid,'ROOT':tmp_path}
+    exec(compile(ast.Module(body=[function],type_ignores=[]),'<notebook-call>','exec'),scope)
+    with pytest.raises(subprocess.CalledProcessError) as failure:
+        scope['call']([sys.executable,'-c',"import sys;print('ERROR: synthetic diagnostic',file=sys.stderr);sys.exit(2)"])
+    assert 'ERROR: synthetic diagnostic' in failure.value.stderr
+    assert 'ERROR: synthetic diagnostic' in capsys.readouterr().out
+    reports=list(tmp_path.glob('command-failure-*.json'))
+    assert len(reports)==1
+    saved=json.loads(reports[0].read_text())
+    assert saved['exit_code']==2 and 'synthetic diagnostic' in saved['stderr']
+    source='\n'.join(c.source for c in notebook.cells if c.cell_type=='code')
+    assert "'--analysis',ANALYSIS_DIR" in source
