@@ -1,0 +1,20 @@
+{
+  "status": "prepared_review",
+  "queue_n": 404,
+  "candidate_n": 12545,
+  "applicable_n": 9961,
+  "reviewer_a_completed": 0,
+  "reviewer_b_completed": 0,
+  "confirmed_n": 0,
+  "agreement": null,
+  "robustness_metrics": null,
+  "tatweel_comparison": null,
+  "human_review_completed": false,
+  "training_performed": false,
+  "test_evaluated": false,
+  "remaining": [
+    "Two independent human reviews and adjudication",
+    "Completed Task 04 inference evidence and paired predictions",
+    "Verified tokenizer/checkpoint access for intensity-1 versus intensity-2 token comparison"
+  ]
+}

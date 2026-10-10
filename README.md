@@ -146,3 +146,12 @@ Follow [the reproduction and semantic-review instructions](docs/task04.md).
 The [Task 04 Colab notebook](https://colab.research.google.com/github/haneenbiate/-/blob/main/notebooks/task04_robustness_colab.ipynb)
 loads the existing Drive checkpoint and runs inference through the documented CLI.
 The official test text is never opened by the Task 04 implementation.
+
+## Task 05: semantic validation and negation scope
+
+[Review and reproduction instructions](docs/task05.md) describe the blinded RTL
+offline interface, the fixed 404-case full-text queue, independent review and
+adjudication, integrity-checked imports and saved-prediction analysis. Actual
+[Task 05 evidence](reports/task05) is at **prepared review**: no human decisions
+or confirmed robustness results are claimed. Full-text exports remain in private
+`runs/` storage; model training and official test evaluation are prohibited.

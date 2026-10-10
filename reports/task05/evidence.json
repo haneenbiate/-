@@ -1,0 +1,87 @@
+{
+  "source_commit": "eb85513e133cfc67e30aca4968fadbe2594fcb42",
+  "source_training_sha256": "1da727eb763459f436c4e61f52c6a0bc63d5300af8fcc99b5675ae4616dae04a",
+  "recorded_test_sha256_not_opened": "0f0a77ba8a4a0a9370846a42a93a63244092f1fb30a909595b70e17e299bcf6c",
+  "task02_metadata_sha256": "6736f1e25a0d4eb4bb79ffc4dafaed630ec59e1d4b8e7e896fb28e019b92bb66",
+  "manifest_sha256": {
+    "baseline_manifest.csv": "2034b29a415ffb76c55e252b58e93ba9b78987d9ae7dd326d23bfefc3eca7449",
+    "distributions.csv": "80cf48cbaa50a68f83c52f8eebb1d99cd3cba2916d64857506ddebcbd8d07e66",
+    "duplicate_groups.csv": "08d85533eec35ef617b57127d8af341a9c31f7342b6ec83d42f4bec4cc74f229",
+    "group_members.csv": "ab59ee79681ed530034b14e59a0e23b9396618ba9f48b9ce804769f643d3bc5c",
+    "near_duplicate_review.csv": "d8ecbed76afcd366d59a817025514c285e89774ef196d6e3de7acadfa20fa0ad",
+    "overlap_members.csv": "8d5d7298d4f2e7488b3bb942bf17fedf2d8abb36b062d6bad5f966c0ecd49038",
+    "overlap_statistics.csv": "cf08f0e748598ed86630d25dcd6c140d34072a2a67ecc048f6684adb7a5e699f",
+    "quarantine_manifest.csv": "19f48761f045a49570b749190553a138b6588c8367d89fcdc495a3ff39f24b82",
+    "split_manifest.csv": "ab59ee79681ed530034b14e59a0e23b9396618ba9f48b9ce804769f643d3bc5c",
+    "test_evaluation_manifest.csv": "20e6846b400da731ae4d0d78386a4a310381d31f3e7b3b610d0050ea2795cd90",
+    "test_manifest.csv": "1e5592f184b1d7fc9a604584cfebc1a007ee127d9f74f2dab9f5642b364befd0",
+    "train_manifest.csv": "0be126ba51ddcfbf966ea9fc416fcea3bfb56e45ed10ac5d343b2eb2117a0cc6",
+    "training_deviations.csv": "80a0070747b9394cdefbcf2320447e9c57eab5debc3332e44e8d0bea154c18fb",
+    "validation_manifest.csv": "903c7ebc0ef3073d52831922d1adacd4451210e0ec876348ddec0d6d7b1e53a8"
+  },
+  "counts": {
+    "train": 10037,
+    "validation": 2509,
+    "quarantine": 2,
+    "test": 3000
+  },
+  "seed": 42,
+  "validation_high_risk_rows": 112,
+  "near_pairs": 753,
+  "high_risk_pairs": 264,
+  "test_text_read": false,
+  "test_evaluated": false,
+  "code_sha256": {
+    "task04.py": "8f1b2c0a66703654c8d24cfc367523e5491a973a5f18ec5a8995abb2d02a2bef",
+    "orthography.py": "45e5fbafb084b03b24ddaef53d63cee437afdca9ced71afeeb9957ca3eb93c09",
+    "marbert.py": "9b1d91e3026a6861c8a396f14872451f2393028c184f86355a648ce3ad79ca2f",
+    "metrics.py": "74a87e25f14a35f98ea54cac611e305d717cac484e2fa0951d653077ef8d4a8e",
+    "preflight.py": "2460f02c9b5c6654197c2f8ff405c7360dcf710ce60ce00a16f8fdf919a28b46"
+  },
+  "versions": {
+    "python": "3.12.14",
+    "pandas": "2.2.3",
+    "numpy": "2.3.5",
+    "scikit-learn": "1.8.0",
+    "torch": "2.8.0+cpu",
+    "transformers": "4.57.3",
+    "huggingface-hub": "0.36.0",
+    "tokenizers": "0.22.1",
+    "safetensors": "0.7.0",
+    "pytest": "9.1.1"
+  },
+  "checkpoint_sha256": {
+    "config.json": "0a3b9e616ec6d8dcdc5d2083ce226b58d6ed4d4290cb395753171eebf257bb5e",
+    "model.safetensors": "5c9fd87e2639a967d2c7517d5bb4189a6cbcb3bb477f9998e105682fcc249840",
+    "special_tokens_map.json": "b6d346be366a7d1d48332dbc9fdf3bf8960b5d879522b7799ddba59e76237ee3",
+    "tokenizer.json": "7f4d625ea888be9dd915f09e7d7cc9ff899619b02e1836cdc73b287d27c14e5c",
+    "tokenizer_config.json": "0088a6f8bcdd4014184fb068b83ebb12896a9db2bb269a71f73de83fef24bceb",
+    "vocab.txt": "4cbe17fdb035ba4afb5eb9889657b0f9895e2c6bd26574409cf9f8bdf75e2542"
+  },
+  "checkpoint_bytes_verified": false,
+  "baseline_run_status": {
+    "status": "completed",
+    "best_checkpoint": "/content/drive/MyDrive/NASN/task03b/marbert-v1-20261009T213143Z-be8b8811/experiment/best_checkpoint",
+    "checkpoint_reload_verified": true,
+    "training_duration_seconds": 1212.7425137720002,
+    "test_evaluated": false,
+    "device": "cuda",
+    "peak_gpu_allocated_bytes": 3333181440,
+    "peak_gpu_reserved_bytes": 3563061248,
+    "best_epoch": 2,
+    "model_revision": "88e1fa192dd723cf0b3563500aec46209762eb22",
+    "epochs_completed": 4
+  },
+  "baseline_report_registry_sha256": "91cbd040fcfc0956769b2b724b78a87eb24a3c185882e3ecb719c024d110e29b",
+  "task04_input_sha256": {
+    "applicability.csv": "1dc84f7d2d0bbf397cb3f0508efc16c5b55ae3c60b197253dd0d3c5a239a8330",
+    "failure_cases.csv": "3a2d98d13ca8aba612fd546174114a978ac01a4e95f7ff91a031cfc6c0729315",
+    "human_review_queue.csv": "8a41fdec40c9d4712f6ddf826d67c6d48ebfdf1092b4d4884ff6002347037f88",
+    "near_duplicate_audit.csv": "3a77f62d3ba1d4343a599dbd77c8518a8ac067a55447f3970a55dedcc70824df",
+    "perturbation_manifest.csv": "9cd762e45d5629fd3e8433fcbdfc00a247ae5a16f849b375c22416d6a14ce42a",
+    "preparation.json": "5a29da79db63c2c08d9d41917b9cce2d3111bade70e6b17f2a386d503467f853"
+  },
+  "task05_code_sha256": "362acd6de8ea63e44295761636f16ccb34b6f17a368b6810acd96b0be911c366",
+  "interface_code_sha256": "9481c9d52bdd6b775af082f8165cd2566eac7128610c353b0fc55a76f36b43ba",
+  "prepared_at_utc": "2026-10-10T09:15:06.363973+00:00"
+}

@@ -1,0 +1,31 @@
+{
+  "verified_at_utc": "2026-10-10T09:12:53.963702+00:00",
+  "test_command": "MPLBACKEND=Agg MPLCONFIGDIR=/tmp/nasn-matplotlib XDG_CACHE_HOME=/tmp/nasn-cache .venv/bin/python -m pytest -q",
+  "tests_passed": 170,
+  "tests_failed": 0,
+  "tests_skipped": 0,
+  "test_duration_seconds": 26.77,
+  "dependency_check": "No broken requirements found.",
+  "actual_preparation": "runs/task05-semantic-review-v1",
+  "queue_n": 404,
+  "unique_original_ids": 279,
+  "lexical_negation_variants": 200,
+  "lexical_non_negation_variants": 204,
+  "human_decisions": 0,
+  "confirmed_variants": 0,
+  "confirmed_metrics_computed": false,
+  "completed_task04_perturbed_inference_artifacts_available_locally": false,
+  "checkpoint_metadata_verified": true,
+  "checkpoint_bytes_accessible_locally": false,
+  "archive_checksums_verified": true,
+  "reviewer_packages_blinded": true,
+  "training_performed": false,
+  "test_text_read": false,
+  "test_evaluated": false,
+  "code_sha256": {
+    "nasn/task05.py": "362acd6de8ea63e44295761636f16ccb34b6f17a368b6810acd96b0be911c366",
+    "nasn/review_interface.html": "9481c9d52bdd6b775af082f8165cd2566eac7128610c353b0fc55a76f36b43ba",
+    "tools/package_task05_review.py": "bb92fdea00f3d2a9f12fc1c4947cf513e4c5cdf6ae35920d6a29c7853b0ee6e3",
+    "tests/test_task05.py": "63f76712734f6f85ae672d5c498305c3581afa2d00ce177548c4dec02c632126"
+  }
+}

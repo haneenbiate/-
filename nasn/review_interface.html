@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ar" dir="rtl"><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NASN — مراجعة المعنى ونطاق النفي</title>
+<style>body{font:18px system-ui;max-width:1050px;margin:auto;padding:24px;background:#f5f5f5}article,section{background:white;padding:18px;margin:16px 0;border-radius:8px}pre{white-space:pre-wrap;overflow-wrap:anywhere;font:22px system-ui;line-height:1.8;unicode-bidi:plaintext}label{display:block;margin:12px 0}input,select,textarea,button{font:inherit;padding:8px;max-width:100%;box-sizing:border-box}textarea{width:100%;height:80px}button{margin:6px}#identity{font-size:13px;direction:ltr;overflow-wrap:anywhere}#status{color:#154b32}</style>
+<h1>مراجعة بشرية مستقلة للمعنى ونطاق النفي</h1>
+<p>احكم على المعنى والمشاعر، والتأكيد والتهكم واللهجة. لا تخمّن الحالات الغامضة.
+إذا يوجد نفي، اكتب عبارته ونطاقه في النصين وأثره على المشاعر. أكمل العمل مستقلاً عن المراجع الآخر.
+لا تعرض هذه الواجهة أي تنبؤات أو تسميات للمشاعر. صدّر CSV باستمرار؛ إغلاق الصفحة يفقد التعديلات غير المصدَّرة.</p>
+<label>هوية المراجع <input id="reviewer" dir="ltr" placeholder="reviewer-01"></label>
+<button id="export">حفظ القرارات CSV</button>
+<label>استئناف ملف CSV سابق <input type="file" id="resume" accept=".csv"></label>
+<p id="status" role="status"></p>
+<button id="prev">السابق</button><button id="next">التالي</button>
+<label>رقم الحالة <input id="jump" type="number" min="1" value="1"></label>
+<p id="position"></p><p id="identity"></p>
+<article><h2>النص الأصلي</h2><pre id="original"></pre></article>
+<article><h2>النص المعدّل</h2><pre id="perturbed"></pre></article>
+<p id="transformation"></p>
+<section id="form"></section>
+<script>
+'use strict';
+const rows=__REVIEW_DATA__;
+const fields={semantic_validity:['المعنى: semantic_validity',['preserved','changed','ambiguous']],sentiment_preserved:['المشاعر محفوظة: sentiment_preserved',['yes','no','uncertain']],negation_present:['وجود النفي: negation_present',['yes','no','uncertain']],negation_affects_sentiment:['النفي يؤثر على المشاعر: negation_affects_sentiment',['yes','no','uncertain']]};
+const notes={linguistic_notes:'ملاحظات لغوية وتعليل القرار (مطلوب)',negation_cue:'عبارة النفي',original_negation_scope:'نطاق النفي في النص الأصلي',perturbed_negation_scope:'نطاق النفي في النص المعدّل'};
+const $=id=>document.getElementById(id);let index=0;
+const human=[...Object.keys(fields),...Object.keys(notes),'reviewer_id','review_timestamp'];
+for(const [key,[label,options]] of Object.entries(fields)){
+ const l=document.createElement('label');l.textContent=label+' ';const s=document.createElement('select');s.id=key;
+ for(const v of ['',...options]){const o=document.createElement('option');o.value=v;o.textContent=v||'— لم يُراجَع —';s.append(o);}l.append(s);$('form').append(l);
+}
+for(const [key,label] of Object.entries(notes)){const l=document.createElement('label');l.textContent=label;const t=document.createElement('textarea');t.id=key;l.append(t);$('form').append(l);}
+function persist(){if(!rows.length)return;const r=rows[index];let changed=false;
+ for(const k of [...Object.keys(fields),...Object.keys(notes)]){if(r[k]!==$(k).value){r[k]=$(k).value;changed=true;}}
+ if(changed){r.reviewer_id=$('reviewer').value.trim();r.review_timestamp=new Date().toISOString();}
+}
+function render(){if(!rows.length){$('position').textContent='لا توجد حالات للتحكيم';return;}
+ const r=rows[index];$('position').textContent=`الحالة ${index+1} من ${rows.length}`;$('jump').max=rows.length;$('jump').value=index+1;
+ $('identity').textContent=r.variant_id;$('original').textContent=r.original_text;$('perturbed').textContent=r.perturbed_text;
+ $('transformation').textContent=`التحويل: ${r.rule} — الشدة: ${r.intensity}`;
+ for(const k of [...Object.keys(fields),...Object.keys(notes)])$(k).value=r[k];
+}
+$('prev').onclick=()=>{persist();index=Math.max(0,index-1);render();};
+$('next').onclick=()=>{persist();index=Math.min(rows.length-1,index+1);render();};
+$('jump').onchange=()=>{persist();index=Math.max(0,Math.min(rows.length-1,Number($('jump').value)-1));render();};
+function quote(v){return '"'+String(v).replaceAll('"','""')+'"';}
+$('export').onclick=()=>{persist();const who=$('reviewer').value.trim();
+ if(!who){alert('أدخل هوية المراجع أولاً');return;}
+ if(rows.some(r=>r.reviewer_id&&r.reviewer_id!==who)){alert('لا تجمع قرارات مراجعين مختلفين في ملف واحد');return;}
+ const keys=rows.length?Object.keys(rows[0]):[];
+ const data='\ufeff'+[keys.map(quote).join(','),...rows.map(r=>keys.map(k=>quote(r[k])).join(','))].join('\r\n');
+ const url=URL.createObjectURL(new Blob([data],{type:'text/csv;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='human-review-'+who.replace(/[^\w-]/g,'_')+'.csv';a.click();URL.revokeObjectURL(url);
+ $('status').textContent='تم تصدير CSV. القرارات الناقصة لا تقبلها أداة الاستيراد حتى تُكمَّل.';
+};
+function parseCSV(source){let result=[],row=[],cell='',quoted=false;source=source.replace(/^\ufeff/,'');
+ for(let i=0;i<source.length;i++){const c=source[i];if(c==='"'){if(quoted&&source[i+1]==='"'){cell+='"';i++;}else quoted=!quoted;}
+ else if(c===','&&!quoted){row.push(cell);cell='';}else if((c==='\n'||c==='\r')&&!quoted){if(c==='\r'&&source[i+1]==='\n')i++;row.push(cell);result.push(row);row=[];cell='';}else cell+=c;}
+ if(quoted)throw Error('Unclosed CSV quote');if(cell||row.length){row.push(cell);result.push(row);}return result;
+}
+$('resume').onchange=async()=>{try{const file=$('resume').files[0];if(!file)return;const parsed=parseCSV(await file.text());const keys=parsed.shift();
+ if(!rows.length||keys.length!==Object.keys(rows[0]).length||new Set(keys).size!==keys.length||keys.some(k=>!(k in rows[0])))throw Error('Columns changed');
+ const lookup=new Map();for(const values of parsed){if(values.length!==keys.length)throw Error('CSV row length');const r=Object.fromEntries(keys.map((k,i)=>[k,values[i]]));if(lookup.has(r.variant_id))throw Error('Duplicate ID');lookup.set(r.variant_id,r);}
+ if(lookup.size!==rows.length)throw Error('Assigned IDs changed');
+ for(const r of rows){const loaded=lookup.get(r.variant_id);if(!loaded)throw Error('Missing ID');for(const k of keys)if(!human.includes(k)&&loaded[k]!==String(r[k]))throw Error('Text/ID changed');for(const [k,[,opts]] of Object.entries(fields))if(loaded[k]&&!opts.includes(loaded[k]))throw Error('Invalid decision');}
+ const reviewers=new Set([...lookup.values()].map(r=>r.reviewer_id).filter(Boolean));if(reviewers.size>1)throw Error('Multiple reviewers');
+ for(const r of rows)Object.assign(r,lookup.get(r.variant_id));$('reviewer').value=[...reviewers][0]||'';render();$('status').textContent='تم استيراد القرارات السابقة دون تغيير النصوص';
+ }catch(e){alert('تعذّر الاستيراد: '+e.message);}};
+render();
+</script></html>
