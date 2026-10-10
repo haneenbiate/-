@@ -40,6 +40,22 @@ def read(path):
     return json.loads(Path(path).read_text())
 
 
+def verify_metric_report(saved, actual, path='subgroups'):
+    """Exact report structure/counts/labels; float metrics tolerate 1e-12 roundoff."""
+    if isinstance(actual,dict):
+        require(isinstance(saved,dict) and set(saved)==set(actual),f'Saved metric report keys mismatch: {path}')
+        for key in actual:verify_metric_report(saved[key],actual[key],f'{path}.{key}')
+    elif isinstance(actual,list):
+        require(isinstance(saved,list) and len(saved)==len(actual),f'Saved metric report length mismatch: {path}')
+        for i,(a,b) in enumerate(zip(saved,actual)):verify_metric_report(a,b,f'{path}[{i}]')
+    elif isinstance(actual,float):
+        require(isinstance(saved,(int,float)) and not isinstance(saved,bool) and
+                np.isfinite(saved) and np.isfinite(actual) and abs(saved-actual)<=1e-12,
+                f'Saved metric report value mismatch: {path}')
+    else:
+        require(type(saved) is type(actual) and saved==actual,f'Saved metric report metadata mismatch: {path}')
+
+
 def validation_inputs(config):
     """Verify split registry bytes; read only official training CSV, never test CSV."""
     directory=Path(config['split_directory'])
@@ -238,7 +254,7 @@ def verify_run(run, checkpoint, validation, evidence, original):
     require(best==status['best_epoch']==saved['checkpoint_epoch'],'Checkpoint selection differs from original best epoch')
     require(abs(history.macro_f1.max()-metrics['macro_f1'])<1e-12,'Selected checkpoint score mismatch')
     if (run/'subgroup_metrics.json').is_file():
-        require(read(run/'subgroup_metrics.json')==subgroup_metrics(predictions), 'Saved subgroup metrics mismatch')
+        verify_metric_report(read(run/'subgroup_metrics.json'),subgroup_metrics(predictions))
     return predictions,hashes,status
 
 
@@ -288,6 +304,16 @@ def verify_external_reports(run):
 
 def analyze_reports(run, output, config):
     output=fresh(output)
+    try:
+        return _analyze_reports(run,output,config)
+    except Exception as exc:
+        save(output/'run_status.json',{'status':'blocked_or_failed',
+            'reason':f'{type(exc).__name__}: {exc}','analysis_completed':False,
+            'training_performed':False,'test_text_read':False,'test_evaluated':False})
+        raise
+
+
+def _analyze_reports(run, output, config):
     validation,near,evidence=validation_inputs(config)
     provenance=verify_external_reports(run)
     predictions,hashes,status=verify_run(run,None,validation,evidence,config)

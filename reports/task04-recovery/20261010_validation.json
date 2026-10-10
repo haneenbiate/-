@@ -1,0 +1,22 @@
+{
+  "reported_colab_exit_code": 2,
+  "reported_colab_cause": "unconfirmed: no stderr supplied",
+  "original_analysis_local_reproduction": "completed",
+  "patched_analysis_local_reproduction": "completed",
+  "new_task04_tests_passed": 67,
+  "task04_tests_duration_seconds": 8.39,
+  "verified_defect": "exact subgroup float equality rejects last-bit differences; now 1e-12 metric-only tolerance",
+  "checkpoint_reloaded_locally": false,
+  "perturbed_inference_performed": false,
+  "original_baseline_reports_modified": false,
+  "source_sha256": {
+    "nasn/task04.py": "8f1b2c0a66703654c8d24cfc367523e5491a973a5f18ec5a8995abb2d02a2bef",
+    "nasn/orthography.py": "45e5fbafb084b03b24ddaef53d63cee437afdca9ced71afeeb9957ca3eb93c09"
+  },
+  "actual_clean_metrics": {
+    "accuracy": 0.7652451175767238,
+    "macro_f1": 0.7504280517795497,
+    "weighted_f1": 0.7645983584344926,
+    "n": 2509
+  }
+}

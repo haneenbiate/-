@@ -203,6 +203,32 @@ def test_clean_to_wrong_and_correction_directions():
     assert result['wrong_to_wrong_flip_rate']==pytest.approx(1/3)
 
 
+def test_metric_reports_tolerate_roundoff_but_not_changed_results():
+    from nasn.task04 import verify_metric_report
+    actual=[{'value':'FALSE','n':2049,'macro_f1':0.75,'weighted_f1':0.7475,'status':'computed'}]
+    saved=json.loads(json.dumps(actual));saved[0]['weighted_f1']=float(np.nextafter(0.7475,1.))
+    verify_metric_report(saved,actual)
+    saved[0]['weighted_f1']+=1e-5
+    with pytest.raises(DataValidationError,match='weighted_f1'):verify_metric_report(saved,actual)
+    saved=json.loads(json.dumps(actual));saved[0]['n']=2048
+    with pytest.raises(DataValidationError,match='metadata'):verify_metric_report(saved,actual)
+    saved=json.loads(json.dumps(actual));saved[0]['value']='TRUE'
+    with pytest.raises(DataValidationError,match='metadata'):verify_metric_report(saved,actual)
+    saved=json.loads(json.dumps(actual));saved[0]['macro_f1']=float('nan')
+    with pytest.raises(DataValidationError,match='macro_f1'):verify_metric_report(saved,actual)
+
+
+def test_analysis_failure_preserves_diagnostic_status(tmp_path,monkeypatch):
+    import nasn.task04 as module
+    def invalid(config):raise DataValidationError('Fixture: manifest checksum mismatch')
+    monkeypatch.setattr(module,'validation_inputs',invalid)
+    output=tmp_path/'analysis'
+    with pytest.raises(DataValidationError,match='checksum'):module.analyze_reports(tmp_path/'run',output,{})
+    status=json.loads((output/'run_status.json').read_text())
+    assert status['status']=='blocked_or_failed' and 'checksum mismatch' in status['reason']
+    assert status['analysis_completed'] is False and status['training_performed'] is False
+
+
 @pytest.fixture
 def baseline(tmp_path,validation):
     """Complete synthetic evidence, never claimed as an actual model experiment."""

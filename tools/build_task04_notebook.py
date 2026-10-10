@@ -23,7 +23,22 @@ BASELINE_RUN_ID = 'marbert-v1-20261009T213143Z-be8b8811'
 RUN_ID = 'orthography-v1-' + datetime.datetime.now(datetime.timezone.utc).strftime('%Y%m%dT%H%M%SZ') + '-' + uuid.uuid4().hex[:8]
 REVIEWS = None  # optional completed full-text human review CSV in Drive; never auto-approved
 INFERENCE_BATCH_SIZE = 4  # lower to 2 or 1 in a NEW run after OOM
-def call(args, **kwargs):return subprocess.run([str(x) for x in args],check=True,**kwargs)
+def call(args, **kwargs):
+    command=[str(x) for x in args]
+    capture=not any(key in kwargs for key in ['stdout','stderr','capture_output'])
+    if capture:kwargs.update(capture_output=True,text=True)
+    result=subprocess.run(command,check=False,**kwargs)
+    if capture and result.stdout:print(result.stdout,end='')
+    if result.returncode:
+        if result.stderr:print(result.stderr)
+        root=globals().get('ROOT')
+        if root is not None:
+            failure=root/('command-failure-'+uuid.uuid4().hex[:8]+'.json')
+            failure.write_text(json.dumps({{'command':command,'exit_code':result.returncode,
+                'stdout':result.stdout,'stderr':result.stderr}},indent=2)+'\\n')
+            print('Failure details saved:',failure)
+        raise subprocess.CalledProcessError(result.returncode,command,output=result.stdout,stderr=result.stderr)
+    return result
 assert not REPO.exists(), 'Use a fresh runtime instead of overwriting a checkout'
 call(['git','clone','--no-checkout','https://github.com/haneenbiate/-.git',REPO],env={{**os.environ,'GIT_TERMINAL_PROMPT':'0'}})
 call(['git','-C',REPO,'checkout','--detach',CODE_REF])
@@ -73,7 +88,12 @@ if not TRAIN.exists():
 assert hashlib.sha256(TRAIN.read_bytes()).hexdigest()==EXPECTED_SHA
 BASELINE_REPORTS=REPO/'reports/task03b'/BASELINE_RUN_ID
 call([PY,'-m','nasn.task04','prepare','--output',ROOT/'benchmark'],cwd=REPO,env=ENV)
-call([PY,'-m','nasn.task04','analyze','--run',BASELINE_REPORTS,'--output',ROOT/'saved-prediction-analysis'],cwd=REPO,env=ENV)
+''')
+code('''# Re-run this analysis cell independently; preserve any earlier attempt.
+ANALYSIS_DIR=ROOT/'saved-prediction-analysis'
+if ANALYSIS_DIR.exists():
+    ANALYSIS_DIR=ROOT/('saved-prediction-analysis-'+uuid.uuid4().hex[:8])
+call([PY,'-m','nasn.task04','analyze','--run',BASELINE_REPORTS,'--output',ANALYSIS_DIR],cwd=REPO,env=ENV)
 ''')
 md('''The full-text semantic review queue is in the durable `benchmark/` folder. It is initially pending and stratifies class, dialect, sarcasm, rule/intensity and lexical negation. Review must check polarity, scope, entities and emphasis. Invalid/ambiguous examples are excluded; individual valid decisions never approve unreviewed examples. A run without `REVIEWS` measures **provisional candidate instability**, not confirmed meaning-preserving robustness.
 ''')
@@ -92,7 +112,7 @@ print(json.dumps(status,indent=2))
 md('''Checkpoint/model input hashes, full original/perturbed texts, predictions and review decisions stay in Drive. Export only reviewed lightweight reports to GitHub. The following allowlist excludes weights and raw/full tweet copies; CSV prediction/manifest exports retain IDs, probabilities and logged spans while dropping full text. Population-with-noop and applicable-only summaries are separate; mixed population scores remain provisional. Bootstrap CIs use paired original IDs and tokenization associations are descriptive.
 ''')
 code('''LIGHTWEIGHT=ROOT/'lightweight_reports'
-call([PY,'-m','nasn.task04','publish','--preparation',ROOT/'benchmark','--analysis',ROOT/'saved-prediction-analysis','--output',LIGHTWEIGHT],cwd=REPO,env=ENV)
+call([PY,'-m','nasn.task04','publish','--preparation',ROOT/'benchmark','--analysis',ANALYSIS_DIR,'--output',LIGHTWEIGHT],cwd=REPO,env=ENV)
 allowed=['run_status.json','evidence.json','methodology.md','robustness_metrics.csv','robustness_table.tex','tokenization_associations.csv','perturbed_predictions.csv','perturbation_manifest.csv','clean_predictions.csv']
 csv_cleaner="import pandas as pd,sys; f=pd.read_csv(sys.argv[1],dtype={'sarcasm':str,'row_id':str},keep_default_na=False); f.drop(columns=['original_text','perturbed_text'],errors='ignore').to_csv(sys.argv[2],index=False)"
 inference_reports=LIGHTWEIGHT/'inference';inference_reports.mkdir()
