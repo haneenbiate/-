@@ -1,0 +1,11 @@
+{
+  "resolved_consensus_n": 191,
+  "eligible_consensus_n": 191,
+  "human_negation_presence_counts": {
+    "no": 191
+  },
+  "negation_containing_eligible_consensus_n": 0,
+  "review_complete": false,
+  "robustness_metrics_computed": false,
+  "all_213_disagreements_require_human_adjudication": true
+}

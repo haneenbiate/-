@@ -1,0 +1,101 @@
+{
+  "source_sha256": {
+    "a": "9347e63fe29952ee7e831160768c24507a1c5747eb6e21f2eb5af8a83e5bbfd9",
+    "b": "7ad311527ab1506fd74b92744015d5e24c4577990579171676850366bda94464",
+    "llm": "c25f144d98578c5c578de12189b73ba603dd270a0e16b9867b13344761d52809"
+  },
+  "source_flags": {
+    "a": {
+      "explicit_ai_assistance_disclaimer_n": 0,
+      "explicit_not_independent_human_disclaimer_n": 0,
+      "unique_timestamp_n": 1,
+      "reviewer_identifier_n": 1,
+      "negation_uncertain_n": 1,
+      "negation_effect_uncertain_n": 19
+    },
+    "b": {
+      "explicit_ai_assistance_disclaimer_n": 0,
+      "explicit_not_independent_human_disclaimer_n": 0,
+      "unique_timestamp_n": 1,
+      "reviewer_identifier_n": 1,
+      "negation_uncertain_n": 0,
+      "negation_effect_uncertain_n": 102
+    },
+    "llm": {
+      "explicit_ai_assistance_disclaimer_n": 0,
+      "explicit_not_independent_human_disclaimer_n": 0,
+      "unique_timestamp_n": 404,
+      "reviewer_identifier_n": 1,
+      "negation_uncertain_n": 5,
+      "negation_effect_uncertain_n": 7
+    }
+  },
+  "worksheet_a_ai_review_title_flag": true,
+  "all_workbooks_same_creator_metadata": true,
+  "llm_declared_identifier": [
+    "llm-annotator (claude-opus-5-5)"
+  ],
+  "llm_model_and_revision_verified": false,
+  "llm_prompt_available": false,
+  "llm_sampling_settings_available": false,
+  "private_audit_artifact_sha256": {
+    "agreement_contingency.csv": "f1f45405e5789eb553a77c94c7c875884f812b4297fb55febf2cde1f18344ce3",
+    "decision_distributions.csv": "73b2298aee8fa499b8499d53a2d7c6f34db4b9747f2f3173cfb9d428b92ebbb5",
+    "disagreement_summary.csv": "f71aaa5315fef76ddf19b0f7cd33e2df550414bd2ba145682cbbcb6a0ea9c1d6",
+    "evidence.json": "843a3e5ef8fb8b72483508cfe46803fbe24647ce5f2dbea178cb22b99b7d06a4",
+    "inspection_queue.csv": "4de0347c1432bbd299f25535bba9c13b41be335c657721191bedcb7bced505bf",
+    "inspection_queue.html": "32b08e0364f8c2b7f449ef73a817d5fb481c22360008014d1f15454a5771964b",
+    "inspection_source_a.csv": "af86123d4500d629b47341869bf8734370e4faa267129de77669a18d2685540a",
+    "inspection_source_b.csv": "131c5fb5d9549bdfa341f2173d388ec1dc462e6f1ec625a590a1ed15b8ca6931",
+    "methodology.md": "0c9e1461b712bc5c617d923c370e92dd2989b0d2b9cd5ecc89bad96d128f3968",
+    "negation_heuristic_comparison.csv": "48ec34a20345895339e541fb58e6f4a2e70c922478d22d1587c40a86bb9b9f61",
+    "original_a.xlsx": "9347e63fe29952ee7e831160768c24507a1c5747eb6e21f2eb5af8a83e5bbfd9",
+    "original_b.xlsx": "7ad311527ab1506fd74b92744015d5e24c4577990579171676850366bda94464",
+    "original_llm.xlsx": "c25f144d98578c5c578de12189b73ba603dd270a0e16b9867b13344761d52809",
+    "pairwise_inspection_flags.csv": "d2aa4cab36a1c90ffa4e60dd4229ebee90615fbb139e1eb1f90f4687013511e9",
+    "run_status.json": "93aff198c55cc8df5fd3fe222514daed98c069d94b6b29a3e9667f428fa59ed7",
+    "submitted_a.csv": "ef61f608074cc50fc73e95ee48d22fd5085bd70cb0fa4fc5e1c9c7c16234eead",
+    "submitted_annotation_agreement.csv": "48527d9c76fecfdcf2ffdbc4179a7df2c2309aeaa16428e38d1cbeb3a693f343",
+    "submitted_annotation_agreement.tex": "39b8c989b200f891c19e20d0d7c959785f7d70e739a683faf127cfd8e8de18dd",
+    "submitted_b.csv": "eab6e1663638f34f09f36dafa4b6ed043671bda59b6b71d6988bf5174658709e",
+    "submitted_coverage.csv": "80f6a48f6e4ffd2fbce8bd128079855acaaae7672051aec383b097c71858c2da",
+    "submitted_llm.csv": "1c859d330f5bfaaac8fa81148cf64926f77073c56a05a9fda0ca714335e630a2"
+  },
+  "review_package_registry_sha256": "ba0d834fe77efa75d7f347f07794ac0cbd0b51ff4ecb33c2531e423027c44aff",
+  "versions": {
+    "python": "3.12.14",
+    "pandas": "2.2.3",
+    "numpy": "2.3.5",
+    "scikit-learn": "1.8.0",
+    "torch": "2.8.0+cpu",
+    "transformers": "4.57.3",
+    "huggingface-hub": "0.36.0",
+    "tokenizers": "0.22.1",
+    "safetensors": "0.7.0",
+    "pytest": "9.1.1",
+    "openpyxl": "3.1.5"
+  },
+  "code_sha256": {
+    "review_workbooks.py": "e2fb9afdfed927120975c7ecdc914dad1f038715e40a3e1fe328840577403a89",
+    "task05.py": "362acd6de8ea63e44295761636f16ccb34b6f17a368b6810acd96b0be911c366"
+  },
+  "source_declaration": {
+    "source_roles": {
+      "a": "human_user_declared",
+      "b": "human_user_declared",
+      "llm": "automated_llm"
+    },
+    "declaration_basis": "User supplied corrected A/B workbooks on 2026-10-11, stated the previous files had a typographical/upload error, and requested continuation treating corrected A/B as the requested human reviews. Identity and blinding have not been independently verified.",
+    "source_sha256": {
+      "a": "9347e63fe29952ee7e831160768c24507a1c5747eb6e21f2eb5af8a83e5bbfd9",
+      "b": "7ad311527ab1506fd74b92744015d5e24c4577990579171676850366bda94464",
+      "llm": "c25f144d98578c5c578de12189b73ba603dd270a0e16b9867b13344761d52809"
+    },
+    "llm_adjudication_allowed": false
+  },
+  "source_declaration_sha256": "aa10d09ab0ef6e981d4f0e2a1352e00e105e76db4f602527dca2fb5c0b07c4e7",
+  "human_provenance_verified": false,
+  "test_text_read": false,
+  "test_evaluated": false,
+  "human_confirmed_n": 191
+}

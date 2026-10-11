@@ -1,0 +1,11 @@
+{
+  "status": "adjudication_download_prepared",
+  "assigned_n": 213,
+  "human_decisions_generated": false,
+  "model_predictions_in_package": false,
+  "zip_sha256": "fe86fbb37acb2285ddf541a2301bfb6b023987b7960556824928bee6d855dd8e",
+  "assignments_sha256": "7070bb942e6c8089e422ca12ca5805fcd47d7dfd255f9d3d2a2ad8102d975781",
+  "source_manifest_sha256": "9cd762e45d5629fd3e8433fcbdfc00a247ae5a16f849b375c22416d6a14ce42a",
+  "test_text_read": false,
+  "test_evaluated": false
+}

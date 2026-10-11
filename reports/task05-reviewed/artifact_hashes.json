@@ -1,0 +1,22 @@
+{
+  "adjudication_assignment.csv": "7070bb942e6c8089e422ca12ca5805fcd47d7dfd255f9d3d2a2ad8102d975781",
+  "adjudication_download.json": "16a388ad72f88c790e047fd9370a2f3f47b5de55ffd0100e7350b1264fb404dc",
+  "agreement.csv": "17ecf427a6fcb0e8c91e43ddfa14af6c328290a74f8650aa5760a2604f52e715",
+  "agreement_contingency.csv": "f1f45405e5789eb553a77c94c7c875884f812b4297fb55febf2cde1f18344ce3",
+  "consensus_summary.json": "85cc2a3b1fae4f19d65535aa010e55d48cc0605c83dc21389b899d85f1d95382",
+  "correction_audit.json": "ab7d36c73007232ac4d66dc99c2e9010b225a87cea03c1d28ec6026414309230",
+  "coverage_by_stratum.csv": "8eb1adf2103c0dd289871ef07ea62d5a1fa3ebe32968fcfb3c326110f81141c2",
+  "decision_distributions.csv": "73b2298aee8fa499b8499d53a2d7c6f34db4b9747f2f3173cfb9d428b92ebbb5",
+  "development_validation.json": "01e5fe2db0fc8be610328327ed8597cba3ff3b6dec76dc5d29f55c2df5cb148e",
+  "disagreement_summary.csv": "f71aaa5315fef76ddf19b0f7cd33e2df550414bd2ba145682cbbcb6a0ea9c1d6",
+  "evidence.json": "7cea5e9036723920acd788594924c6de8c8a7a6449934dd2ae843945db2ffece",
+  "human_review_provenance.json": "aa10d09ab0ef6e981d4f0e2a1352e00e105e76db4f602527dca2fb5c0b07c4e7",
+  "methodology.md": "0c9e1461b712bc5c617d923c370e92dd2989b0d2b9cd5ecc89bad96d128f3968",
+  "negation_heuristic_comparison.csv": "48ec34a20345895339e541fb58e6f4a2e70c922478d22d1587c40a86bb9b9f61",
+  "pairwise_inspection_flags.csv": "d2aa4cab36a1c90ffa4e60dd4229ebee90615fbb139e1eb1f90f4687013511e9",
+  "review_coverage.json": "49be94ed52e5af91e5346f8c8ca96d1a97a93b77138c72446569ca50ccfb2b1e",
+  "run_status.json": "93aff198c55cc8df5fd3fe222514daed98c069d94b6b29a3e9667f428fa59ed7",
+  "submitted_annotation_agreement.csv": "48527d9c76fecfdcf2ffdbc4179a7df2c2309aeaa16428e38d1cbeb3a693f343",
+  "submitted_annotation_agreement.tex": "39b8c989b200f891c19e20d0d7c959785f7d70e739a683faf127cfd8e8de18dd",
+  "submitted_coverage.csv": "80f6a48f6e4ffd2fbce8bd128079855acaaae7672051aec383b097c71858c2da"
+}

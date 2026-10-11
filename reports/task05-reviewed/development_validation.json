@@ -1,0 +1,21 @@
+{
+  "verified_at_utc": "2026-10-11T08:38:33.638014+00:00",
+  "full_suite_tests_passed": 181,
+  "full_suite_tests_failed": 0,
+  "full_suite_tests_skipped": 0,
+  "test_duration_seconds": 30.2,
+  "cpu_only_adjudication_export_completed": true,
+  "cpu_package_zip_matches_full_environment": true,
+  "xlsx_source_role_and_hash_tests_passed": 10,
+  "selected_checkpoint_accessible_locally": false,
+  "completed_task04_perturbed_predictions_accessible_locally": false,
+  "training_performed": false,
+  "test_text_read": false,
+  "adjudication_colab_executed": false,
+  "current_code_sha256": {
+    "nasn/review_workbooks.py": "e2fb9afdfed927120975c7ecdc914dad1f038715e40a3e1fe328840577403a89",
+    "tests/test_review_workbooks.py": "ee9b9beb10155755e2eaca4f025246a31b98970136fc7a433220e22199a7c929",
+    "requirements-reviews-xlsx.txt": "3b106160e20f9c6d898c73e86e46bcbb99e205cd6e20a60ab0d94355489d1056",
+    "tools/build_adjudication_notebook.py": "47b841f440fa71241e150008b878d93afc9cd06c55e3eeaee8abff2b5f313ef6"
+  }
+}

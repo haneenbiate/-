@@ -1,0 +1,8 @@
+field,different_n,paired_n,interpretation
+semantic_validity,22,404,categorical disagreement
+sentiment_preserved,21,404,categorical disagreement
+negation_present,33,404,categorical disagreement
+negation_affects_sentiment,134,404,categorical disagreement
+negation_cue,118,404,literal scope wording difference; needs inspection
+original_negation_scope,203,404,literal scope wording difference; needs inspection
+perturbed_negation_scope,203,404,literal scope wording difference; needs inspection

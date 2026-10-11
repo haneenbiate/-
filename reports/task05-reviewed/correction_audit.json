@@ -1,0 +1,21 @@
+{
+  "superseded_workbook_sha256": {
+    "a": "81dd2a80432905f1cddeceefc38c2131fc35ce8ce7f3cdca8eee3cb5cdda9edd",
+    "b": "93aa61f45c0acc9aefdfcf5d2ecc6bbc0d903faab0c5570bf76a194c5d5328dd"
+  },
+  "accepted_corrected_workbook_sha256": {
+    "a": "9347e63fe29952ee7e831160768c24507a1c5747eb6e21f2eb5af8a83e5bbfd9",
+    "b": "7ad311527ab1506fd74b92744015d5e24c4577990579171676850366bda94464"
+  },
+  "changed_cell_counts": {
+    "a": {},
+    "b": {
+      "linguistic_notes": 404
+    }
+  },
+  "categorical_decisions_changed": false,
+  "immutable_text_and_ids_changed": false,
+  "a_ai_review_sheet_title_retained": true,
+  "role_assignment_basis": "User described corrected A/B as the requested human reviews; identities and independence not independently verified.",
+  "original_uploads_and_baseline_evidence_preserved": true
+}

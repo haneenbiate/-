@@ -1,0 +1,28 @@
+{
+  "status": "user_declared_human_reviews_audited_pending_adjudication",
+  "queue_n": 404,
+  "submitted_a_n": 404,
+  "submitted_b_n": 404,
+  "submitted_llm_n": 404,
+  "categorical_disagreement_n": 150,
+  "literal_scope_difference_n": 203,
+  "inspection_queue_n": 213,
+  "fully_matching_records_n": 191,
+  "human_provenance_verified": false,
+  "human_confirmed_n": 191,
+  "human_review_completed": false,
+  "llm_used_for_adjudication": false,
+  "robustness_metrics_computed": false,
+  "checkpoint_loaded": false,
+  "training_performed": false,
+  "test_text_read": false,
+  "test_evaluated": false,
+  "remaining": [
+    "Complete explicit third-human adjudication for all flagged cases",
+    "Supply LLM model/version/prompt/settings provenance",
+    "Supply completed Task 04 perturbed predictions and verified tokenizer access"
+  ],
+  "human_source_user_declared": true,
+  "human_consensus_eligible_n": 191,
+  "source_provenance_basis": "user_declaration_not_independent_identity_verification"
+}

@@ -1,0 +1,14 @@
+{
+  "source_roles": {
+    "a": "human_user_declared",
+    "b": "human_user_declared",
+    "llm": "automated_llm"
+  },
+  "declaration_basis": "User supplied corrected A/B workbooks on 2026-10-11, stated the previous files had a typographical/upload error, and requested continuation treating corrected A/B as the requested human reviews. Identity and blinding have not been independently verified.",
+  "source_sha256": {
+    "a": "9347e63fe29952ee7e831160768c24507a1c5747eb6e21f2eb5af8a83e5bbfd9",
+    "b": "7ad311527ab1506fd74b92744015d5e24c4577990579171676850366bda94464",
+    "llm": "c25f144d98578c5c578de12189b73ba603dd270a0e16b9867b13344761d52809"
+  },
+  "llm_adjudication_allowed": false
+}

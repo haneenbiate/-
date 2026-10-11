@@ -155,3 +155,10 @@ adjudication, integrity-checked imports and saved-prediction analysis. Actual
 [Task 05 evidence](reports/task05) is at **prepared review**: no human decisions
 or confirmed robustness results are claimed. Full-text exports remain in private
 `runs/` storage; model training and official test evaluation are prohibited.
+
+Corrected human reviews were subsequently supplied: see
+[agreement and adjudication instructions](docs/task05_reviewed.md) and
+[text-free reviewed evidence](reports/task05-reviewed). Human agreement covers
+all 404 assignments; 191 have eligible consensus and 213 require third-human
+adjudication. The LLM is analyzed separately. Confirmed robustness evaluation
+remains blocked by incomplete adjudication and unavailable Task 04 predictions.
