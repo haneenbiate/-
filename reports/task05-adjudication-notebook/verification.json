@@ -1,0 +1,19 @@
+{
+  "status": "notebook_prepared_local_cpu_export_verified_colab_unexecuted",
+  "code_ref": "d3658b4da959913530f77a26f6b3aa115b849493",
+  "assigned_n": 213,
+  "human_decisions_generated": false,
+  "model_predictions_in_package": false,
+  "zip_sha256": "fe86fbb37acb2285ddf541a2301bfb6b023987b7960556824928bee6d855dd8e",
+  "notebook_sha256": "8f84bd3e577b94aa2d65d22e9be8e6e36eedd09ef29621649d6f627b15c2b79e",
+  "selected_checkpoint_loaded": false,
+  "training_performed": false,
+  "test_text_read": false,
+  "test_evaluated": false,
+  "colab_execution_claimed": false,
+  "notebook_schema_and_ast_tests_passed": 1,
+  "full_suite_tests_passed": 182,
+  "full_suite_tests_failed": 0,
+  "full_suite_tests_skipped": 0,
+  "test_duration_seconds": 25.39
+}
