@@ -1,0 +1,13 @@
+{
+  "source_registry_sha256": "62d0c3fdc81728d58a499d119368564daffeb5c03d86b36460af65360914a2cf",
+  "audit_code_sha256": "2548811271724daf18f5b3566dd63cb008df0f5446ca3afa78e4419d664f7244",
+  "original_decisions_used": true,
+  "adjudication_used_for_agreement": false,
+  "missing_provenance": [
+    "authenticated distinct people",
+    "independent collection/submission records",
+    "blinding attestations",
+    "actual AI assistance disclosure beyond user declaration"
+  ],
+  "no_fabricated_identities": true
+}

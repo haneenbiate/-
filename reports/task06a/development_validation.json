@@ -1,0 +1,24 @@
+{
+  "pytest": {
+    "passed": 276,
+    "failed": 0,
+    "skipped": 0,
+    "duration_seconds": 34.53
+  },
+  "actual_selected_tokenizer_strategy_input_rows": 62350,
+  "exact_inverse_checks_passed": 62350,
+  "explicit_task04_text_restoration_exercised": true,
+  "published_original_annotation_replay_exercised": true,
+  "historical_B0_confirmed_point_metrics_match_Task05": true,
+  "new_B1_B4_classifier_metrics": false,
+  "cohort_counts": {
+    "source_human_confirmed": 394,
+    "source_reviewed_excluded": 10,
+    "source_unreviewed_provisional": 9557
+  },
+  "private_blank_normalization_review_queue_rows": 45,
+  "training_performed": false,
+  "official_test_text_read": false,
+  "official_test_evaluated": false,
+  "notebook_colab_execution": "not_run_here"
+}

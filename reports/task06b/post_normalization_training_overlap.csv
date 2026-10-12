@@ -1,0 +1,11 @@
+strategy,kind,exact_training_overlap,canonical_training_overlap
+B0,clean,0,0
+B0,perturbed,0,0
+B1,clean,0,0
+B1,perturbed,0,0
+B2,clean,0,0
+B2,perturbed,0,0
+B3,clean,0,0
+B3,perturbed,0,0
+B4,clean,0,0
+B4,perturbed,0,0

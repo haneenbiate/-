@@ -1,0 +1,45 @@
+{
+  "source": "original_pre_adjudication_A_B_and_explicit_adjudicator_records",
+  "source_roles": "user_declared_human",
+  "independence_status": "unverified",
+  "authenticated_distinct_people": false,
+  "blinding_verified": false,
+  "distinct_recorded_identifiers": true,
+  "recorded_completion_counts": {
+    "A": 404,
+    "B": 404,
+    "ADJ": 213
+  },
+  "unique_timestamp_counts": {
+    "A": 1,
+    "B": 1,
+    "ADJ": 213
+  },
+  "unique_rationale_counts": {
+    "A": 404,
+    "B": 387,
+    "ADJ": 213
+  },
+  "source_workbook_sha256": {
+    "a": "9347e63fe29952ee7e831160768c24507a1c5747eb6e21f2eb5af8a83e5bbfd9",
+    "b": "7ad311527ab1506fd74b92744015d5e24c4577990579171676850366bda94464",
+    "llm": "c25f144d98578c5c578de12189b73ba603dd270a0e16b9867b13344761d52809"
+  },
+  "original_file_sha256": {
+    "independent_reviewer_a.csv": "ef61f608074cc50fc73e95ee48d22fd5085bd70cb0fa4fc5e1c9c7c16234eead",
+    "independent_reviewer_b.csv": "eab6e1663638f34f09f36dafa4b6ed043671bda59b6b71d6988bf5174658709e",
+    "adjudication_decisions.csv": "2a2d1b524479feba87320d6d951ee7518ff1c3f2e8e64575839d19133334c896",
+    "resolved_decisions.csv": "1d44fb77a5c4cce6ee5b11cc330128bddef560ee57aa807935d57c6c3a62a28b"
+  },
+  "private_decision_registry_sha256": "3d3a317a45b367f1992e137963f4c546065078bda573633ece63164a1fdc56a9",
+  "review_package_registry_sha256": "ba0d834fe77efa75d7f347f07794ac0cbd0b51ff4ecb33c2531e423027c44aff",
+  "worksheet_a_ai_review_title_flag": true,
+  "all_workbooks_same_creator_metadata": true,
+  "interpretation": "Metadata flags and bulk timestamps neither prove nor disprove independent human review. No authenticated identities, isolated submission logs or blinding attestations are present.",
+  "free_text_export": "SHA256 of exact UTF-8 cells; literal equality only, not semantic equivalence",
+  "human_decisions_modified": false,
+  "llm_used_for_adjudication": false,
+  "test_text_read": false,
+  "test_evaluated": false,
+  "export_code_sha256": "2548811271724daf18f5b3566dd63cb008df0f5446ca3afa78e4419d664f7244"
+}

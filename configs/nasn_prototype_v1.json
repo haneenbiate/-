@@ -1,0 +1,23 @@
+{
+  "version": "nasn-prototype-v1",
+  "seed": 42,
+  "development_only": true,
+  "strategies": ["B0", "B1", "B2", "B3", "B4"],
+  "unicode_normalization": "NFC",
+  "repeat_minimum": 3,
+  "repeat_target": 1,
+  "scope_following_arabic_tokens": 3,
+  "clause_boundaries": ".!?؟؛،\n\r",
+  "neutral_repeat_allowlist": ["اليوم", "الوقت", "الناس", "البيت", "الشارع", "كتاب", "مكان", "صورة", "موقع", "برنامج", "فيلم", "كلام"],
+  "protected_sentiment_words": ["جيد", "جيدة", "ممتاز", "ممتازة", "رائع", "رائعة", "سيئ", "سيئة", "سيء", "سعيد", "سعيدة", "حزين", "حزينة", "أحب", "احب", "أكره", "اكره", "حب", "كره", "جميل", "جميلة", "قبيح", "أفضل", "افضل", "أسوأ", "اسوأ", "حلو", "زين", "تعبان"],
+  "protected_expressions": ["لا بأس", "غير جيد", "ليس سيئا", "ما شاء الله", "يا سلام", "لا أطيق", "بدون شك"],
+  "alef_mapping": false,
+  "remove_diacritics": false,
+  "stemming": false,
+  "stopword_removal": false,
+  "max_length": 128,
+  "bootstrap_repetitions": 2000,
+  "minimum_stratum_size": 30,
+  "probability_comparison_tolerance": 0.00001,
+  "selection_basis": "Fixed linguistic prototype choices. No label, prediction, metric, training corpus frequency or test information is an input to normalization. Post-hoc development evaluation only; no parameter search."
+}

@@ -1,0 +1,10 @@
+{
+  "source_preparation_registry_sha256": "061011e04199bbacdbf8e49b699ff2d1bec788ee8fa8fa10b9ffc24c46f54070",
+  "actual_task04_inference_registry_sha256": "3d94c5d680d180e504fe4b8a89fa06473de1f35cc6ce8e51603e7e5ab53368cc",
+  "confirmed_manifest_sha256": "05669b06ed74cdbb3719642b9088478d47a9a5bea9d42a7f3eb2b0a929e26884",
+  "publisher_sha256": "66c8d4c0c99166917a67e60ac44f45960e64d2336b7cf466b6c4cc69f532db3a",
+  "raw_text_published": false,
+  "weights_published": false,
+  "private_new_review_queue_sha256": "20bac1b1e1c675deb6ff633578994968c1fa0bed11f2232abdf214456dcdc930",
+  "new_human_decisions_generated": false
+}

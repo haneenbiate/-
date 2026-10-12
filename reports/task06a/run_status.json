@@ -1,0 +1,11 @@
+{
+  "status": "annotation_quality_audit_completed_provenance_unverified",
+  "paired_assignments": 404,
+  "conflicts": 213,
+  "categorical_conflicts": 150,
+  "scope_wording_only_conflicts": 63,
+  "eligible_cases_user_declared_human": 394,
+  "human_independence_verified": false,
+  "training_performed": false,
+  "test_evaluated": false
+}

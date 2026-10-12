@@ -1,0 +1,17 @@
+{
+  "B0_historical_paired_metrics.csv": "00ca971098453d0efa4c4ec8dfaba12b3648ec8929674eb5ac1ceb90f6dfe839",
+  "B3_B4_guard_effect.csv": "77f0ebad1a5abd5d356aa371ee9a1a77213025706da47ce9032725827f31219d",
+  "blocker_report.json": "36b549742286b454695279ee0f85ae92244180d7fb46d908634ff78f7b455dde",
+  "character_token_audit.csv": "8c830123f4ebaf565ce4477a5f8a38684f08479b7d384f67860586228ee474f1",
+  "comparison_table.csv": "3281db40ebc184c437217c8070872307dc74301988814210b8082f8f0c6aba04",
+  "comparison_table.tex": "cce753ab3f0f3d55b6015b8224d12da761fa9ef1cb3d139553f69fe589dbcb88",
+  "development_collisions.csv": "94ca4968232f0048b94b1e718b1ac3c1337dd7805ded6657b06e1b23a4ea86e3",
+  "development_validation.json": "dcab72bbc66fa5369ae474cdee1d7680720ca0eda7c5e8a6722c5cb2cd0409c4",
+  "evidence.json": "c308daabc0774e2f25de50080b063ecf9c39c0bbf971229a4070b3353c2ac4ae",
+  "methodology.md": "54cfb09d9c82f6b80d0d2facd2b34746752dc8e050b0ae697ed7105f3e54ff6a",
+  "normalization_manifest.csv.gz": "3cdb1e19973aa71f730b3a27a32a1dd92a83d80e240cda96a8a8df3d4e0b81a2",
+  "normalization_rules.json": "dd749f4281a6be2f717fdb96460850a8d241946061c7b1052cafc97f3ae9d7eb",
+  "post_normalization_training_overlap.csv": "f1da2512e0e4831359815b37676ebd6a66de2c4638c39ff715c26582cc60bc7d",
+  "publication.json": "81fcb5bc037a87541d064ec2b3f625effcff7b0834b71dc487a850fd72740b2e",
+  "run_status.json": "e20447bda3b961bd7b68651c7d4f180d11aa7b81c56c9765334d57a93f091787"
+}

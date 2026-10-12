@@ -1,0 +1,9 @@
+dimension,paired_n,observed_agreement,disagreement_n,expected_chance_agreement,cohen_kappa,kappa_status,interpretation
+semantic_validity,404,0.9455445544554455,22,0.946034702480149,-0.009082652134423164,computed,nominal_categories
+sentiment_preserved,404,0.948019801980198,21,0.9304234878933437,0.25290595280028183,computed,nominal_categories
+negation_present,404,0.9183168316831684,33,0.4996507695323988,0.8367476887283414,computed,nominal_categories
+negation_affects_sentiment,404,0.6683168316831684,134,0.3869289775512204,0.4589808420694962,computed,nominal_categories
+negation_cue,404,0.7079207920792079,118,,,not_applicable_free_text,literal_cell_equality_only_not_semantic_agreement
+original_negation_scope,404,0.4975247524752475,203,,,not_applicable_free_text,literal_cell_equality_only_not_semantic_agreement
+perturbed_negation_scope,404,0.4975247524752475,203,,,not_applicable_free_text,literal_cell_equality_only_not_semantic_agreement
+linguistic_notes,404,0.0,404,,,not_applicable_free_text,literal_cell_equality_only_not_semantic_agreement

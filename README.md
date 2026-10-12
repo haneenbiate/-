@@ -181,4 +181,14 @@ robustness results](docs/task05_robustness_results.md) and
 metrics, human-negation strata, near-duplicate sensitivity and matched tatweel
 intensity/token comparisons. No primary Macro-F1 drop interval excludes zero.
 All predictions come from the existing selected baseline; no retraining or
-official test evaluation occurs. NASN remains unimplemented.
+official test evaluation occurs. NASN had not been implemented at Task 05 completion.
+
+[Task 06](docs/task06.md) now audits the original independent-review records and
+all 213 adjudications. Reviewer identity/independence remains explicitly unverified.
+The deterministic B0–B4 NASN prototype has reversible logs, negation/sentiment
+guards and actual selected-tokenizer audits. [Annotation quality](reports/task06a)
+and [development preparation/comparison tables](reports/task06b) preserve all prior
+evidence. Historical B0 scores are available; new B1–B4 classifier metrics remain
+blocked by missing selected checkpoint/GPU locally. The pinned
+[Colab GPU notebook](notebooks/task06_nasn_colab.ipynb) performs inference with the
+existing trained checkpoint only. No NASN robustness improvement is claimed.

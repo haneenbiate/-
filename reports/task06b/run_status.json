@@ -1,0 +1,14 @@
+{
+  "status": "prepared_character_token_audit_complete_model_inference_pending",
+  "clean_original_ids": 2509,
+  "applicable_perturbed_variants": 9961,
+  "source_human_confirmed_variants": 394,
+  "source_unreviewed_provisional_variants": 9557,
+  "source_reviewed_excluded_variants": 10,
+  "normalization_strategy_input_rows": 62350,
+  "new_normalization_human_validated": false,
+  "training_performed": false,
+  "test_text_read": false,
+  "test_evaluated": false,
+  "new_strategy_metrics_computed": false
+}
