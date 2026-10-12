@@ -1,0 +1,8 @@
+{
+  "status": "no_new_independent_human_agreement_computed",
+  "reason": "Original A/B records exist but authenticated independent people/submissions/blinding are unverified",
+  "original_source_registry_sha256": "9ab81c83b3ed7d3c31c8869b4182566890c254c6f06da6b4cdc262d84b1f5398",
+  "prior_descriptive_statistics": "reports/task06a/agreement.csv; not verified human reliability",
+  "human_independence_verified": false,
+  "human_confirmation_claim": "user-declared eligibility only"
+}

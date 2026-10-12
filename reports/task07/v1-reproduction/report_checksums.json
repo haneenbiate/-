@@ -1,0 +1,17 @@
+{
+  "evaluation/comparison_metrics.csv": "81807ce7ea5e008190ef60013be77fff0efe8f9b53b40ebf06c758ef0afdc896",
+  "evaluation/paired_strategy_differences.csv": "17555577fb9a33d08e4412a09d13e3f095f0f905387b7a711c98a3b379debe9f",
+  "evaluation/development_predictions.csv.gz": "fab77d2a122ca974a4d5289c2c3adaf1df600a14d6f51b689041fd0f3785105e",
+  "evaluation/run_status.json": "732171e50537aa5c2fadfdf00c64c603685f254ed368ad262f2cdb5b1fc3eda0",
+  "evaluation/loading_info.json": "ea8462ce1fb5161e28a2547070c1a7915315f32097d1aec2ca40a21e18831d85",
+  "evaluation/artifact_hashes.json": "05707fe3f5781d20eef1d7ee4ff1457514b51c9b844392f3d51f78dc51b42757",
+  "preparation/evidence.json": "7a67113c92443b33f64f96a1acf8c5699b74c6fe1013ac333e13f9a4f8076675",
+  "preparation/character_token_audit.csv": "8c830123f4ebaf565ce4477a5f8a38684f08479b7d384f67860586228ee474f1",
+  "preparation/normalization_manifest.csv.gz": "3a68b89edf1cdfd822692356db491de8d8386241a118608bf92466de84a3556f",
+  "preparation/normalization_rules.json": "dd749f4281a6be2f717fdb96460850a8d241946061c7b1052cafc97f3ae9d7eb",
+  "preparation/B3_B4_guard_effect.csv": "77f0ebad1a5abd5d356aa371ee9a1a77213025706da47ce9032725827f31219d",
+  "gpu_runtime.json": "b999b2d717ccb4254d6f5dda66114262aef6111cdd66196d7cae2a66c9751472",
+  "runtime_choices.json": "47bfefd918c1c5ffe5067edc2cfb7f3a039e7ed5f094081785d0d0ecbc1b2a60",
+  "dependency_check.txt": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+  "dependency_freeze.txt": "932badd57f28607467b12d8f82330b1179cbe6eb7939592c81b10fdba85fb378"
+}

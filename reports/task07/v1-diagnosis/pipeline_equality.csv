@@ -1,0 +1,7 @@
+kind,rule,intensity,input_ids,B1_B4_identical_texts,B1_B4_identical_effective_inputs,B1_B4_identical_predictions
+clean,clean,0,2509,2078,2475,2507
+perturbed,alef_allowlist,1,65,56,64,65
+perturbed,elongation,1,2474,2049,2441,2473
+perturbed,elongation,2,2474,2035,2423,2472
+perturbed,tatweel,1,2474,1818,2167,2448
+perturbed,tatweel,2,2474,1818,2167,2448

@@ -192,3 +192,17 @@ evidence. Historical B0 scores are available; new B1–B4 classifier metrics rem
 blocked by missing selected checkpoint/GPU locally. The pinned
 [Colab GPU notebook](notebooks/task06_nasn_colab.ipynb) performs inference with the
 existing trained checkpoint only. No NASN robustness improvement is claimed.
+
+[Task 07](docs/task07.md) subsequently verifies the completed Task 06 GPU ZIP and
+recomputes its real B0–B4 tables. V1 elongation predictions agree in 4,945 of 4,948
+applicable variants (all 183 source-eligible reviewed elongations agree), rather
+than every input. All 643 B3/B4 guard differences and 84 elongation token exceptions
+are audited. [Completed v1 evidence and frozen v2 preparation](reports/task07) are
+preserved separately; historical Task 06 blocker reports remain untouched.
+The v2 prototype uses explicit conservative run caps, simple baselines and a
+context ablation, with new blank independent-review packages. Its model comparison
+is not executed locally because selected weights/CUDA remain unavailable. The
+[Task 07 Colab notebook](notebooks/task07_nasn_v2_colab.ipynb) performs that exact
+selected-checkpoint experiment; the scientific decision is undetermined until
+verified v2 results arrive. No new authenticated-human agreement or novelty claim
+is made.

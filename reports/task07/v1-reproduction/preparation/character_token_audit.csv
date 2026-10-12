@@ -1,0 +1,11 @@
+strategy,kind,rows,characters_changed,full_tokens_changed,effective_tokens_changed,protected_spans
+B0,clean,2509,0,0,0,0
+B0,perturbed,9961,0,0,0,0
+B1,clean,2509,123,123,123,0
+B1,perturbed,9961,5189,5189,5189,0
+B2,clean,2509,494,123,123,0
+B2,perturbed,9961,5929,5189,5189,0
+B3,clean,2509,112,111,111,5179
+B3,perturbed,9961,5178,5175,5175,20494
+B4,clean,2509,103,102,102,6848
+B4,perturbed,9961,4639,4636,4636,27171

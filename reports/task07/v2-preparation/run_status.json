@@ -1,0 +1,11 @@
+{
+  "status": "v2_prepared_no_model_metrics",
+  "strategy_input_rows": 62350,
+  "source_eligible_variants": 394,
+  "source_unreviewed_variants": 9557,
+  "source_excluded_variants": 10,
+  "new_human_validated": false,
+  "new_review_queue_n": 188,
+  "training_performed": false,
+  "test_evaluated": false
+}

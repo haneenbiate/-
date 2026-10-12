@@ -1,0 +1,21 @@
+{
+  "pytest": {
+    "passed": 342,
+    "failed": 0,
+    "skipped": 0,
+    "duration_seconds": 45.03
+  },
+  "task06_payload_hashes_verified": 15,
+  "task06_prediction_rows": 62350,
+  "v1_character_token_replay_rows": 62350,
+  "v2_inverse_character_token_audit_rows": 62350,
+  "v1_guard_differences": 643,
+  "v1_elongation_token_exceptions": 84,
+  "v1_elongation_prediction_exceptions": 3,
+  "new_blank_review_assignments": 188,
+  "reviewer_packages_without_gold_or_model_predictions": true,
+  "new_human_decisions_generated": false,
+  "v2_model_metrics_computed": false,
+  "training_performed": false,
+  "official_test_read_or_evaluated": false
+}

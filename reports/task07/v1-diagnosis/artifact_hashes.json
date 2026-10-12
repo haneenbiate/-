@@ -1,0 +1,8 @@
+{
+  "all_B3_B4_differences.csv": "d7e1031c2f876d88f799fb05eba84e2f029329c935578fbf76e8058ee03ef19e",
+  "all_elongation_token_exceptions.csv": "699c1d3fb5fcdf721907abfe708fae00567b7e36570cffc11434d8455d684c21",
+  "annotation_quality_status.json": "71cc363167c0f29a75dbc4d49328b4477a97d7611b00395390a275879676714c",
+  "evidence.json": "5fe4fb1e64a1e57d08c166f1b673a32b76bbb91fbab98ca8065ef30bd0355267",
+  "guard_difference_summary.csv": "26fdbde3e8975fd854c3f93b9f63870802eba410071ee05e9e07bf4ac7c11504",
+  "pipeline_equality.csv": "3fffa7f78845f5a967338d03bcf44f3fe83b904355fd2d50fcd8d171573a5c5c"
+}

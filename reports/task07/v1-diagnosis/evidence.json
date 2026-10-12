@@ -1,0 +1,23 @@
+{
+  "v1_private_registry_sha256": "061011e04199bbacdbf8e49b699ff2d1bec788ee8fa8fa10b9ffc24c46f54070",
+  "verified_task06_intake_status": {
+    "status": "verified_completed_task06_inference",
+    "source_archive_sha256": "f72c24eae1ebd58fcc755fbc0461d040b0293151e70b76f3d11a70365ba6c837",
+    "code_ref": "95f316706e973ab3a43ae08023a1edea2502a678",
+    "rows": 62350,
+    "metric_tables_recomputed": true,
+    "uploaded_payload_hashes_verified": 15,
+    "selected_checkpoint_bytes_verified_here": false,
+    "checkpoint_verification": "external recorded load/hash evidence; no local weight bytes",
+    "human_independence_verified": false,
+    "test_text_read": false,
+    "training_performed": false
+  },
+  "v1_replayed_strategy_input_rows": 62350,
+  "B3_B4_differences": 643,
+  "selected_checkpoint_weight_bytes_available_locally": false,
+  "new_model_inference": false,
+  "test_text_read": false,
+  "training_performed": false,
+  "diagnostic_code_sha256": "ac6b7025682e01f1238848dd080deccf83a1541d0e68912e1178dfdef7ee3bf1"
+}

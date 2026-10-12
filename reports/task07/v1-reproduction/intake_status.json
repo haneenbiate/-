@@ -1,0 +1,13 @@
+{
+  "status": "verified_completed_task06_inference",
+  "source_archive_sha256": "f72c24eae1ebd58fcc755fbc0461d040b0293151e70b76f3d11a70365ba6c837",
+  "code_ref": "95f316706e973ab3a43ae08023a1edea2502a678",
+  "rows": 62350,
+  "metric_tables_recomputed": true,
+  "uploaded_payload_hashes_verified": 15,
+  "selected_checkpoint_bytes_verified_here": false,
+  "checkpoint_verification": "external recorded load/hash evidence; no local weight bytes",
+  "human_independence_verified": false,
+  "test_text_read": false,
+  "training_performed": false
+}

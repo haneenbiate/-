@@ -1,0 +1,7 @@
+{
+  "character_token_audit.csv": "3f79ec6508a07556a3979818fab4e25d0b78d1fb1123b68d6e753d4d6e5db9b1",
+  "evidence.json": "8ceaac014b456218a82adcc02cc8125de0feda748960b13e3681d0899a3822e1",
+  "normalization_manifest.csv.gz": "bcf1b7459b3d83c3b70f6740205dc8828d0a9a6f89f8b6e4c8ac6c3336c8eb77",
+  "normalization_rules.json": "386fc554aa67ca8b69234e68b4edf9c5669f2310199670eea04ddce2134882d7",
+  "run_status.json": "8a36324aa515596a6a34da510724b1e29b10209f85b1fba55c81f3893e71e4c7"
+}

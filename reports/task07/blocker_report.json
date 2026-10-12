@@ -1,0 +1,27 @@
+{
+  "reason": "DataValidationError: Selected trained checkpoint directory unavailable",
+  "actual_local_attempt": {
+    "status": "blocked_or_failed",
+    "training_performed": false,
+    "test_text_read": false,
+    "test_evaluated": false,
+    "metrics_computed": false,
+    "reason": "DataValidationError: Selected trained checkpoint directory unavailable",
+    "duration_seconds": 1.5205421980062965
+  },
+  "cuda_available": false,
+  "cuda_build": null,
+  "trained_weight_bytes_uploaded": false,
+  "no_model_substitution": true,
+  "selected_checkpoint_sha256": {
+    "config.json": "0a3b9e616ec6d8dcdc5d2083ce226b58d6ed4d4290cb395753171eebf257bb5e",
+    "model.safetensors": "5c9fd87e2639a967d2c7517d5bb4189a6cbcb3bb477f9998e105682fcc249840",
+    "special_tokens_map.json": "b6d346be366a7d1d48332dbc9fdf3bf8960b5d879522b7799ddba59e76237ee3",
+    "tokenizer.json": "7f4d625ea888be9dd915f09e7d7cc9ff899619b02e1836cdc73b287d27c14e5c",
+    "tokenizer_config.json": "0088a6f8bcdd4014184fb068b83ebb12896a9db2bb269a71f73de83fef24bceb",
+    "vocab.txt": "4cbe17fdb035ba4afb5eb9889657b0f9895e2c6bd26574409cf9f8bdf75e2542"
+  },
+  "needed": "Execute the pinned Task 07 Colab notebook with the existing selected Drive checkpoint; return its report ZIP",
+  "v1_predictions_available_and_verified": true,
+  "v2_predictions_available": false
+}

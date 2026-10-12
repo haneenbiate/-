@@ -1,0 +1,20 @@
+{
+  "source_task06_archive_sha256": "f72c24eae1ebd58fcc755fbc0461d040b0293151e70b76f3d11a70365ba6c837",
+  "v1_external_registry_sha256": "ad35d97b0b1a1c5da3f21af4671f0bccd1649ec91565a774dfe3827e13e1d9d5",
+  "diagnostic_private_full_examples_sha256": "e3551811a7f5c6f791a7784445af38ee760fa0cd85934c2052273ac2bf231aa9",
+  "elongation_private_full_examples_sha256": "64dbd85c93b89e617d600235b347614101ce996ce2cbfabe7bd424842d318298",
+  "v2_new_human_review_queue_sha256": "7acdc27fc688f693d73ef53e7bfc8ddbc98be07e5daae3007b0022144e7ac15f",
+  "v2_reviewer_a_zip_sha256": "4db3dfd37e83bd95cb36c8de49f328e52b2e78f89548ba80cd76683d55135eae",
+  "v2_reviewer_b_zip_sha256": "1595ef4cbe715fb64c4b2c68f65c383f0f37a05abf11a0b5d14b68f624bebbd2",
+  "v2_private_registry_sha256": "ce8bf4225434ee51df93ff2234a26d20d7578c5644579dd3c41a8c79d6f38d31",
+  "registered_subdirectories": {
+    "v1-reproduction": "1780c1970eb790f9fa8eb37468d08e02cfee6dfce2fdaab05a656d92c9005bb5",
+    "v1-diagnosis": "045524a90a4adec2b4e16da37e058fe52dbee8ed59cde8a061f5b92b228e0cfe",
+    "v2-preparation": "d6224cfd744c89296a50040c7c2f96f540e9b9d9e0b850884bc18d74160c9823"
+  },
+  "publisher_sha256": "67c9210857edbf6b16c32dcd87050a04f926ec8413a062544224a172d944b26f",
+  "full_raw_text_published": false,
+  "weight_bytes_published": false,
+  "human_provenance_verified": false,
+  "new_independent_human_IAA_computed": false
+}
