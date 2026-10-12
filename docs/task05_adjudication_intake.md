@@ -16,6 +16,15 @@ hash-registered original strings. It fails on internal-space changes, changed
 letters, negation, IDs or hashes. This is a conversion repair with an audit log,
 not an automatic semantic judgment or a modification of the source XLSX.
 
+The user explicitly confirmed **Baghdad time** on 2026-10-12. The intake was
+executed with `--timestamp-timezone Asia/Baghdad --restore-edge-spaces`, and all
+404 assignments are now resolved. The finalized evidence is in
+[reports/task05-final-review](../reports/task05-final-review); the earlier pending
+intake audit is preserved unchanged as a historical snapshot. There are 394
+eligible variants (184 human-negation, 210 non-negation), and 10 excluded:
+3 ambiguous meanings, 1 changed meaning with uncertain sentiment, and 6 with
+uncertain negation effects. No unresolved adjudication remains.
+
 All 213 review timestamps are native Excel datetime cells without timezone.
 No timezone is inferred from the filename, workbook metadata or chat location.
 The reviewer must declare it; then `--timestamp-timezone` attaches that zone and
@@ -55,3 +64,31 @@ Analysis additionally requires the completed Task 04 inference directory and
 selected checkpoint/tokenizer provenance, which have not been supplied locally.
 Missing inputs block metrics rather than reconstructing predictions or inventing
 results. No training, checkpoint selection or official test text access occurs.
+
+Exact completed intake output in this workspace is
+`runs/task05-adjudication-final-baghdad/`; its `decisions/` subdirectory is the
+completed `--decisions` input for future `nasn.task05 analyze`.
+
+Reproduce the public final review summary without model inference:
+
+```bash
+MPLBACKEND=Agg MPLCONFIGDIR=/tmp/nasn-review-matplotlib XDG_CACHE_HOME=/tmp/nasn-review-cache \
+  .venv/bin/python -m tools.summarize_task05_reviews \
+  --intake runs/task05-adjudication-final-baghdad \
+  --review-package runs/task05-semantic-review-v1 \
+  --llm-audit runs/task05-corrected-workbook-audit-final \
+  --output runs/task05-final-review-summary-new
+```
+
+The Task 03B archive supplied earlier contains original validation predictions.
+Orthographic robustness additionally needs Task 04 `clean_predictions.csv` and
+`perturbed_predictions.csv`, plus saved evidence, checkpoint hashes and a
+completed run status. The Task 04 notebook exports these in
+`orthography-v1-...-reports.zip` from its last cell, and keeps full evidence under
+`MyDrive/NASN/task04/<orthography-run-id>/inference/`. The lightweight ZIP omits
+full tweet text and weights; original private evidence stays on Drive. Uploading
+the ZIP allows verification before any robustness computation. If no completed
+inference output exists, the Task 04 inference stage must finish using the
+selected baseline checkpoint, without retraining or official test evaluation.
+An annotation spreadsheet contains human semantic decisions, not the model's
+clean/perturbed probability vectors.

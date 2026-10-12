@@ -1,0 +1,19 @@
+{
+  "tests_passed": 193,
+  "tests_failed": 0,
+  "tests_skipped": 0,
+  "duration_seconds": 29.13,
+  "actual_intake_completed": true,
+  "actual_human_review_completed": true,
+  "actual_robustness_computation_performed": false,
+  "test_text_read": false,
+  "training_performed": false,
+  "timestamp_timezone_user_confirmed": "Asia/Baghdad",
+  "regression_test": "End-to-end import with a conflict at nonzero template index",
+  "actual_summary_command": ".venv/bin/python -m tools.summarize_task05_reviews --intake runs/task05-adjudication-final-baghdad --review-package runs/task05-semantic-review-v1 --llm-audit runs/task05-corrected-workbook-audit-final --output reports/task05-final-review",
+  "code_sha256": {
+    "nasn/adjudication_intake.py": "afd56a615697bc0b814cd0ee7db93da984a8cf91cc41c160bfb66ed5dadb819e",
+    "tools/summarize_task05_reviews.py": "c5651b25d24b5ed00e9c0e6a1a0dc01f7f5324a192a2c840c95adf1bd84d0d20",
+    "tests/test_adjudication_intake.py": "7a0202cd279e16af5f119cd265327355cab67eb5c865705329dd7ef5f3d92b30"
+  }
+}

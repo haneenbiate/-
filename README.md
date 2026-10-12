@@ -168,3 +168,9 @@ removed edge spaces from 20 text pairs and stored all timestamps without timezon
 [The intake protocol](docs/task05_adjudication_intake.md) documents explicit,
 hash-checked formatting repairs and the required reviewer timezone; the current
 [intake audit](reports/task05-adjudication-intake) preserves this pending status.
+
+The user then confirmed Baghdad time. [Final review evidence](reports/task05-final-review)
+now records all 404 resolved assignments: 394 eligible meaning-preserving variants
+(184 with human-identified negation, 210 without), and 10 exclusions. Human review
+is complete; model robustness analysis still needs the Task 04 saved predictions.
+Earlier reports remain unchanged as historical stage evidence.

@@ -1,0 +1,11 @@
+field,value,n
+semantic_validity,preserved,400
+semantic_validity,ambiguous,3
+semantic_validity,changed,1
+sentiment_preserved,yes,403
+sentiment_preserved,uncertain,1
+negation_present,no,210
+negation_present,yes,194
+negation_affects_sentiment,no,231
+negation_affects_sentiment,yes,167
+negation_affects_sentiment,uncertain,6

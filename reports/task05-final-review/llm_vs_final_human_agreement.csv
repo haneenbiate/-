@@ -1,0 +1,5 @@
+field,paired_n,exact_agreement,cohen_kappa,kappa_status,interpretation
+semantic_validity,404,0.9529702970297029,0.03664658634538154,computed,agreement_with_user_declared_adjudicated_human_reference; not MARBERT robustness
+sentiment_preserved,404,0.9603960396039604,-0.004662729250854758,computed,agreement_with_user_declared_adjudicated_human_reference; not MARBERT robustness
+negation_present,404,0.9801980198019802,0.9608156931209233,computed,agreement_with_user_declared_adjudicated_human_reference; not MARBERT robustness
+negation_affects_sentiment,404,0.8960396039603961,0.7891938229118783,computed,agreement_with_user_declared_adjudicated_human_reference; not MARBERT robustness

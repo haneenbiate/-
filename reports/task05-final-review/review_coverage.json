@@ -1,0 +1,12 @@
+{
+  "queue_n": 404,
+  "reviewer_a_completed": 404,
+  "reviewer_b_completed": 404,
+  "paired_completed": 404,
+  "paired_coverage": 1.0,
+  "disagreements": 213,
+  "resolved_n": 404,
+  "confirmed_n": 394,
+  "unresolved_disagreements": 0,
+  "human_review_completed": true
+}

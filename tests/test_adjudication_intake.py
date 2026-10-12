@@ -9,6 +9,40 @@ from nasn.task05 import review_template
 from nasn.adjudication_intake import canonicalize
 
 
+def test_end_to_end_intake_handles_nonzero_conflict_index(tmp_path,pair):
+    import datetime
+    import openpyxl
+    from nasn.task05 import HUMAN,import_reviews,seal,csv
+    from nasn.adjudication_intake import intake
+    sample,one=pair
+    template=pd.concat([one,one],ignore_index=True)
+    template.loc[1,'variant_id']='v2';template.loc[1,'source_row_id']='s2'
+    package=tmp_path/'package';package.mkdir()
+    template.to_csv(package/'reviewer_a.csv',index=False)
+    template.to_csv(package/'reviewer_b.csv',index=False)
+    template[['variant_id','rule','intensity']].assign(gold_label='NEG',dialect='msa',sarcasm='FALSE',has_negation='True').to_csv(package/'queue_registry.csv',index=False)
+    seal(package)
+    a,b=template.copy(),template.copy()
+    for frame,who in [(a,'R1'),(b,'R2')]:
+        for field in HUMAN:frame[field]=sample[field].iloc[0]
+        frame['reviewer_id']=who;frame['review_timestamp']='2026-10-12T08:00:00+03:00'
+    b.loc[1,'semantic_validity']='ambiguous'
+    a.to_csv(tmp_path/'a.csv',index=False);b.to_csv(tmp_path/'b.csv',index=False)
+    independent=tmp_path/'independent'
+    import_reviews(package,tmp_path/'a.csv',tmp_path/'b.csv',None,independent)
+    adjud=csv(independent/'adjudication_queue.csv')
+    for field in HUMAN:adjud[field]=sample[field].iloc[0]
+    adjud['reviewer_id']='R3';adjud['original_text']=adjud.original_text.str.strip(' ')
+    adjud['perturbed_text']=adjud.perturbed_text.str.strip(' ');adjud['diffs']='auxiliary only'
+    workbook=tmp_path/'adjudication.xlsx';w=openpyxl.Workbook();s=w.active
+    s.append(adjud.columns.tolist())
+    for row in adjud.itertuples(index=False,name=None):s.append(list(row))
+    s['O2']=datetime.datetime(2026,10,12,8,45);w.save(workbook)
+    status=intake(package,independent,workbook,tmp_path/'result','Asia/Baghdad',True)
+    assert status['human_review_completed'] and status['confirmed_n']==2
+    assert csv(tmp_path/'result'/'canonical_adjudication.csv').review_timestamp.iloc[0]=='2026-10-12T08:45:00+03:00'
+
+
 @pytest.fixture
 def pair():
     records=pd.DataFrame({'variant_id':['v1'],'source_row_id':['s1'],

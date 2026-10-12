@@ -1,0 +1,23 @@
+{
+  "status": "human_review_complete_model_predictions_pending",
+  "queue_n": 404,
+  "reviewer_a_completed": 404,
+  "reviewer_b_completed": 404,
+  "paired_completed": 404,
+  "paired_coverage": 1.0,
+  "disagreements": 213,
+  "resolved_n": 404,
+  "confirmed_n": 394,
+  "unresolved_disagreements": 0,
+  "human_review_completed": true,
+  "intake_status": "completed",
+  "robustness_metrics_computed": false,
+  "test_evaluated": false,
+  "training_performed": false,
+  "confirmed_human_negation_yes": 184,
+  "confirmed_human_negation_no": 210,
+  "excluded_variants": 10,
+  "task04_perturbed_predictions_available_locally": false,
+  "official_test_text_read": false,
+  "checkpoint_loaded": false
+}

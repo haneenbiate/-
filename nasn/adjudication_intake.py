@@ -64,6 +64,7 @@ def intake(review_package,independent_review,workbook,output,timezone=None,resto
     a=validate_decisions(independent/'independent_reviewer_a.csv',template)
     b=validate_decisions(independent/'independent_reviewer_b.csv',template)
     _,expected,_,_=resolve_reviews(template,a,b)
+    expected=expected.reset_index(drop=True)
     require(expected.equals(csv(independent/'adjudication_queue.csv')),'Adjudication queue differs from independent judgments')
     raw,metadata=read_workbook(workbook,allowed_extra=('diffs',))
     canonical,changes=canonicalize(raw,expected,timezone,restore_edge_spaces)

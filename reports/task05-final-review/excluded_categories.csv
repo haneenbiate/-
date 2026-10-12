@@ -1,0 +1,4 @@
+semantic_validity,sentiment_preserved,negation_present,negation_affects_sentiment,n
+ambiguous,yes,yes,yes,3
+changed,uncertain,yes,yes,1
+preserved,yes,yes,uncertain,6

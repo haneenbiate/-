@@ -1,0 +1,18 @@
+{
+  "source_workbook_sha256": "b4dd8acdbf16f6100e2d316f85b5faa51429b960f7b14e5733f387847218a3aa",
+  "timestamp_timezone": "Asia/Baghdad",
+  "timestamp_timezone_basis": "User explicitly confirmed Baghdad time on 2026-10-12",
+  "human_source": "user_declared",
+  "independent_identity_and_blinding_verification": false,
+  "root_intake_registry_sha256": "5439864541720f366716df64f78298e1fa12fa079691e92a7fbdedd724ef363a",
+  "decisions_registry_sha256": "3d3a317a45b367f1992e137963f4c546065078bda573633ece63164a1fdc56a9",
+  "review_package_registry_sha256": "ba0d834fe77efa75d7f347f07794ac0cbd0b51ff4ecb33c2531e423027c44aff",
+  "llm_audit_registry_sha256": "ef3a1ca1d1e311592d07f7a047c3bbd0dc3eaf653ae03b145617bd4c61e8f211",
+  "formatting_repair_cells_n": 253,
+  "human_decisions_modified": false,
+  "code_sha256": {
+    "summary": "c5651b25d24b5ed00e9c0e6a1a0dc01f7f5324a192a2c840c95adf1bd84d0d20",
+    "intake": "afd56a615697bc0b814cd0ee7db93da984a8cf91cc41c160bfb66ed5dadb819e"
+  },
+  "llm_model_revision_prompt_and_settings_unverified": true
+}
