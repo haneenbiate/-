@@ -1,0 +1,11 @@
+{
+  "notebook_sha256": "164528254bb08832d56949b050a18eb8fbffd18465c0fbc4d0498245cce7554b",
+  "implementation_commit": "95f316706e973ab3a43ae08023a1edea2502a678",
+  "code_cells_compiled": 7,
+  "all_outputs_empty": true,
+  "executed_in_colab": false,
+  "selected_checkpoint_weights_available_locally": false,
+  "selected_checkpoint_replaced": false,
+  "generator_sha256": "8ca1f4505233df651bece2a0fd0496bfe67c4bf79581fcaf8f21e89e01241c86",
+  "pinned_source_bytes_match": true
+}

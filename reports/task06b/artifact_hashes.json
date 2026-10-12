@@ -11,6 +11,7 @@
   "methodology.md": "54cfb09d9c82f6b80d0d2facd2b34746752dc8e050b0ae697ed7105f3e54ff6a",
   "normalization_manifest.csv.gz": "3cdb1e19973aa71f730b3a27a32a1dd92a83d80e240cda96a8a8df3d4e0b81a2",
   "normalization_rules.json": "dd749f4281a6be2f717fdb96460850a8d241946061c7b1052cafc97f3ae9d7eb",
+  "notebook_verification.json": "2923b164995366080e5701cb0e577da3b6175bd9a47d1db8a5ca8e55d7e87e42",
   "post_normalization_training_overlap.csv": "f1da2512e0e4831359815b37676ebd6a66de2c4638c39ff715c26582cc60bc7d",
   "publication.json": "81fcb5bc037a87541d064ec2b3f625effcff7b0834b71dc487a850fd72740b2e",
   "run_status.json": "e20447bda3b961bd7b68651c7d4f180d11aa7b81c56c9765334d57a93f091787"
