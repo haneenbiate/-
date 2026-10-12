@@ -1,0 +1,35 @@
+{
+  "source_archive_name": "orthography-v1-20261010T083120Z-3d929f7b-reports.zip",
+  "source_archive_sha256": "5cb2df58f092169b66dde3156a07cea025ba626293c234eab9a7ef0a6dbd14a5",
+  "original_root_registry_sha256": "8946076991fcaf77357ff3ffcf10d8eec1680c47d5fea627978b80dceaec1c24",
+  "verified_original_files": 40,
+  "original_file_bytes_preserved": true,
+  "derived_inference_registry_sha256": "3d94c5d680d180e504fe4b8a89fa06473de1f35cc6ce8e51603e7e5ab53368cc",
+  "archive_contains_checkpoint_weights": false,
+  "runtime": {
+    "code_ref": "bde827f741a625e5b8b4ceaca7c6dd6bc36901a6",
+    "run_id": "orthography-v1-20261010T083120Z-3d929f7b",
+    "checkpoint": "/content/drive/MyDrive/NASN/task03b/marbert-v1-20261009T213143Z-be8b8811/experiment/best_checkpoint",
+    "inference_batch_size": 4,
+    "baseline_run_id": "marbert-v1-20261009T213143Z-be8b8811",
+    "status": {
+      "status": "completed",
+      "training_performed": false,
+      "test_text_read": false,
+      "test_evaluated": false,
+      "seed": 42,
+      "gpu": "Tesla T4",
+      "metrics": "robustness_metrics.csv",
+      "cuda_build": "12.6",
+      "free_vram_bytes": 15527116800,
+      "duration_seconds": 264.5466956350001,
+      "confirmed_variants": 0,
+      "confirmed_analysis_available": false,
+      "provisional_variants": 9961,
+      "excluded_invalid": 0,
+      "excluded_ambiguous": 0,
+      "peak_gpu_memory_bytes": 704616448
+    }
+  },
+  "code_sha256": "5960c77d4adf758674127d1de5f7766dcdbe4b51508bd8fb5f8a25ccebf0a4ef"
+}

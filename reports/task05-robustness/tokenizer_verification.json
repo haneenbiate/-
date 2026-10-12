@@ -1,0 +1,34 @@
+{
+  "status": "all_selected_tokenizer_bytes_identical",
+  "model_revision": "88e1fa192dd723cf0b3563500aec46209762eb22",
+  "official_source_sha256": {
+    "config.json": "cd2a25895e0e243e5475e241db2a61f5721b4b380ea175e9cafcbf4f0359b1f1",
+    "tokenizer_config.json": "16c98e576cebd77e6ea1c16ef01fc839af38606bbbb8dcc769b9a50f328ac54b",
+    "special_tokens_map.json": "303df45a03609e4ead04bc3dc1536d0ab19b5358db685b6f3da123d05ec200e3",
+    "vocab.txt": "4cbe17fdb035ba4afb5eb9889657b0f9895e2c6bd26574409cf9f8bdf75e2542"
+  },
+  "tokenizer_sha256": {
+    "special_tokens_map.json": "b6d346be366a7d1d48332dbc9fdf3bf8960b5d879522b7799ddba59e76237ee3",
+    "tokenizer.json": "7f4d625ea888be9dd915f09e7d7cc9ff899619b02e1836cdc73b287d27c14e5c",
+    "tokenizer_config.json": "0088a6f8bcdd4014184fb068b83ebb12896a9db2bb269a71f73de83fef24bceb",
+    "vocab.txt": "4cbe17fdb035ba4afb5eb9889657b0f9895e2c6bd26574409cf9f8bdf75e2542"
+  },
+  "checkpoint_registry_sha256": "df46c2608d3fafbfde0f00c3e26994a5fda8261280e5e65f87f33839bdf9a67b",
+  "serialization_state": "original baseline truncation=128 and max_length padding",
+  "synthetic_probe_is_experimental_data": false,
+  "model_weights_loaded": false,
+  "selected_checkpoint_weight_bytes_verified_locally": false,
+  "versions": {
+    "python": "3.12.14",
+    "pandas": "2.2.3",
+    "numpy": "2.3.5",
+    "scikit-learn": "1.8.0",
+    "torch": "2.8.0+cpu",
+    "transformers": "4.57.3",
+    "huggingface-hub": "0.36.0",
+    "tokenizers": "0.22.1",
+    "safetensors": "0.7.0",
+    "pytest": "9.1.1"
+  },
+  "code_sha256": "91fb5bec5565fcfc827a7dc6abfcf7a9df9fbc5da8289071899bbd55ff9bd8a6"
+}

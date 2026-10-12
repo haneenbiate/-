@@ -174,3 +174,11 @@ now records all 404 resolved assignments: 394 eligible meaning-preserving varian
 (184 with human-identified negation, 210 without), and 10 exclusions. Human review
 is complete; model robustness analysis still needs the Task 04 saved predictions.
 Earlier reports remain unchanged as historical stage evidence.
+
+The completed Task 04 inference archive was then supplied. [Actual confirmed
+robustness results](docs/task05_robustness_results.md) and
+[publication artifacts](reports/task05-robustness) now include paired-bootstrap
+metrics, human-negation strata, near-duplicate sensitivity and matched tatweel
+intensity/token comparisons. No primary Macro-F1 drop interval excludes zero.
+All predictions come from the existing selected baseline; no retraining or
+official test evaluation occurs. NASN remains unimplemented.

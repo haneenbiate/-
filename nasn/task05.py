@@ -381,6 +381,52 @@ def tatweel_comparison(changed, clean, manifest, tokenizer=None, tolerance=1e-6)
     return details, pd.DataFrame(summary)
 
 
+def verify_exported_token_flags(changed,manifest,tokenizer):
+    """Recompute every recorded token flag using the byte-verified tokenizer."""
+    lookup=manifest.set_index('variant_id');cache={}
+    def tokens(text):
+        if text not in cache:
+            full=tokenizer(text,add_special_tokens=True,truncation=False)['input_ids']
+            effective=tokenizer(text,add_special_tokens=True,truncation=True,max_length=128)['input_ids']
+            cache[text]=(full,effective)
+        return cache[text]
+    for row in changed.itertuples(index=False):
+        record=lookup.loc[row.variant_id]
+        original,effective=tokens(record.original_text)
+        perturbed,changed_effective=tokens(record.perturbed_text)
+        expected={'token_ids_changed':original!=perturbed,'effective_token_ids_changed':effective!=changed_effective,
+                  'clean_truncated':len(original)>128,'perturbed_truncated':len(perturbed)>128}
+        for field,value in expected.items():require(str(getattr(row,field))==str(value),f'Recorded token flag differs: {row.variant_id}, {field}')
+        for field,value in [('clean_token_count',len(original)),('perturbed_token_count',len(perturbed)),
+                            ('token_count_delta',len(perturbed)-len(original))]:
+            require(int(getattr(row,field))==value,f'Recorded token count differs: {row.variant_id}, {field}')
+    return {'status':'all_exported_token_flags_reproduced','variant_rows':len(changed),'max_length':128}
+
+
+def paired_intensity_tables(changed,decisions,repetitions=2000,minimum=30):
+    """Compare doses on identical IDs; separate from differently sampled cohorts."""
+    selected=changed[changed.rule.eq('tatweel') & changed.applicable]
+    one,two=(selected[selected.intensity.eq(i)].set_index('source_row_id') for i in [1,2])
+    require(set(one.index)==set(two.index),'Paired intensity IDs differ')
+    two=two.loc[one.index]
+    require(one.gold_id.tolist()==two.gold_id.tolist(),'Paired intensity gold differs')
+    frame=pd.DataFrame({'source_row_id':one.index,'gold_id':one.gold_id.to_numpy(),
+                       'clean_id':one.predicted_id.to_numpy(),'predicted_id':two.predicted_id.to_numpy(),
+                       'high_risk':one.high_risk_near_duplicate.to_numpy()})
+    confirmed=set(decisions.loc[decisions.eligible_confirmed.astype(str).eq('True'),'variant_id'])
+    frame['both_human_confirmed']=[a in confirmed and b in confirmed for a,b in zip(one.variant_id,two.variant_id)]
+    rows=[]
+    for name,part in [('provisional_all_matched',frame),('confirmed_both_intensities',frame[frame.both_human_confirmed]),
+                      ('confirmed_both_exclude_high_risk',frame[frame.both_human_confirmed & ~frame.high_risk])]:
+        common={'cohort':name,'n_original_ids':len(part),'left':'tatweel_intensity_1','right':'tatweel_intensity_2',
+                'seed':42,'bootstrap_repetitions':repetitions}
+        if len(part)<minimum:rows.append({**common,'status':'insufficient_sample_size'});continue
+        for metric,values in paired_bootstrap(part,repetitions).items():
+            # In this table clean_* means intensity 1, perturbed_* intensity 2.
+            rows.append({**common,'status':'computed','metric':metric,**values})
+    return pd.DataFrame(rows),frame
+
+
 def analyze(args, config):
     package, decisions = Path(args.review_package), Path(args.decisions)
     package_hashes, decision_hashes = registry(package), registry(decisions)
@@ -409,16 +455,26 @@ def analyze(args, config):
     require(final.equals(expected) and coverage == verified_coverage, 'Resolved decisions differ from explicit human records')
     tables = confirmed_tables(changed, final, args.bootstrap)
     tokenizer = None
+    tokenizer_hashes = None
     if args.checkpoint:
         from transformers import AutoTokenizer
         tokenizer = AutoTokenizer.from_pretrained(args.checkpoint, local_files_only=True, trust_remote_code=False)
+    elif getattr(args,'tokenizer_directory',None):
+        from .verified_tokenizer import verify
+        from transformers import AutoTokenizer
+        tokenizer_hashes=verify(args.tokenizer_directory,evidence['checkpoint_sha256'])
+        tokenizer=AutoTokenizer.from_pretrained(args.tokenizer_directory,local_files_only=True,trust_remote_code=False)
     details, tatweel = tatweel_comparison(changed, clean, manifest, tokenizer)
+    token_reproduction=verify_exported_token_flags(changed,manifest,tokenizer) if tokenizer else None
+    intensity_tables,intensity_ids=paired_intensity_tables(changed,final,args.bootstrap)
     output = fresh(args.output)
     tables.to_csv(output/'confirmed_robustness.csv', index=False)
     (output/'confirmed_robustness.tex').write_text(tables.to_latex(index=False, float_format='%.4f'))
     details.to_csv(output/'tatweel_paired_audit.csv', index=False)
     tatweel.to_csv(output/'tatweel_summary.csv', index=False)
     (output/'tatweel_summary.tex').write_text(tatweel.to_latex(index=False))
+    intensity_tables.to_csv(output/'tatweel_matched_intensity_metrics.csv',index=False)
+    intensity_ids.to_csv(output/'tatweel_matched_intensity_ids.csv',index=False)
     # Original provisional scores stay byte-identical, physically separate.
     source = Path(args.inference)/'robustness_metrics.csv'
     require(source.name in inference_hashes, 'Provisional metrics absent from verified evidence')
@@ -426,7 +482,10 @@ def analyze(args, config):
     save(output/'evidence.json', {**evidence, 'task04_inference_sha256':inference_hashes,
         'decisions_registry_sha256':sha256(decisions/'artifact_hashes.json'), 'seed':42,
         'bootstrap_repetitions':args.bootstrap, 'task05_code_sha256':sha256(Path(__file__)),
-        'token_comparison_checkpoint_bytes_verified':args.checkpoint is not None})
+        'token_comparison_checkpoint_bytes_verified':args.checkpoint is not None,
+        'selected_tokenizer_files_verified':tokenizer_hashes,
+        'exported_token_flags_reproduction':token_reproduction,
+        'tokenizer_model_weights_loaded':False})
     status = {'status':'completed', **coverage, 'training_performed':False, 'test_evaluated':False,
               'confirmed_metrics':'confirmed_robustness.csv', 'checkpoint_reselection':False}
     save(output/'run_status.json',status)
@@ -519,9 +578,11 @@ def main(argv=None):
     for name in ['preparation','baseline','review-package','decisions','inference','output']:
         analysis.add_argument('--'+name,required=True)
     analysis.add_argument('--checkpoint')
+    analysis.add_argument('--tokenizer-directory',help='Only byte-verified selected tokenizer files; no model weight fallback')
     analysis.add_argument('--bootstrap',type=int,default=2000)
     args = parser.parse_args(argv)
     try:
+        if args.command=='analyze':require(not (args.checkpoint and args.tokenizer_directory),'Choose checkpoint or verified tokenizer directory')
         if args.command == 'prepare': result = prepare(args.preparation,args.baseline,args.output,read(args.config))
         elif args.command == 'import-reviews': result = import_reviews(args.review_package,args.reviewer_a,args.reviewer_b,args.adjudication,args.output)
         else: result = analyze(args,read(args.config))

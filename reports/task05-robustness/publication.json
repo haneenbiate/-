@@ -1,0 +1,8 @@
+{
+  "source_analysis_registry_sha256": "c5529bc364bbdf672baf087570f0f40a2a76941f4f547fa2d87c05851ba11dfe",
+  "private_token_ids_and_probabilities_sha256": "13dde6b793a7630c13460444d07c93c807cb4d5a22cb350589c53e650558b2c6",
+  "publisher_sha256": "cba241184262d177aaee19d349c028011197ac549c71d476b079e1449981cf71",
+  "full_tweet_text_published": false,
+  "token_ids_published": false,
+  "model_weights_published": false
+}

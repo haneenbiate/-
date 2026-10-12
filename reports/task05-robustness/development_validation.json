@@ -1,0 +1,33 @@
+{
+  "pytest": {
+    "passed": 203,
+    "failed": 0,
+    "skipped": 0,
+    "duration_seconds": 26.34
+  },
+  "independent_sklearn_metric_recalculation": "passed",
+  "confirmed_model_prediction_rows": 394,
+  "prediction_flip_counts": {
+    "elongation_1": 4,
+    "elongation_2": 5,
+    "tatweel_1": 8,
+    "tatweel_2": 3
+  },
+  "tatweel_paired_comparison_rows": 7422,
+  "uploaded_payload_hashes_verified": 39,
+  "baseline_report_hashes_verified": 25,
+  "pinned_source_code_hashes_verified": 5,
+  "token_flags_reproduced_rows": 12545,
+  "confirmed_negation_yes": 184,
+  "confirmed_negation_no": 210,
+  "applicable_perturbed_to_active_training_overlap": {
+    "exact": 0,
+    "canonical": 0,
+    "rows_checked": 9961
+  },
+  "official_test_read_or_evaluated": false,
+  "training_performed": false,
+  "new_model_inference_performed_locally": false,
+  "model_weight_bytes_available_locally": false,
+  "selected_tokenizer_file_hashes_verified": 4
+}

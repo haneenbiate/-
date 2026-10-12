@@ -1,0 +1,4 @@
+comparison,n_original_ids,changed_probability_vectors_exact,changed_probability_vectors_above_1e_6,changed_final_predictions,changed_effective_token_sequences,changed_full_token_sequences,token_status,interpretation
+1_vs_2,2474,1,0,0,0,0,verified_tokenizer,"provisional candidate instability; descriptive correlation, not causal evidence"
+clean_vs_1,2474,2474,2474,176,2474,2474,verified_tokenizer,"provisional candidate instability; descriptive correlation, not causal evidence"
+clean_vs_2,2474,2474,2474,176,2474,2474,verified_tokenizer,"provisional candidate instability; descriptive correlation, not causal evidence"
