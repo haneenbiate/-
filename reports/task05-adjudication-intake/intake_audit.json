@@ -1,0 +1,52 @@
+{
+  "status": "adjudication_intake_pending_explicit_timestamp_timezone",
+  "source_workbook_sha256": "b4dd8acdbf16f6100e2d316f85b5faa51429b960f7b14e5733f387847218a3aa",
+  "assigned_n": 213,
+  "submitted_n": 213,
+  "all_assignment_ids_match": true,
+  "extra_auxiliary_columns": [
+    "diffs"
+  ],
+  "formula_cells": 0,
+  "native_excel_timestamps_without_timezone_n": 213,
+  "declared_timestamp_timezone": null,
+  "original_text_edge_space_differences_n": 20,
+  "perturbed_text_edge_space_differences_n": 20,
+  "leading_space_affected_rows_n": 1,
+  "trailing_space_affected_rows_n": 19,
+  "meaning_sensitive_character_differences_n": 0,
+  "decisions_modified": false,
+  "metadata_repairs_applied": false,
+  "all_adjudications_imported": false,
+  "human_review_completed": false,
+  "existing_accepted_consensus_n": 191,
+  "new_human_confirmed_n": 0,
+  "robustness_metrics_computed": false,
+  "completed_task04_predictions_available_locally": false,
+  "training_performed": false,
+  "test_text_read": false,
+  "test_evaluated": false,
+  "decision_counts_as_submitted_only": {
+    "semantic_validity": {
+      "preserved": 209,
+      "ambiguous": 3,
+      "changed": 1
+    },
+    "sentiment_preserved": {
+      "yes": 212,
+      "uncertain": 1
+    },
+    "negation_present": {
+      "yes": 194,
+      "no": 19
+    },
+    "negation_affects_sentiment": {
+      "yes": 167,
+      "no": 40,
+      "uncertain": 6
+    }
+  },
+  "reviewer_id_count": 1,
+  "independent_reviewer_registry_sha256": "ccbf03f323d6b92cab3f9ddf8a03252f174d8098deb62ec366e29d3c14fb38b2",
+  "required_next_input": "Reviewer timezone for naive timestamps; do not infer from chat timezone"
+}

@@ -1,0 +1,18 @@
+{
+  "full_suite_tests_passed": 192,
+  "full_suite_tests_failed": 0,
+  "full_suite_tests_skipped": 0,
+  "test_duration_seconds": 34.36,
+  "raw_excel_timestamp_types": {
+    "datetime": 213
+  },
+  "explicit_timezone_required": true,
+  "adjudication_import_executed": false,
+  "model_inference_executed": false,
+  "code_sha256": {
+    "nasn/adjudication_intake.py": "5093a1003a0b565a3b83537961f74879a498f5dda6f4cd20968e0b5c62d937cf",
+    "nasn/review_workbooks.py": "4547b4838e36929d84fddd17b019b0c2f6e2d7c89596b7dc3fd0138d5887d5d9",
+    "tests/test_adjudication_intake.py": "b5b47ac72188173a4b5651f8546b0337e54de77dd05a01fcb2a6adea5458faad",
+    "tests/test_review_workbooks.py": "3b0a4f0009c26f644e09397b62c6ffa199f3727e2bfde63f72b32e203149c9a8"
+  }
+}

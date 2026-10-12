@@ -162,3 +162,9 @@ Corrected human reviews were subsequently supplied: see
 all 404 assignments; 191 have eligible consensus and 213 require third-human
 adjudication. The LLM is analyzed separately. Confirmed robustness evaluation
 remains blocked by incomplete adjudication and unavailable Task 04 predictions.
+
+An adjudication workbook was subsequently supplied. Its 213 IDs match, but Excel
+removed edge spaces from 20 text pairs and stored all timestamps without timezone.
+[The intake protocol](docs/task05_adjudication_intake.md) documents explicit,
+hash-checked formatting repairs and the required reviewer timezone; the current
+[intake audit](reports/task05-adjudication-intake) preserves this pending status.

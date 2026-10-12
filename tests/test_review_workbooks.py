@@ -38,6 +38,15 @@ def test_literal_arabic_roundtrip_and_sheet_metadata(tmp_path,records):
     assert len(meta['workbook_sha256'])==64
 
 
+def test_auxiliary_diffs_column_only_allowed_explicitly(tmp_path,records):
+    original=review_template(records);original['diffs']="[('insert', '', 'ـ')]"
+    path=workbook(tmp_path/'review.xlsx',original)
+    with pytest.raises(DataValidationError):read_workbook(path)
+    frame,metadata=read_workbook(path,allowed_extra=('diffs',))
+    pd.testing.assert_frame_equal(frame,original)
+    assert metadata['formula_cells']==0
+
+
 @pytest.mark.parametrize('bad',['formula','multiple_sheets','extra_column'])
 def test_workbook_unsafe_structures_rejected(tmp_path,records,bad):
     frame=review_template(records)

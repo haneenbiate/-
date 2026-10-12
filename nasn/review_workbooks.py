@@ -17,7 +17,7 @@ from .task05 import (DECISIONS, HUMAN, VISIBLE, agreement, csv, fresh, html_revi
 SCOPE = ['negation_cue','original_negation_scope','perturbed_negation_scope']
 
 
-def read_workbook(path):
+def read_workbook(path,allowed_extra=()):
     """Read literal cell values only. Reject formulas rather than use cached results."""
     path=Path(path)
     require(path.is_file() and path.suffix.lower()=='.xlsx', 'Expected an existing XLSX file')
@@ -29,7 +29,7 @@ def read_workbook(path):
     try:
         require(len(workbook.sheetnames)==1, 'Exactly one annotation worksheet required; do not silently select a sheet')
         sheet=workbook.active
-        require(sheet.max_row<=1000 and sheet.max_column==len(VISIBLE+HUMAN), 'Unexpected worksheet dimensions')
+        require(sheet.max_row<=1000 and len(VISIBLE+HUMAN)<=sheet.max_column<=len(VISIBLE+HUMAN)+len(allowed_extra), 'Unexpected worksheet dimensions')
         for row in sheet.iter_rows():
             require(not any(cell.data_type=='f' for cell in row), 'Formula cells are prohibited in review inputs')
         metadata={'sheet_name':sheet.title,'creator':workbook.properties.creator,
@@ -39,6 +39,7 @@ def read_workbook(path):
         workbook.close()
     frame=pd.read_excel(path,sheet_name=metadata['sheet_name'],dtype=str,keep_default_na=False,engine='openpyxl')
     require(not any(str(c).startswith('Unnamed:') for c in frame.columns), 'Missing or duplicate worksheet header')
+    require(set(frame.columns)<=set(VISIBLE+HUMAN+list(allowed_extra)), 'Unexpected worksheet columns')
     return frame,metadata
 
 
