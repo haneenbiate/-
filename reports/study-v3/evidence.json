@@ -51,9 +51,27 @@
     "pytest": "9.1.1"
   },
   "files": {
-    "tokenizer_summary.csv": "a0b0677b9803608c027a1b5ec9e3ae92751fb73df84383c788873ee92bcc8699",
-    "applicability.csv": "88cdcbacf2e36eb56f051b0a55bd4668181dbf8324607d7f547af25113ecd75d"
+    "applicability.csv": "88cdcbacf2e36eb56f051b0a55bd4668181dbf8324607d7f547af25113ecd75d",
+    "arsas_applicability.csv": "792babf00d4428f985c357d8e1ab0e44427ca8b7e9a0eacb0e72f69a2bb91f6d",
+    "arsas_tokenizer_summary.csv": "f3aed2a5c8deea67346eb5ea0d37eefa2bb6857518be6ab886a108a14211379b",
+    "natural_noise.csv": "97cad0fdb2ca0a11eb1afb8537cf558a40cacfcef374a08352da5b712882a004",
+    "tokenizer_summary.csv": "a0b0677b9803608c027a1b5ec9e3ae92751fb73df84383c788873ee92bcc8699"
   },
   "contains_tweet_text": false,
-  "model_predictions": null
+  "model_predictions": null,
+  "arsas": {
+    "variants_sha256": "a12f747fc04813037b29c8e14e0e6710918dafa51402417b9e4cbd7443ab2693",
+    "rows": 1966,
+    "variants": 21626,
+    "applicable": 17599,
+    "tokenizer_audit_variants_sha256": "a12f747fc04813037b29c8e14e0e6710918dafa51402417b9e4cbd7443ab2693",
+    "split_manifest_sha256": "a60d4b2364b49905c7b97c7f805f43835aaf5c4e040e5d9618a1645a42bc1567"
+  },
+  "natural_noise": {
+    "partitions": [
+      "train",
+      "validation"
+    ],
+    "test_text_read": false
+  }
 }

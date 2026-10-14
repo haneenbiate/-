@@ -3,7 +3,8 @@ import argparse
 import json
 from pathlib import Path
 
-VARIANTS_SHA256 = 'd6b467f0bd615c613e90e4c8e60ece49ea248a1ffcc6a846363d34b57874bb2d'
+VARIANTS_SHA256 = {'arsarcasm': 'd6b467f0bd615c613e90e4c8e60ece49ea248a1ffcc6a846363d34b57874bb2d',
+                   'arsas': 'a12f747fc04813037b29c8e14e0e6710918dafa51402417b9e4cbd7443ab2693'}
 
 
 def cell(kind, source):
@@ -16,17 +17,21 @@ def build(reference):
         cell('markdown', '''# Study v3 — multi-model orthographic-noise robustness audit
 
 Run cells in order on a GPU runtime. Every stage writes to Google Drive and **skips
-work that is already complete**, so a disconnected session can be resumed by
-re-running all cells. Encoders fit on a T4 (about 20–30 min per run); the LLM stage
-needs at least 24 GB (L4 or A100) and is skipped otherwise. The official test set
-stays locked; only the validation partition is used here.
+work that is already complete**, so a disconnected session resumes by re-running all
+cells. Encoders fit on a T4 (about 20–30 min per run; 5 models × 3 seeds × 2 datasets);
+the LLM stage needs at least 24 GB (L4 or A100) and is skipped otherwise. Official
+test partitions stay locked; only validation partitions are used here.
+
+Tip: to split the work across sessions, shorten `DATASETS`, `ENCODERS` or `SEEDS` in
+the next cell; finished runs are never repeated.
 '''),
         cell('code', f'''REF = '{reference}'
 DRIVE = '/content/drive/MyDrive/NASN/study-v3'
+DATASETS = ['arsarcasm', 'arsas']
 ENCODERS = ['MARBERT', 'MARBERTv2', 'AraBERTv02-twitter', 'CAMeLBERT-DA', 'XLM-R-base']
 SEEDS = [42, 43, 44]
 LLMS = ['Qwen2.5-7B-Instruct']
-VARIANTS_SHA256 = '{VARIANTS_SHA256}'
+VARIANTS_SHA256 = {json.dumps(VARIANTS_SHA256)}
 '''),
         cell('code', '''import hashlib, json, os, subprocess, sys
 from pathlib import Path
@@ -35,6 +40,7 @@ drive.mount('/content/drive')
 REPO = Path('/content/nasn-study-v3')
 if not REPO.exists():
     subprocess.run(['git', 'clone', 'https://github.com/haneenbiate/-.git', str(REPO)], check=True)
+subprocess.run(['git', 'fetch', 'origin'], cwd=REPO, check=True)
 subprocess.run(['git', 'checkout', REF], cwd=REPO, check=True)
 subprocess.run([sys.executable, '-m', 'pip', 'install', '-q', '-r', 'requirements-marbert.txt', 'accelerate==1.10.1'], cwd=REPO, check=True)
 ROOT = Path(DRIVE); ROOT.mkdir(parents=True, exist_ok=True)
@@ -51,57 +57,66 @@ def sha(path):
 import torch
 print(torch.cuda.get_device_name(0), torch.cuda.get_device_properties(0).total_memory / 2**30, 'GiB')
 '''),
-        cell('code', '''# Data and the frozen perturbation variants (must reproduce the registered hash).
+        cell('code', '''# Data and the frozen perturbation variants (each must reproduce its registered hash).
 subprocess.run([sys.executable, '-m', 'arsarcasm_audit', 'fetch', '--destination', 'data/raw'], cwd=REPO, env=ENV, check=True)
-VARIANTS = ROOT / 'variants' / 'variants.csv.gz'
-if not VARIANTS.exists():
-    call('prepare', '--partition', 'validation', '--output', ROOT / 'variants')
-assert sha(VARIANTS) == VARIANTS_SHA256, 'Variants differ from the registered study-v3 set'
+subprocess.run([sys.executable, '-m', 'nasn.arsas', 'fetch'], cwd=REPO, env=ENV, check=True)
+VARIANTS = {}
+for dataset in DATASETS:
+    VARIANTS[dataset] = ROOT / dataset / 'variants' / 'variants.csv.gz'
+    if not VARIANTS[dataset].exists():
+        call('prepare', '--dataset', dataset, '--partition', 'validation', '--output', ROOT / dataset / 'variants')
+    assert sha(VARIANTS[dataset]) == VARIANTS_SHA256[dataset], f'{dataset}: variants differ from the registered set'
 '''),
-        cell('code', '''# Fine-tune every encoder with every seed (frozen MARBERT v1 recipe).
-for model in ENCODERS:
-    for seed in SEEDS:
-        run = ROOT / 'train' / f'{model}-s{seed}'
-        status = run / 'run_status.json'
-        if status.exists() and json.loads(status.read_text()).get('status') == 'completed':
-            continue
-        if run.exists():
-            run.rename(run.with_name(run.name + f'-incomplete-{len(list(run.parent.glob(run.name + "-incomplete-*")))}'))
-        call('train', '--model', model, '--seed', seed, '--output', run)
+        cell('code', '''# Fine-tune every encoder with every seed on each dataset (frozen MARBERT v1 recipe).
+for dataset in DATASETS:
+    for model in ENCODERS:
+        for seed in SEEDS:
+            run = ROOT / dataset / 'train' / f'{model}-s{seed}'
+            status = run / 'run_status.json'
+            if status.exists() and json.loads(status.read_text()).get('status') == 'completed':
+                continue
+            if run.exists():
+                run.rename(run.with_name(run.name + f'-incomplete-{len(list(run.parent.glob(run.name + "-incomplete-*")))}'))
+            call('train', '--dataset', dataset, '--model', model, '--seed', seed, '--output', run)
 '''),
         cell('code', '''# Clean + perturbed predictions under every defense.
-for model in ENCODERS:
-    for seed in SEEDS:
-        out = ROOT / 'predictions' / f'{model}-s{seed}'
-        if (out / 'evidence.json').exists():
-            continue
-        call('infer', '--variants', VARIANTS, '--checkpoint', ROOT / 'train' / f'{model}-s{seed}' / 'best_checkpoint',
-             '--model', model, '--seed', seed, '--output', out)
+for dataset in DATASETS:
+    for model in ENCODERS:
+        for seed in SEEDS:
+            out = ROOT / dataset / 'predictions' / f'{model}-s{seed}'
+            if (out / 'evidence.json').exists():
+                continue
+            call('infer', '--variants', VARIANTS[dataset], '--checkpoint', ROOT / dataset / 'train' / f'{model}-s{seed}' / 'best_checkpoint',
+                 '--model', model, '--seed', seed, '--output', out)
 '''),
-        cell('code', '''# Zero-shot LLM (RAW inputs only); needs >= 24 GB GPU memory.
+        cell('code', '''# Zero-shot LLM (RAW and STD inputs); needs >= 24 GB GPU memory.
 if torch.cuda.get_device_properties(0).total_memory >= 22 * 2**30:
-    for model in LLMS:
-        out = ROOT / 'predictions' / f'{model}-zero-shot'
-        if not (out / 'evidence.json').exists():
-            call('llm', '--variants', VARIANTS, '--model', model, '--output', out)
+    for dataset in DATASETS:
+        for model in LLMS:
+            out = ROOT / dataset / 'predictions' / f'{model}-zero-shot'
+            if not (out / 'evidence.json').exists():
+                call('llm', '--variants', VARIANTS[dataset], '--model', model, '--defenses', 'RAW', 'STD', '--output', out)
 else:
     print('Skipping LLM stage: switch to an L4/A100 runtime and re-run all cells.')
 '''),
         cell('code', '''# Analysis over everything available, then a ZIP of public (text-free) results.
 import shutil, time
-files = sorted(str(p) for p in (ROOT / 'predictions').glob('*/predictions.csv.gz'))
 stamp = time.strftime('%Y%m%dT%H%M%SZ', time.gmtime())
-for suffix, extra in [('all', []), ('cue-tweets', ['--cue-only'])]:
-    call('analyze', '--variants', VARIANTS, '--predictions', *files, *extra, '--output', ROOT / 'analysis' / f'{stamp}-{suffix}')
 public = ROOT / 'analysis' / f'{stamp}-public'
-public.mkdir()
-for suffix in ['all', 'cue-tweets']:
-    for name in ['robustness_cells.csv', 'contrasts.csv', 'evidence.json']:
-        shutil.copy(ROOT / 'analysis' / f'{stamp}-{suffix}' / name, public / f'{suffix}-{name}')
-for run in sorted((ROOT / 'train').glob('*-s*')):
-    for name in ['validation_metrics.json', 'run_status.json', 'checkpoint_hashes.json']:
-        if (run / name).exists():
-            shutil.copy(run / name, public / f'{run.name}-{name}')
+public.mkdir(parents=True)
+for dataset in DATASETS:
+    files = sorted(str(p) for p in (ROOT / dataset / 'predictions').glob('*/predictions.csv.gz'))
+    if not files:
+        continue
+    for suffix, extra in [('all', []), ('cue-tweets', ['--cue-only'])]:
+        out = ROOT / 'analysis' / f'{stamp}-{dataset}-{suffix}'
+        call('analyze', '--variants', VARIANTS[dataset], '--predictions', *files, *extra, '--output', out)
+        for name in ['robustness_cells.csv', 'contrasts.csv', 'natural_noise_cells.csv', 'evidence.json']:
+            shutil.copy(out / name, public / f'{dataset}-{suffix}-{name}')
+    for run in sorted((ROOT / dataset / 'train').glob('*-s*')):
+        for name in ['validation_metrics.json', 'run_status.json', 'checkpoint_hashes.json', 'epoch_history.csv']:
+            if (run / name).exists():
+                shutil.copy(run / name, public / f'{dataset}-{run.name}-{name}')
 print(shutil.make_archive(str(public), 'zip', public))
 '''),
     ]

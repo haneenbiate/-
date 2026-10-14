@@ -1,0 +1,50 @@
+{
+  "source": "https://homepages.inf.ed.ac.uk/wmagdy/Resources/ArSAS.zip",
+  "zip_sha256": "1d517bfddf2fb766ab6ca2bc98a816f1339e68d7bb04d281959358d8e015d8f1",
+  "file_sha256": "e1f6081f2a4dafab422834efc2ed97c17840154d700aa5b8309a623e900a0567",
+  "seed": 42,
+  "fractions": {
+    "test": 0.2,
+    "validation": 0.1
+  },
+  "label_map": {
+    "Negative": "NEG",
+    "Neutral": "NEU",
+    "Positive": "POS"
+  },
+  "exclusions": {
+    "": 19627,
+    "mixed_sentiment": 1302,
+    "label_conflict_within_group": 90,
+    "duplicate_of_excluded": 44,
+    "shared_with_arsarcasm_v2": 1
+  },
+  "counts": {
+    "excluded": {
+      "": 1302,
+      "NEG": 55,
+      "NEU": 37,
+      "POS": 43
+    },
+    "test": {
+      "": 0,
+      "NEG": 1556,
+      "NEU": 1447,
+      "POS": 920
+    },
+    "train": {
+      "": 0,
+      "NEG": 5451,
+      "NEU": 5069,
+      "POS": 3218
+    },
+    "validation": {
+      "": 0,
+      "NEG": 778,
+      "NEU": 726,
+      "POS": 462
+    }
+  },
+  "manifest_sha256": "a60d4b2364b49905c7b97c7f805f43835aaf5c4e040e5d9618a1645a42bc1567",
+  "method": "Group = rows linked by Task 02 canonical text or a repeated tweet ID. Mixed, within-group label conflicts and any text whose URL/mention/hashtag-free canonical form (>=10 chars) occurs in ArSarcasm-v2 train or test are excluded group-wide. Remaining groups are ranked by SHA-256(seed|arsas|group) within each label: first 20% test, next 10% validation, rest train."
+}

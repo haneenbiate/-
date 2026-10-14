@@ -229,6 +229,8 @@ inference-time defenses (NASN2 appears only as an ablation). See the
 The CPU tokenizer audit is complete ([text-free results](reports/study-v3)):
 in all four Arabic WordPiece encoders a single tatweel turns the edited word,
 including negation cues, into `[UNK]`; XLM-R and Qwen2.5 instead fragment it.
-Model predictions, the second dataset and the new independent human annotation
-are pending; the [Study v3 Colab notebook](notebooks/study_v3_colab.ipynb) runs the
+The second dataset is ArSAS ([pinned leakage-safe split](reports/arsas); ASTD was
+rejected because 20% of ArSarcasm-v2 training tweets come from it), and the
+tokenizer findings replicate on it exactly. Model predictions and the new
+independent human annotation ([intake tool](nasn/annotation_v3.py)) are pending; the [Study v3 Colab notebook](notebooks/study_v3_colab.ipynb) runs the
 GPU stages. On Windows, run Python with `PYTHONUTF8=1`.

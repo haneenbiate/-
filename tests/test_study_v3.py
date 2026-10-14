@@ -83,3 +83,20 @@ def test_analyze_end_to_end(tmp_path):
 def test_test_partition_locked():
     with pytest.raises(Exception, match='locked'):
         study_v3.load_split('test', load_config())
+
+
+def test_natural_noise_compares_raw_with_std():
+    config = {**load_config(), 'bootstrap_repetitions': 20, 'minimum_cell_size': 5}
+    texts = [f'جميـل جدا {i}' for i in range(6)] + [f'عادي {i}' for i in range(6)]
+    variants = pd.DataFrame({'source_row_id': [f'r{i}' for i in range(12)], 'group_id': [f'g{i}' for i in range(12)],
+                             'text': texts, 'clean_sha256': [text_hash(t) for t in texts], 'gold_label': 'POS'})
+    rows = []
+    for t in texts:
+        for defense in ['RAW', 'STD']:
+            # Model reads tatweel words as unknown: RAW tatweel tweets predicted NEG, cleaned ones POS.
+            rows.append({'model': 'm', 'seed': 1, 'defense': defense, 'raw_sha256': text_hash(t),
+                         'pred': 0 if (defense == 'RAW' and 'ـ' in t) else 2})
+    cells = pd.DataFrame(study_v3.natural_noise(variants, pd.DataFrame(rows), config)).set_index('noise')
+    assert cells.loc['tatweel', 'n'] == 6 and cells.loc['tatweel', 'flip_rate'] == 1
+    assert cells.loc['tatweel', 'clean_macro_f1'] > cells.loc['tatweel', 'perturbed_macro_f1']
+    assert cells.loc['letter_run_ge3', 'n'] == 0

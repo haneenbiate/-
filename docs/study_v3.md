@@ -39,15 +39,42 @@ AraBERTv02-twitter and CAMeLBERT-DA, **every** word containing a tatweel becomes
 `[UNK]`, including negation cues (404/404 cue edits). XLM-R and Qwen2.5 never produce
 an unknown token but fragment edited words 1.7–2.9×. MARBERT's lower-casing strips
 hamza from alef, so 35.5% of single-word folding edits leave its tokens unchanged.
-Hypotheses H2 and H3 below build on this observation. They are confirmatory only for
-model *predictions*, which no one has observed yet.
+The same audit on the ArSAS validation partition reproduces every one of these
+figures: 100% `[UNK]` for tatweel in the four WordPiece encoders, and 30.9% of MARBERT
+folding edits unchanged (`reports/study-v3/arsas_tokenizer_summary.csv`). Hypotheses
+H2 and H3 below build on this observation. They are confirmatory only for model
+*predictions*, which no one has observed yet.
+
+**Natural prevalence** (`reports/study-v3/natural_noise.csv`, train and validation
+partitions only):
+
+| | ArSarcasm-v2 | ArSAS |
+|---|---|---|
+| Tweets with natural tatweel | 4.6% | 3.2% |
+| Tweets with a letter repeated 3+ times | 4.0% | 2.8% |
+
+Natural noise *on a negation cue* is rare (≤0.04% of tweets). The cue-targeted
+conditions are therefore a **controlled stress test** of how the models represent
+negation; they do not estimate how often this happens in the wild.
 
 ## Design
 
-**Data.** ArSarcasm-v2 Task 02 splits (leakage-safe, pinned hashes). Development:
-the 2,509 validation tweets. Final: the official test set (3,000), evaluated once
-after the freeze tag. A second dataset is required for the journal version; its
-choice and loader are frozen before any results on it are viewed.
+**Data.**
+- **ArSarcasm-v2**, using the Task 02 splits (leakage-safe, pinned hashes).
+  Development: the 2,509 validation tweets. Final: the official test set (3,000),
+  evaluated once after the freeze tag.
+- **ArSAS** (Elmadany et al., 2018; 21,064 tweets), pinned and split by
+  `nasn/arsas.py`.
+  - *Exclusions:* Mixed sentiment (1,302) is dropped. Tweet ID repeats and identical
+    texts are merged into groups. Groups with conflicting labels (90 tweets + 44
+    linked copies) and the one tweet shared with ArSarcasm-v2 are excluded.
+  - *Split:* a stratified group split gives 13,738 train / 1,966 validation / 3,923
+    test tweets (`reports/arsas/`).
+  - *Why ArSAS rather than ASTD:* 2,473 ArSarcasm-v2 training tweets (20%) also
+    appear in ASTD, so ASTD could not serve as an independent second dataset.
+
+Every model is trained and evaluated separately on each dataset; the two datasets
+are never pooled. Both test partitions stay locked until the freeze.
 
 **Perturbations** (`nasn/orthography_v3.py`; deterministic, hash-selected, logged):
 
@@ -80,6 +107,10 @@ collapse runs of ≥3 identical letters to one); NO_CONTEXT and NASN2 (frozen v2
   isolates the effect of the perturbation.
 - Secondary: clean Macro-F1, perturbed Macro-F1 and their difference (drop),
   computed on the same applicable rows.
+- Natural-noise slice: tweets that already contain tatweel or a letter repeated 3+
+  times are compared with their own STD-cleaned text (cleaned treated as the
+  reference). This is the only real-world estimate in the study; its n is limited
+  to roughly 3–5% of the validation tweets.
 - Uncertainty: 2,000 cluster-bootstrap resamples over Task 02 group IDs (duplicate
   tweets move together), seed 42, percentile 95% intervals. Encoder metrics are
   averaged over the three training seeds inside every resample.
@@ -126,11 +157,16 @@ labels are not reused for any claim.**
 python -m nasn.study_v3 prepare --partition validation --output runs/study-v3/validation-variants
 python -m nasn.study_v3 tokenizer-audit --variants runs/study-v3/validation-variants/variants.csv.gz --output runs/study-v3/tokenizer-audit
 python -m nasn.study_v3 sample-annotation --variants runs/study-v3/validation-variants/variants.csv.gz --output runs/study-v3/annotation-v1
+python -m nasn.study_v3 prevalence --output runs/study-v3/natural-noise
+python -m nasn.arsas fetch && python -m nasn.arsas split --output <new directory>   # reproduces reports/arsas
+python -m nasn.study_v3 prepare --dataset arsas --partition validation --output runs/study-v3/arsas-validation-variants
 python tools/build_study_v3_notebook.py --reference <commit>   # GPU stages in Colab
+python -m nasn.annotation_v3 --package runs/study-v3/annotation-v1 --a A.csv --b B.csv --output <new directory>
 ```
 
-On Windows, set `PYTHONUTF8=1`. The registered variants hash is
-`d6b467f0bd615c613e90e4c8e60ece49ea248a1ffcc6a846363d34b57874bb2d`.
+On Windows, set `PYTHONUTF8=1`. The registered variants hashes are:
+- ArSarcasm-v2: `d6b467f0bd615c613e90e4c8e60ece49ea248a1ffcc6a846363d34b57874bb2d`
+- ArSAS: `a12f747fc04813037b29c8e14e0e6710918dafa51402417b9e4cbd7443ab2693`
 
 ## Known limits
 

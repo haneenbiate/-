@@ -1,6 +1,6 @@
 """Study v3: multi-model orthographic-noise robustness audit for Arabic sentiment.
 
-Commands: prepare, sample-annotation, tokenizer-audit, train, infer, llm, analyze. Private outputs that
+Commands: prepare, prevalence, sample-annotation, tokenizer-audit, train, infer, llm, analyze. Private outputs that
 contain tweet text belong under runs/ (ignored by Git); public outputs contain IDs,
 hashes and aggregate metrics only.
 """
@@ -52,10 +52,14 @@ def load_config(path=CONFIG):
     return config
 
 
-def load_split(partition, config, raw_directory=None):
-    """Registered Task 02 rows joined to raw text; the official test needs an explicit unlock."""
+def load_split(partition, config, raw_directory=None, dataset='arsarcasm'):
+    """Registered rows joined to raw text; every test partition needs an explicit unlock."""
     require(partition in RAW, f'Unknown partition: {partition}')
     require(partition != 'test' or config['test_unlocked'] is True, 'Official test is locked: ' + config['test_unlock_rule'])
+    if dataset == 'arsas':
+        from . import arsas
+        return arsas.load_partition(Path(raw_directory or ROOT / 'data/arsas') / arsas.MEMBER, partition)
+    require(dataset == 'arsarcasm', f'Unknown dataset: {dataset}')
     meta = json.loads((SPLITS / 'metadata.json').read_text(encoding='utf-8'))
     require(meta['source_commit'] == COMMIT, 'Task 02 source revision changed')
     manifest_name = f'{partition}_manifest.csv'
@@ -96,18 +100,54 @@ def build_variants(frame, config):
 
 def prepare(args, config):
     output = fresh(args.output)
-    frame = load_split(args.partition, config, args.raw_directory)
+    frame = load_split(args.partition, config, args.raw_directory, args.dataset)
     variants = build_variants(frame, config)
     variants.to_csv(output / 'variants.csv.gz', index=False, compression=GZIP)
     public = variants.drop(columns=['text', 'perturbed_text', 'edits'])
     summary = public.groupby(['condition', 'has_cue']).agg(rows=('variant_id', 'size'), applicable=('applicable', 'sum'),
                                                          mean_edits=('n_edits', 'mean')).reset_index()
     summary.to_csv(output / 'applicability.csv', index=False)
-    save(output / 'evidence.json', {'study': config['version'], 'partition': args.partition, 'rows': len(frame),
+    save(output / 'evidence.json', {'study': config['version'], 'dataset': args.dataset, 'partition': args.partition, 'rows': len(frame),
          'variants': len(variants), 'applicable': int(variants.applicable.sum()),
          'config_sha256': sha256(args.config), 'orthography_sha256': sha256(ROOT / 'nasn/orthography_v3.py'),
          'variants_sha256': sha256(output / 'variants.csv.gz'), 'versions': library_versions()})
     print(summary.to_string(index=False))
+
+
+NATURAL = {
+    'tatweel': lambda word: 'ـ' in word,
+    'letter_run_ge3': lambda word: bool(REPEAT_RUN.search(word.replace('ـ', ''))),
+    'long_vowel_run_ge3': lambda word: bool(re.search(r'([اوي])\1{2,}', word.replace('ـ', ''))),
+}
+
+
+def prevalence(args, config):
+    """How often naturally occurring noise appears in real tweets (train + validation only)."""
+    output = fresh(args.output)
+    rows = []
+    for dataset in ['arsarcasm', 'arsas']:
+        for partition in ['train', 'validation']:
+            frame = load_split(partition, config, None, dataset)
+            for row in frame.itertuples(index=False):
+                words = [t.group() for t in TOKEN.finditer(row.tweet)]
+                record = {'dataset': dataset, 'partition': partition, 'source_row_id': row.source_row_id}
+                for name, test in NATURAL.items():
+                    hits = [w for w in words if test(w)]
+                    record[name] = bool(hits)
+                    record[f'{name}_on_cue'] = any(is_cue(w.replace('ـ', '')) or is_cue(re.sub(r'(.)\1+', r'\1', w)) for w in hits)
+                rows.append(record)
+    detail = pd.DataFrame(rows)
+    columns = [c for c in detail.columns if c not in {'dataset', 'partition', 'source_row_id'}]
+    summary = detail.groupby('dataset')[columns].agg(['sum', 'mean'])
+    summary.columns = [f'{a}_{"tweets" if b == "sum" else "rate"}' for a, b in summary.columns]
+    summary.insert(0, 'tweets', detail.groupby('dataset').size())
+    summary.reset_index().to_csv(output / 'natural_noise.csv', index=False)
+    save(output / 'evidence.json', {'partitions': ['train', 'validation'], 'test_text_read': False,
+                                    'definitions': {'tatweel': 'U+0640 inside an Arabic word',
+                                                    'letter_run_ge3': 'same Arabic letter 3+ times in a row',
+                                                    'long_vowel_run_ge3': 'ا/و/ي 3+ times in a row',
+                                                    '_on_cue': 'the noisy word is an unambiguous negation cue'}})
+    print(summary.T.to_string())
 
 
 def sample_annotation(args, config):
@@ -188,11 +228,11 @@ def train(args, config):
     from . import marbert
     spec = config['encoders'][args.model]
     template = json.loads((ROOT / config['training_template']).read_text(encoding='utf-8'))
-    run = {**template, **spec, 'seed': args.seed, 'study': config['version'], 'encoder_key': args.model,
+    run = {**template, **spec, 'seed': args.seed, 'study': config['version'], 'encoder_key': args.model, 'dataset': args.dataset,
            'cache_directory': args.cache_directory}
     output = fresh(args.output)
     marbert.save_json(output / 'training_config.json', run)
-    training, validation = (load_split(p, config, args.raw_directory) for p in ('train', 'validation'))
+    training, validation = (load_split(p, config, args.raw_directory, args.dataset) for p in ('train', 'validation'))
     started = time.perf_counter()
     status = marbert.fit(training, validation, run, output)
     status['wall_seconds'] = time.perf_counter() - started
@@ -327,6 +367,27 @@ def load_predictions(paths):
     return frame
 
 
+def natural_noise(variants, predictions, config):
+    """Unmodified tweets that already contain noise: RAW vs STD-cleaned predictions of the same text."""
+    clean = variants.drop_duplicates('source_row_id')
+    words = clean.text.map(lambda t: [m.group() for m in TOKEN.finditer(t)])
+    cells = []
+    for name, test in NATURAL.items():
+        rows = clean[words.map(lambda ws: any(map(test, ws)))]
+        for model, part in predictions[predictions.defense.isin(['RAW', 'STD'])].groupby('model'):
+            seeds = sorted(set(part[part.defense == 'RAW'].seed) & set(part[part.defense == 'STD'].seed))
+            cell = {'model': model, 'noise': name, 'n': len(rows), 'seeds': len(seeds)}
+            if len(rows) >= config['minimum_cell_size'] and seeds:
+                lookup = {(d, s): part[(part.defense == d) & (part.seed == s)].set_index('raw_sha256').pred for d in ['RAW', 'STD'] for s in seeds}
+                raw = np.stack([lookup['RAW', s].reindex(rows.clean_sha256).to_numpy() for s in seeds]).astype(int)
+                std = np.stack([lookup['STD', s].reindex(rows.clean_sha256).to_numpy() for s in seeds]).astype(int)
+                # Orientation: "clean" = STD-cleaned text, "noisy" = the tweet as written.
+                cell.update(cell_statistics(rows.gold_label.map(LABEL2ID).to_numpy(), std, raw, rows.group_id.to_numpy(),
+                                            config['bootstrap_repetitions'], config['seed']))
+            cells.append(cell)
+    return cells
+
+
 def analyze(args, config):
     output = fresh(args.output)
     variants = read_variants(args.variants)
@@ -381,6 +442,7 @@ def analyze(args, config):
         for model in models:
             if model != reference:
                 paired('model_contrasts', (model, 'RAW', name), (reference, 'RAW', name), condition=name, a=model, b=reference)
+    pd.DataFrame(natural_noise(variants, predictions, config)).to_csv(output / 'natural_noise_cells.csv', index=False)
     pd.DataFrame(cells).to_csv(output / 'robustness_cells.csv', index=False)
     pd.DataFrame(contrasts).to_csv(output / 'contrasts.csv', index=False)
     save(output / 'evidence.json', {'variants_sha256': sha256(args.variants),
@@ -394,11 +456,13 @@ def main(argv=None):
     parser.add_argument('--config', default=str(CONFIG))
     sub = parser.add_subparsers(dest='command', required=True)
     p = sub.add_parser('prepare'); p.add_argument('--partition', default='validation'); p.add_argument('--raw-directory')
+    p.add_argument('--dataset', choices=['arsarcasm', 'arsas'], default='arsarcasm')
+    sub.add_parser('prevalence')
     p = sub.add_parser('sample-annotation'); p.add_argument('--variants', required=True)
     p.add_argument('--per-condition', type=int, default=30)
     p = sub.add_parser('tokenizer-audit'); p.add_argument('--variants', required=True)
     p = sub.add_parser('train'); p.add_argument('--model', required=True); p.add_argument('--seed', type=int, required=True)
-    p.add_argument('--raw-directory')
+    p.add_argument('--raw-directory'); p.add_argument('--dataset', choices=['arsarcasm', 'arsas'], default='arsarcasm')
     p = sub.add_parser('infer'); p.add_argument('--variants', required=True); p.add_argument('--checkpoint', required=True)
     p.add_argument('--model', required=True); p.add_argument('--seed', type=int, required=True); p.add_argument('--defenses', nargs='*')
     p = sub.add_parser('llm'); p.add_argument('--variants', required=True); p.add_argument('--model', required=True)
@@ -409,7 +473,7 @@ def main(argv=None):
         p.add_argument('--output', required=True); p.add_argument('--cache-directory', default='data/huggingface')
     args = parser.parse_args(argv)
     config = load_config(args.config)
-    {'prepare': prepare, 'sample-annotation': sample_annotation, 'tokenizer-audit': tokenizer_audit, 'train': train, 'infer': infer, 'llm': llm,
+    {'prepare': prepare, 'prevalence': prevalence, 'sample-annotation': sample_annotation, 'tokenizer-audit': tokenizer_audit, 'train': train, 'infer': infer, 'llm': llm,
      'analyze': analyze}[args.command](args, config)
 
 

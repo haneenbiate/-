@@ -1,0 +1,3 @@
+dataset,tweets,tatweel_tweets,tatweel_rate,tatweel_on_cue_tweets,tatweel_on_cue_rate,letter_run_ge3_tweets,letter_run_ge3_rate,letter_run_ge3_on_cue_tweets,letter_run_ge3_on_cue_rate,long_vowel_run_ge3_tweets,long_vowel_run_ge3_rate,long_vowel_run_ge3_on_cue_tweets,long_vowel_run_ge3_on_cue_rate
+arsarcasm,12546,571,0.0455125139486689,1,7.970667941973537e-05,498,0.03969392635102822,5,0.00039853339709867687,300,0.02391200382592061,5,0.00039853339709867687
+arsas,15704,502,0.031966377992868056,1,6.367804381049414e-05,436,0.027763627101375445,3,0.00019103413143148242,294,0.018721344880285276,2,0.00012735608762098828
