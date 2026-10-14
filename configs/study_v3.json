@@ -1,0 +1,40 @@
+{
+  "version": "study-v3-1",
+  "status": "preregistered_draft",
+  "seed": 42,
+  "training_seeds": [42, 43, 44],
+  "orthography_version": "orthography-v3",
+  "conditions": [
+    "tatweel/single/non_cue", "tatweel/dense/non_cue", "tatweel/single/cue",
+    "elongationx2/single/non_cue", "elongationx4/single/non_cue", "elongationx2/dense/non_cue", "elongationx2/single/cue",
+    "fold/single/non_cue", "fold/dense/non_cue",
+    "typo/single/non_cue", "typo/dense/non_cue"
+  ],
+  "cue_contrasts": [["tatweel/single/cue", "tatweel/single/non_cue"], ["elongationx2/single/cue", "elongationx2/single/non_cue"]],
+  "density_contrasts": [["tatweel/dense/non_cue", "tatweel/single/non_cue"], ["elongationx2/dense/non_cue", "elongationx2/single/non_cue"],
+                        ["fold/dense/non_cue", "fold/single/non_cue"], ["typo/dense/non_cue", "typo/single/non_cue"]],
+  "defenses": ["RAW", "STD", "NO_CONTEXT", "NASN2"],
+  "defense_contrasts": [["STD", "RAW"], ["NO_CONTEXT", "RAW"], ["NASN2", "NO_CONTEXT"]],
+  "reference_model": "XLM-R-base",
+  "model_contrast_conditions": ["tatweel/dense/non_cue", "tatweel/single/cue", "elongationx2/dense/non_cue", "fold/dense/non_cue"],
+  "encoders": {
+    "MARBERT": {"model_name": "UBC-NLP/MARBERT", "model_revision": "88e1fa192dd723cf0b3563500aec46209762eb22"},
+    "MARBERTv2": {"model_name": "UBC-NLP/MARBERTv2", "model_revision": "fe88db9db8ccdb0c4e1627495f405c44a5f89066"},
+    "AraBERTv02-twitter": {"model_name": "aubmindlab/bert-base-arabertv02-twitter", "model_revision": "0decc2e761667f0aea7aa94546ada5a32a6e5bb8"},
+    "CAMeLBERT-DA": {"model_name": "CAMeL-Lab/bert-base-arabic-camelbert-da", "model_revision": "231698eab9ebf0ae7b518a64277b81b2fe829f2d"},
+    "XLM-R-base": {"model_name": "FacebookAI/xlm-roberta-base", "model_revision": "e73636d4f797dec63c3081bb6ed5c7b0bb3f2089"}
+  },
+  "llms": {
+    "Qwen2.5-7B-Instruct": {"model_name": "Qwen/Qwen2.5-7B-Instruct", "model_revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+                            "dtype": "bfloat16", "labels": {"NEG": "negative", "NEU": "neutral", "POS": "positive"}}
+  },
+  "training_template": "configs/marbert_v1.json",
+  "inference_batch_size": 32,
+  "bootstrap_repetitions": 2000,
+  "minimum_cell_size": 30,
+  "primary_metric": "flip_rate",
+  "secondary_metrics": ["macro_f1_drop", "clean_macro_f1", "perturbed_macro_f1"],
+  "development_partition": "validation",
+  "test_unlocked": false,
+  "test_unlock_rule": "Set true only after this file, orthography_v3.py and study_v3.py are committed and tagged study-v3-frozen; the official test is then evaluated exactly once."
+}

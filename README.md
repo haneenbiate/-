@@ -216,3 +216,19 @@ NASN2 improvement claim or reframing as a preprocessing/ablation audit. Actual
 are preserved separately. New normalized-text semantic review and reviewer
 independence remain unverified; no new rules, training or official test evaluation
 are introduced after these results.
+
+## Study v3: multi-model robustness audit (current direction)
+
+Following the failed Task 07 superiority gate, the project is reframed as a
+preregistered audit of how realistic Arabic orthographic noise affects five
+fine-tuned encoders and one zero-shot LLM, with negation-cue-targeted edits and
+inference-time defenses (NASN2 appears only as an ablation). See the
+[preregistration](docs/study_v3.md) and the
+[Arabic annotation protocol](docs/study_v3_annotation_protocol_ar.md).
+
+The CPU tokenizer audit is complete ([text-free results](reports/study-v3)):
+in all four Arabic WordPiece encoders a single tatweel turns the edited word,
+including negation cues, into `[UNK]`; XLM-R and Qwen2.5 instead fragment it.
+Model predictions, the second dataset and the new independent human annotation
+are pending; the [Study v3 Colab notebook](notebooks/study_v3_colab.ipynb) runs the
+GPU stages. On Windows, run Python with `PYTHONUTF8=1`.

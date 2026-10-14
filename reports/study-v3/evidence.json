@@ -1,0 +1,59 @@
+{
+  "stage": "cpu_tokenizer_audit_before_freeze",
+  "variants_sha256": "d6b467f0bd615c613e90e4c8e60ece49ea248a1ffcc6a846363d34b57874bb2d",
+  "orthography_sha256": "3f9b97cd5a2d13da134275ff00b40460458e714713f56dbb25a72e916655dbc0",
+  "rows": 2509,
+  "variants": 27599,
+  "applicable": 22060,
+  "tokenizer_audit_variants_sha256": "d6b467f0bd615c613e90e4c8e60ece49ea248a1ffcc6a846363d34b57874bb2d",
+  "models": {
+    "MARBERT": {
+      "model_name": "UBC-NLP/MARBERT",
+      "model_revision": "88e1fa192dd723cf0b3563500aec46209762eb22"
+    },
+    "MARBERTv2": {
+      "model_name": "UBC-NLP/MARBERTv2",
+      "model_revision": "fe88db9db8ccdb0c4e1627495f405c44a5f89066"
+    },
+    "AraBERTv02-twitter": {
+      "model_name": "aubmindlab/bert-base-arabertv02-twitter",
+      "model_revision": "0decc2e761667f0aea7aa94546ada5a32a6e5bb8"
+    },
+    "CAMeLBERT-DA": {
+      "model_name": "CAMeL-Lab/bert-base-arabic-camelbert-da",
+      "model_revision": "231698eab9ebf0ae7b518a64277b81b2fe829f2d"
+    },
+    "XLM-R-base": {
+      "model_name": "FacebookAI/xlm-roberta-base",
+      "model_revision": "e73636d4f797dec63c3081bb6ed5c7b0bb3f2089"
+    },
+    "Qwen2.5-7B-Instruct": {
+      "model_name": "Qwen/Qwen2.5-7B-Instruct",
+      "model_revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+      "dtype": "bfloat16",
+      "labels": {
+        "NEG": "negative",
+        "NEU": "neutral",
+        "POS": "positive"
+      }
+    }
+  },
+  "versions": {
+    "python": "3.12.10",
+    "pandas": "2.2.3",
+    "numpy": "2.3.5",
+    "scikit-learn": "1.8.0",
+    "torch": null,
+    "transformers": "5.19.0",
+    "huggingface-hub": "2.2.0",
+    "tokenizers": "0.23.3",
+    "safetensors": "0.8.0",
+    "pytest": "9.1.1"
+  },
+  "files": {
+    "tokenizer_summary.csv": "a0b0677b9803608c027a1b5ec9e3ae92751fb73df84383c788873ee92bcc8699",
+    "applicability.csv": "88cdcbacf2e36eb56f051b0a55bd4668181dbf8324607d7f547af25113ecd75d"
+  },
+  "contains_tweet_text": false,
+  "model_predictions": null
+}

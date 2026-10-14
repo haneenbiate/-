@@ -1,3 +1,7 @@
+# Byte-exact checkouts on every OS: artifacts and code are verified by SHA-256,
+# so Windows core.autocrlf must not rewrite line endings.
+* -text
+
 # Preserve generated SVG geometry bytes; Matplotlib emits whitespace in path data.
 reports/task04/*.svg -whitespace
 reports/task05-robustness/*.svg -whitespace
