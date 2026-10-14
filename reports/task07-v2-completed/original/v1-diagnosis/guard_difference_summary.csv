@@ -1,0 +1,6 @@
+kind,rule,intensity,n,typography_candidates,B3_correct,B4_correct
+clean,clean,0,20,17,15,15
+perturbed,elongation,1,20,17,15,15
+perturbed,elongation,2,23,17,18,19
+perturbed,tatweel,1,290,287,220,213
+perturbed,tatweel,2,290,287,220,213

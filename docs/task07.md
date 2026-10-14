@@ -1,5 +1,10 @@
 # Task 07 — verified v1 failure diagnosis and controlled v2 preparation
 
+**Latest stage:** the completed October 14 v2 report ZIP has now been verified and
+all metrics/intervals recomputed. See [actual v2 results and the scientific
+decision](task07_v2_results.md). The preparation/blocker sections below retain
+the earlier stage; frozen rules and decision criteria are unchanged.
+
 The supplied `nasn-prototype-v1-20261012T111339Z-4e08cdbf-reports.zip` is a completed
 Task 06 run, verified from all 15 payload checksums and recomputed metric tables.
 Archive SHA256: `f72c24eae1ebd58fcc755fbc0461d040b0293151e70b76f3d11a70365ba6c837`.

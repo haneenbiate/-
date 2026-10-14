@@ -1,0 +1,12 @@
+{
+  "NASN2_vs_simple_paired.csv": "b5a6e4351d9e291fad2c34a8800069c1873f95e0ce6d4c055a3ecb0f274afd1a",
+  "all_clean_metrics.csv": "4b1876934e44a13fe9cfd29b02622b852b286c1069fb8d6b802033eb148ad68e",
+  "all_clean_paired_intervals.csv": "6bc1ef63250e24c039031965184a4dc51427d184a1e5dd84f6e96339c14d8296",
+  "development_predictions.csv.gz": "3be2162073bc2d64d2c258150ec61d63fa8f842cc51bcab1f41f677846c93695",
+  "loading_info.json": "ea8462ce1fb5161e28a2547070c1a7915315f32097d1aec2ca40a21e18831d85",
+  "pooled_cluster_metrics.csv": "7b8342aa5b686402437852a97fea8dc19c35403a8e44fb7178fbfda34fba0cb4",
+  "rule_intensity_metrics.csv": "471c40e218d151caf12f6bff4c06f120f01dfbfaa7be2c6695b9c6c0ec7fbd3e",
+  "rule_intensity_vs_RAW.csv": "5eeb905cf0e54e020d7a98bf56073493d3c2bff6d189ab0b5466ae775ffbabb3",
+  "run_status.json": "0a5f0db8ba91e8f1bfc7cee9bb7a32cfdf745c975338ec1a9ace300fa997104d",
+  "scientific_decision.json": "7a31a92a7727481bb978535a81751e9c4ce2c8d041737adac100827aaa2caa77"
+}

@@ -1,0 +1,11 @@
+strategy,kind,rows,changed,effective_tokens_changed,repeat_edits,context_abstentions
+NASN2,clean,2509,141,140,33,4
+NASN2,perturbed,9961,7393,7391,2418,252
+NO_CONTEXT,clean,2509,144,143,37,0
+NO_CONTEXT,perturbed,9961,7623,7621,2670,0
+RAW,clean,2509,0,0,0,0
+RAW,perturbed,9961,0,0,0,0
+REP2,clean,2509,35,35,37,0
+REP2,perturbed,9961,2638,2624,2668,0
+TAT,clean,2509,111,110,0,0
+TAT,perturbed,9961,5167,5164,0,0

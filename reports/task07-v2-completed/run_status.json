@@ -1,0 +1,7 @@
+{
+  "status": "verified_results_analysis_completed",
+  "scientific_decision": "abandon_improvement_claim_or_reframe_as_preprocessing_audit",
+  "training_performed": false,
+  "test_evaluated": false,
+  "new_rule_tuning": false
+}

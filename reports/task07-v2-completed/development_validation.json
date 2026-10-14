@@ -1,0 +1,17 @@
+{
+  "pytest": {
+    "passed": 346,
+    "failed": 0,
+    "skipped": 0,
+    "duration_seconds": 29.58
+  },
+  "uploaded_payload_hashes_verified": 26,
+  "prediction_records_verified": 62350,
+  "per_rule_pooled_clean_and_decision_tables_recomputed": true,
+  "frozen_model_normalization_and_decision_code_unchanged": true,
+  "new_model_training_or_inference_locally": false,
+  "official_test_text_read_or_evaluated": false,
+  "new_normalized_text_human_verified": false,
+  "reviewer_independence_verified": false,
+  "source_archive_sha256": "6306331ae954f9778bec80d9ee2e1d55fa41744b29221b4162402ab52a0f286f"
+}

@@ -1,0 +1,8 @@
+{
+  "gpu": "Tesla T4",
+  "free_vram_bytes": 15527116800,
+  "total_vram_bytes": 15637086208,
+  "cuda_build": "12.6",
+  "torch": "2.8.0+cu126",
+  "kernel_check_passed": true
+}

@@ -206,3 +206,13 @@ is not executed locally because selected weights/CUDA remain unavailable. The
 selected-checkpoint experiment; the scientific decision is undetermined until
 verified v2 results arrive. No new authenticated-human agreement or novelty claim
 is made.
+
+The completed October 14 [Task 07 v2 results](docs/task07_v2_results.md) have now
+been verified and independently recomputed. NASN2 and the strongest simple method
+NO_CONTEXT tie on all 394 source-eligible perturbed predictions (Macro-F1 0.655111,
+flip rate 1.7766%). The frozen superiority gate fails; recommend dropping the
+NASN2 improvement claim or reframing as a preprocessing/ablation audit. Actual
+[results, paired intervals, provenance and figures](reports/task07-v2-completed)
+are preserved separately. New normalized-text semantic review and reviewer
+independence remain unverified; no new rules, training or official test evaluation
+are introduced after these results.

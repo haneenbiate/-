@@ -1,0 +1,31 @@
+{
+  "decision": "abandon_improvement_claim_or_reframe_as_preprocessing_audit",
+  "strongest_simple_baseline": "NO_CONTEXT",
+  "checks": [
+    {
+      "baseline": "TAT",
+      "paired_gain": 0.008878285866744662,
+      "paired_ci_low": -0.0029418821971701147,
+      "clean_all_development_macro_f1_gain": 0.00034145406434038517,
+      "supports": false
+    },
+    {
+      "baseline": "REP2",
+      "paired_gain": 0.005931785495207675,
+      "paired_ci_low": -0.002207591151420077,
+      "clean_all_development_macro_f1_gain": 0.000775771216264487,
+      "supports": false
+    },
+    {
+      "baseline": "NO_CONTEXT",
+      "paired_gain": 0.0,
+      "paired_ci_low": 0.0,
+      "clean_all_development_macro_f1_gain": 0.00032038366010389563,
+      "supports": false
+    }
+  ],
+  "human_semantic_validation_complete": false,
+  "reviewer_independence_verified": false,
+  "novelty_or_statistical_significance_claim": false,
+  "post_hoc_rule_additions_recommended": false
+}

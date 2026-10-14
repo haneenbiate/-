@@ -1,0 +1,9 @@
+{
+  "code_ref": "304e54bd4ba0f6fa9b012244de090ee66d84b014",
+  "seed": 42,
+  "max_length": 128,
+  "inference_batch_size": 8,
+  "precision": "float32",
+  "training": false,
+  "selection": "fixed methods, no parameter search"
+}

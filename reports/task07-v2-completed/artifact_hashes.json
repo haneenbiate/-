@@ -1,0 +1,20 @@
+{
+  "NASN2_vs_simple_macro_f1.pdf": "9ec7d687a97b5b0e2240cbdc45452e4fdf86c8d93f81beb817bb24ffeec0525f",
+  "NASN2_vs_simple_macro_f1.svg": "13cb31d0086a5278fee5189d2fbf2a460ea4d5c5a6b8e6e69113909648766dc4",
+  "all_clean_metrics.csv": "4b1876934e44a13fe9cfd29b02622b852b286c1069fb8d6b802033eb148ad68e",
+  "all_clean_per_class.csv": "3fafb9e2bcb58676226b2432e7a69e3f0cabb8124d6a3e2443fd17cbe4c5cafe",
+  "all_context_ablation_comparisons.csv": "3115ee531f281b11b9cda27b15699cfc5081ecd3553452492b678c1ca1e1b285",
+  "context_ablation_summary.csv": "7a65b7ea8ed318c1db8d0fdb88389f215f06a7c09f67f0919f26bb80d4c23788",
+  "development_validation.json": "4132521dbcdf0f7b360d92bfefffa3a0ee82d364db32a3e738079d656ce8abfe",
+  "methodology.md": "ac4ff92e2cb582ecc4980d60d451cbea1f7cca81df47d0a28c1b7e6187052ed5",
+  "primary_and_provisional_results.csv": "bed1afae798c1c351c4c6d253a2b2aeb6eb27a8b47c53fc5e33f27f4265d66b7",
+  "primary_and_provisional_results.tex": "eef33059d4b36969be975dc98a8c24ffda7ade366ef650462f271f1270ce9d85",
+  "primary_comparison_table.csv": "3c356c252c7262e9be878f47946326253756d95a862824e8ab01a2a685247c11",
+  "primary_comparison_table.tex": "1876e4ae640709930824a610632b6df483c08c6ce88547e6e768bf7dc1168dd0",
+  "publication.json": "9044125fb22b2b2d98f019e8fb9380af640fbc3e9ba1f8f66797115356489396",
+  "recomputed_paired_contrasts.csv": "b5a6e4351d9e291fad2c34a8800069c1873f95e0ce6d4c055a3ecb0f274afd1a",
+  "recomputed_pooled_metrics.csv": "7b8342aa5b686402437852a97fea8dc19c35403a8e44fb7178fbfda34fba0cb4",
+  "run_status.json": "73fc47355d4ebc311b721b9cd0893a2afb25ae0635abfff0b235ba5db83c9f82",
+  "scientific_decision.json": "7a31a92a7727481bb978535a81751e9c4ce2c8d041737adac100827aaa2caa77",
+  "verification.json": "aaef974c9ec74f1c42cd0cfd779ad5e646d3236c2c0752fdb6cd0ca80db2b5d5"
+}
