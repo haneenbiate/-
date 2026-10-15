@@ -33,6 +33,12 @@ def text_hash(text):
     return hashlib.sha256(text.encode()).hexdigest()
 
 
+def content_sha256(path):
+    """Hash of the decompressed table: independent of gzip/zlib build and platform."""
+    import gzip
+    return hashlib.sha256(gzip.open(path).read()).hexdigest()
+
+
 def save(path, value):
     Path(path).write_text(json.dumps(value, indent=2, ensure_ascii=False, allow_nan=False) + '\n', encoding='utf-8')
 
@@ -102,15 +108,16 @@ def prepare(args, config):
     output = fresh(args.output)
     frame = load_split(args.partition, config, args.raw_directory, args.dataset)
     variants = build_variants(frame, config)
-    variants.to_csv(output / 'variants.csv.gz', index=False, compression=GZIP)
+    variants.to_csv(output / 'variants.csv.gz', index=False, lineterminator='\n', compression=GZIP)
     public = variants.drop(columns=['text', 'perturbed_text', 'edits'])
     summary = public.groupby(['condition', 'has_cue']).agg(rows=('variant_id', 'size'), applicable=('applicable', 'sum'),
                                                          mean_edits=('n_edits', 'mean')).reset_index()
-    summary.to_csv(output / 'applicability.csv', index=False)
+    summary.to_csv(output / 'applicability.csv', index=False, lineterminator='\n')
     save(output / 'evidence.json', {'study': config['version'], 'dataset': args.dataset, 'partition': args.partition, 'rows': len(frame),
          'variants': len(variants), 'applicable': int(variants.applicable.sum()),
          'config_sha256': sha256(args.config), 'orthography_sha256': sha256(ROOT / 'nasn/orthography_v3.py'),
-         'variants_sha256': sha256(output / 'variants.csv.gz'), 'versions': library_versions()})
+         'variants_sha256': sha256(output / 'variants.csv.gz'),
+         'variants_content_sha256': content_sha256(output / 'variants.csv.gz'), 'versions': library_versions()})
     print(summary.to_string(index=False))
 
 
@@ -141,7 +148,7 @@ def prevalence(args, config):
     summary = detail.groupby('dataset')[columns].agg(['sum', 'mean'])
     summary.columns = [f'{a}_{"tweets" if b == "sum" else "rate"}' for a, b in summary.columns]
     summary.insert(0, 'tweets', detail.groupby('dataset').size())
-    summary.reset_index().to_csv(output / 'natural_noise.csv', index=False)
+    summary.reset_index().to_csv(output / 'natural_noise.csv', index=False, lineterminator='\n')
     save(output / 'evidence.json', {'partitions': ['train', 'validation'], 'test_text_read': False,
                                     'definitions': {'tatweel': 'U+0640 inside an Arabic word',
                                                     'letter_run_ge3': 'same Arabic letter 3+ times in a row',
@@ -169,13 +176,13 @@ def sample_annotation(args, config):
     sample = pd.concat(chosen).sort_values('_rank').reset_index(drop=True)
     sample['item'] = [f'item{i + 1:04d}' for i in range(len(sample))]
     key = sample[['item', 'variant_id', 'source_row_id', 'condition', 'clean_sha256', 'perturbed_sha256']]
-    key.to_csv(output / 'annotation_key_private.csv', index=False, encoding='utf-8-sig')
+    key.to_csv(output / 'annotation_key_private.csv', index=False, lineterminator='\n', encoding='utf-8-sig')
     sheet = sample[['item', 'text', 'perturbed_text']].rename(columns={'text': 'original', 'perturbed_text': 'modified'})
     for column in ['meaning_preserved', 'sentiment_preserved', 'modified_sentiment', 'negation_present',
                    'negation_affected', 'notes']:
         sheet[column] = ''
     for annotator in ['A', 'B']:
-        sheet.to_csv(output / f'annotation_sheet_{annotator}.csv', index=False, encoding='utf-8-sig')
+        sheet.to_csv(output / f'annotation_sheet_{annotator}.csv', index=False, lineterminator='\n', encoding='utf-8-sig')
     save(output / 'evidence.json', {'variants_sha256': sha256(args.variants), 'items': len(sample),
          'per_condition': args.per_condition, 'key_sha256': sha256(output / 'annotation_key_private.csv')})
     print(key.condition.value_counts().to_string())
@@ -209,14 +216,14 @@ def tokenizer_audit(args, config):
                          'n_edits': len(edits)})
         print(key, 'done', flush=True)
     detail = pd.DataFrame(rows)
-    detail.to_csv(output / 'tokenizer_detail.csv.gz', index=False, compression=GZIP)
+    detail.to_csv(output / 'tokenizer_detail.csv.gz', index=False, lineterminator='\n', compression=GZIP)
     summary = detail.assign(
         unk_word_rate=detail.edited_word_unk / detail.n_edits,
         fragmentation=detail.edited_target_tokens / detail.edited_source_tokens.clip(lower=1),
         new_unk=detail.perturbed_unk > detail.clean_unk).groupby(['model', 'condition']).agg(
         n=('variant_id', 'size'), tokens_changed=('tokens_changed', 'mean'), new_unk_rate=('new_unk', 'mean'),
         edited_word_unk_rate=('unk_word_rate', 'mean'), mean_fragmentation=('fragmentation', 'mean')).reset_index()
-    summary.to_csv(output / 'tokenizer_summary.csv', index=False)
+    summary.to_csv(output / 'tokenizer_summary.csv', index=False, lineterminator='\n')
     save(output / 'evidence.json', {'variants_sha256': sha256(args.variants), 'models': models, 'versions': library_versions()})
     print(summary.to_string(index=False))
 
@@ -279,7 +286,7 @@ def write_predictions(inputs, probabilities, output, args, extra):
     frame = inputs.drop(columns='input_text').assign(model=args.model, seed=args.seed)
     for i, label in enumerate(LABELS):
         frame[f'p_{label}'] = probabilities[:, i]
-    frame.to_csv(output / 'predictions.csv.gz', index=False, compression=GZIP)
+    frame.to_csv(output / 'predictions.csv.gz', index=False, lineterminator='\n', compression=GZIP)
     save(output / 'evidence.json', {'model': args.model, 'seed': args.seed, 'variants_sha256': sha256(args.variants),
          'predictions_sha256': sha256(output / 'predictions.csv.gz'), 'rows': len(frame), **extra,
          'versions': library_versions()})
@@ -442,9 +449,9 @@ def analyze(args, config):
         for model in models:
             if model != reference:
                 paired('model_contrasts', (model, 'RAW', name), (reference, 'RAW', name), condition=name, a=model, b=reference)
-    pd.DataFrame(natural_noise(variants, predictions, config)).to_csv(output / 'natural_noise_cells.csv', index=False)
-    pd.DataFrame(cells).to_csv(output / 'robustness_cells.csv', index=False)
-    pd.DataFrame(contrasts).to_csv(output / 'contrasts.csv', index=False)
+    pd.DataFrame(natural_noise(variants, predictions, config)).to_csv(output / 'natural_noise_cells.csv', index=False, lineterminator='\n')
+    pd.DataFrame(cells).to_csv(output / 'robustness_cells.csv', index=False, lineterminator='\n')
+    pd.DataFrame(contrasts).to_csv(output / 'contrasts.csv', index=False, lineterminator='\n')
     save(output / 'evidence.json', {'variants_sha256': sha256(args.variants),
          'predictions_sha256': {str(p): sha256(p) for p in args.predictions}, 'bootstrap_repetitions': reps,
          'config_sha256': sha256(args.config), 'versions': library_versions()})

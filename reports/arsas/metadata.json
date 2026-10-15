@@ -45,6 +45,6 @@
       "POS": 462
     }
   },
-  "manifest_sha256": "a60d4b2364b49905c7b97c7f805f43835aaf5c4e040e5d9618a1645a42bc1567",
+  "manifest_sha256": "ee3d7513cd064fa0bc277dff32ee06b182befe78fb1d00f0ad51c37657cffc2c",
   "method": "Group = rows linked by Task 02 canonical text or a repeated tweet ID. Mixed, within-group label conflicts and any text whose URL/mention/hashtag-free canonical form (>=10 chars) occurs in ArSarcasm-v2 train or test are excluded group-wide. Remaining groups are ranked by SHA-256(seed|arsas|group) within each label: first 20% test, next 10% validation, rest train."
 }

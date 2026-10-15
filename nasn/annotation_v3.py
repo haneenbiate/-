@@ -76,7 +76,7 @@ def intake(package, path_a, path_b, output):
     for condition, part in key[main].groupby('condition'):
         rows += [{'field': 'meaning_preserved', 'scope': condition, **agreement(a.meaning_preserved[part.index],
                   b.meaning_preserved[part.index], FIELDS['meaning_preserved'])}]
-    pd.DataFrame(rows).to_csv(output / 'agreement.csv', index=False)
+    pd.DataFrame(rows).to_csv(output / 'agreement.csv', index=False, lineterminator='\n')
     typo = key.condition.str.startswith('typo/')
     attention = {name: float(sheet.meaning_preserved[typo].eq('no').mean()) for name, sheet in [('A', a), ('B', b)]}
     fields = list(FIELDS)
@@ -84,9 +84,9 @@ def intake(package, path_a, path_b, output):
     queue = key[['item', 'condition']].join(a[['original', 'modified']])
     for name, sheet in [('A', a), ('B', b)]:
         queue = queue.join(sheet[fields + ['notes']].add_suffix(f'_{name}'))
-    queue[differs].drop(columns='condition').to_csv(output / 'adjudication_queue.csv', index=False, encoding='utf-8-sig')
+    queue[differs].drop(columns='condition').to_csv(output / 'adjudication_queue.csv', index=False, lineterminator='\n', encoding='utf-8-sig')
     agreed = key[~differs][['item', 'variant_id', 'condition']].assign(**{f: a[f][~differs] for f in fields})
-    agreed.to_csv(output / 'agreed_decisions.csv', index=False)
+    agreed.to_csv(output / 'agreed_decisions.csv', index=False, lineterminator='\n')
     preserved = agreed.assign(preserved=agreed.meaning_preserved.eq('yes') & agreed.sentiment_preserved.eq('yes'))
     summary = {'items': len(key), 'pilot_items_excluded_from_agreement': PILOT_ITEMS,
                'agreed_all_fields': int((~differs).sum()), 'needs_adjudication': int(differs.sum()),

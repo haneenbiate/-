@@ -3,8 +3,9 @@ import argparse
 import json
 from pathlib import Path
 
-VARIANTS_SHA256 = {'arsarcasm': 'd6b467f0bd615c613e90e4c8e60ece49ea248a1ffcc6a846363d34b57874bb2d',
-                   'arsas': 'a12f747fc04813037b29c8e14e0e6710918dafa51402417b9e4cbd7443ab2693'}
+# SHA-256 of the decompressed variants table (platform- and zlib-independent).
+VARIANTS_CONTENT_SHA256 = {'arsarcasm': '770db43a92b85c5ed40ac9795c544c58da874f262a6273f65f9e7cb90d7b2ec8',
+                           'arsas': 'e9537c2491b8dca4e8a7652162e56cf15f74df3049d31c9af29dba21e2a553b6'}
 
 
 def cell(kind, source):
@@ -31,9 +32,9 @@ DATASETS = ['arsarcasm', 'arsas']
 ENCODERS = ['MARBERT', 'MARBERTv2', 'AraBERTv02-twitter', 'CAMeLBERT-DA', 'XLM-R-base']
 SEEDS = [42, 43, 44]
 LLMS = ['Qwen2.5-7B-Instruct']
-VARIANTS_SHA256 = {json.dumps(VARIANTS_SHA256)}
+VARIANTS_CONTENT_SHA256 = {json.dumps(VARIANTS_CONTENT_SHA256)}
 '''),
-        cell('code', '''import hashlib, json, os, subprocess, sys
+        cell('code', '''import gzip, hashlib, json, os, subprocess, sys, time
 from pathlib import Path
 from google.colab import drive
 drive.mount('/content/drive')
@@ -51,8 +52,8 @@ def call(*args):
     print('$', ' '.join(map(str, args)), flush=True)
     subprocess.run([sys.executable, '-m', 'nasn.study_v3', *map(str, args), '--cache-directory', CACHE], cwd=REPO, env=ENV, check=True)
 
-def sha(path):
-    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+def content_sha(path):
+    return hashlib.sha256(gzip.open(path).read()).hexdigest()
 
 import torch
 print(torch.cuda.get_device_name(0), torch.cuda.get_device_properties(0).total_memory / 2**30, 'GiB')
@@ -62,10 +63,20 @@ subprocess.run([sys.executable, '-m', 'arsarcasm_audit', 'fetch', '--destination
 subprocess.run([sys.executable, '-m', 'nasn.arsas', 'fetch'], cwd=REPO, env=ENV, check=True)
 VARIANTS = {}
 for dataset in DATASETS:
-    VARIANTS[dataset] = ROOT / dataset / 'variants' / 'variants.csv.gz'
+    folder = ROOT / dataset / 'variants'
+    VARIANTS[dataset] = folder / 'variants.csv.gz'
+    if VARIANTS[dataset].exists() and content_sha(VARIANTS[dataset]) != VARIANTS_CONTENT_SHA256[dataset]:
+        # Created by an earlier notebook version: keep it for the record, regenerate with this commit.
+        folder.rename(folder.with_name(f'variants-mismatch-{time.strftime("%Y%m%dT%H%M%S")}'))
     if not VARIANTS[dataset].exists():
-        call('prepare', '--dataset', dataset, '--partition', 'validation', '--output', ROOT / dataset / 'variants')
-    assert sha(VARIANTS[dataset]) == VARIANTS_SHA256[dataset], f'{dataset}: variants differ from the registered set'
+        call('prepare', '--dataset', dataset, '--partition', 'validation', '--output', folder)
+    got = content_sha(VARIANTS[dataset])
+    if got != VARIANTS_CONTENT_SHA256[dataset]:
+        evidence = json.loads((folder / 'evidence.json').read_text())
+        print(json.dumps({k: evidence.get(k) for k in ['rows', 'variants', 'applicable', 'orthography_sha256', 'versions']}, indent=1))
+        print((folder / 'applicability.csv').read_text())
+        raise AssertionError(f'{dataset}: variants content {got} differs from the registered set; send the output above')
+    print(dataset, 'variants verified')
 '''),
         cell('code', '''# Fine-tune every encoder with every seed on each dataset (frozen MARBERT v1 recipe).
 for dataset in DATASETS:

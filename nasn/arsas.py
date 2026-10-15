@@ -132,7 +132,7 @@ def main(argv=None):
     require(not (output / 'manifest.csv').exists(), f'Manifest exists; choose a new directory: {output}')
     output.mkdir(parents=True, exist_ok=True)
     manifest = build_manifest(args.arsas, args.arsarcasm_directory)
-    manifest.to_csv(output / 'manifest.csv', index=False)
+    manifest.to_csv(output / 'manifest.csv', index=False, lineterminator='\n')
     counts = manifest.groupby(['partition', 'sentiment']).size().unstack(fill_value=0)
     metadata = {'source': URL, 'zip_sha256': ZIP_SHA256, 'file_sha256': MEMBER_SHA256, 'seed': SEED,
                 'fractions': {'test': TEST_FRACTION, 'validation': VALIDATION_FRACTION},

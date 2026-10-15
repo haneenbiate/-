@@ -165,9 +165,10 @@ python -m tools.build_annotation_workbooks --package runs/study-v3/annotation-v1
 python -m nasn.annotation_v3 --package runs/study-v3/annotation-v1 --a A.xlsx --b B.xlsx --output <new directory>
 ```
 
-On Windows, set `PYTHONUTF8=1`. The registered variants hashes are:
-- ArSarcasm-v2: `d6b467f0bd615c613e90e4c8e60ece49ea248a1ffcc6a846363d34b57874bb2d`
-- ArSAS: `a12f747fc04813037b29c8e14e0e6710918dafa51402417b9e4cbd7443ab2693`
+On Windows, set `PYTHONUTF8=1`. The registered variants are identified by the SHA-256 of the decompressed table
+(platform-independent; files are written with LF line endings):
+- ArSarcasm-v2: `770db43a92b85c5ed40ac9795c544c58da874f262a6273f65f9e7cb90d7b2ec8`
+- ArSAS: `e9537c2491b8dca4e8a7652162e56cf15f74df3049d31c9af29dba21e2a553b6`
 
 ## Known limits
 

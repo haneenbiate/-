@@ -1,11 +1,9 @@
 {
   "stage": "cpu_tokenizer_audit_before_freeze",
-  "variants_sha256": "d6b467f0bd615c613e90e4c8e60ece49ea248a1ffcc6a846363d34b57874bb2d",
   "orthography_sha256": "3f9b97cd5a2d13da134275ff00b40460458e714713f56dbb25a72e916655dbc0",
   "rows": 2509,
   "variants": 27599,
   "applicable": 22060,
-  "tokenizer_audit_variants_sha256": "d6b467f0bd615c613e90e4c8e60ece49ea248a1ffcc6a846363d34b57874bb2d",
   "models": {
     "MARBERT": {
       "model_name": "UBC-NLP/MARBERT",
@@ -51,21 +49,20 @@
     "pytest": "9.1.1"
   },
   "files": {
-    "applicability.csv": "88cdcbacf2e36eb56f051b0a55bd4668181dbf8324607d7f547af25113ecd75d",
-    "arsas_applicability.csv": "792babf00d4428f985c357d8e1ab0e44427ca8b7e9a0eacb0e72f69a2bb91f6d",
-    "arsas_tokenizer_summary.csv": "f3aed2a5c8deea67346eb5ea0d37eefa2bb6857518be6ab886a108a14211379b",
-    "natural_noise.csv": "97cad0fdb2ca0a11eb1afb8537cf558a40cacfcef374a08352da5b712882a004",
-    "tokenizer_summary.csv": "a0b0677b9803608c027a1b5ec9e3ae92751fb73df84383c788873ee92bcc8699"
+    "applicability.csv": "d3313e29bddd104dcbd6f58ec02de00df5e2ebe7ef448b68c5488c71e382e247",
+    "arsas_applicability.csv": "0c6f56002fafa330e73b6ed6c6c70dcc2c32b1494bc1d82414b417e1424005e0",
+    "arsas_tokenizer_summary.csv": "cc667c126c905eac6c812d4c10e7a2230236d771193c6806dcc128c4b607997d",
+    "natural_noise.csv": "2f0f35d9e69441977cbb18ff9be427bebeacddb42050fffa5bce840018e7d0b7",
+    "tokenizer_summary.csv": "e104c973469c397f208afb648f88717a024dd9b9cabd283e19bd03fbddbd9b06"
   },
   "contains_tweet_text": false,
   "model_predictions": null,
   "arsas": {
-    "variants_sha256": "a12f747fc04813037b29c8e14e0e6710918dafa51402417b9e4cbd7443ab2693",
     "rows": 1966,
     "variants": 21626,
     "applicable": 17599,
-    "tokenizer_audit_variants_sha256": "a12f747fc04813037b29c8e14e0e6710918dafa51402417b9e4cbd7443ab2693",
-    "split_manifest_sha256": "a60d4b2364b49905c7b97c7f805f43835aaf5c4e040e5d9618a1645a42bc1567"
+    "split_manifest_sha256": "ee3d7513cd064fa0bc277dff32ee06b182befe78fb1d00f0ad51c37657cffc2c",
+    "variants_content_sha256": "e9537c2491b8dca4e8a7652162e56cf15f74df3049d31c9af29dba21e2a553b6"
   },
   "natural_noise": {
     "partitions": [
@@ -73,5 +70,7 @@
       "validation"
     ],
     "test_text_read": false
-  }
+  },
+  "variants_content_sha256": "770db43a92b85c5ed40ac9795c544c58da874f262a6273f65f9e7cb90d7b2ec8",
+  "note": "Tokenizer audits ran on byte-different (CRLF) but content-identical variant files; content hashes are authoritative."
 }
