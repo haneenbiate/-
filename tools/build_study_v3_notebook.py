@@ -48,15 +48,37 @@ ROOT = Path(DRIVE); ROOT.mkdir(parents=True, exist_ok=True)
 ENV = {**os.environ, 'PYTHONUTF8': '1', 'HF_HUB_DISABLE_XET': '1', 'CUBLAS_WORKSPACE_CONFIG': ':4096:8'}
 CACHE = '/content/hf-cache'
 
+# Everything printed below, and every error with its traceback, is also appended to a
+# log on Drive so the run can be inspected without copying cell output.
+LOG = ROOT / 'logs' / f'{time.strftime("%Y%m%dT%H%M%SZ", time.gmtime())}-{REF[:7]}.log'
+LOG.parent.mkdir(parents=True, exist_ok=True)
+
+def log(text):
+    print(text, flush=True)
+    with open(LOG, 'a', encoding='utf-8') as handle:
+        handle.write(text + '\\n')
+
 def call(*args):
-    print('$', ' '.join(map(str, args)), flush=True)
-    subprocess.run([sys.executable, '-m', 'nasn.study_v3', *map(str, args), '--cache-directory', CACHE], cwd=REPO, env=ENV, check=True)
+    command = [sys.executable, '-m', 'nasn.study_v3', *map(str, args), '--cache-directory', CACHE]
+    log('$ ' + ' '.join(map(str, args)))
+    process = subprocess.Popen(command, cwd=REPO, env=ENV, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+    for line in process.stdout:
+        log(line.rstrip('\\n'))
+    if process.wait():
+        raise RuntimeError(f'Command failed with exit code {process.returncode}; see {LOG}')
+
+import traceback
+def record_error(shell, kind, value, tb, tb_offset=None):
+    log('ERROR ' + ''.join(traceback.format_exception(kind, value, tb)))
+    shell.showtraceback((kind, value, tb), tb_offset=tb_offset)
+get_ipython().set_custom_exc((Exception,), record_error)
+log(f'Run started; commit {REF}; Python {sys.version.split()[0]}')
 
 def content_sha(path):
     return hashlib.sha256(gzip.open(path).read()).hexdigest()
 
 import torch
-print(torch.cuda.get_device_name(0), torch.cuda.get_device_properties(0).total_memory / 2**30, 'GiB')
+log(f'GPU: {torch.cuda.get_device_name(0)}, {torch.cuda.get_device_properties(0).total_memory / 2**30:.1f} GiB')
 '''),
         cell('code', '''# Data and the frozen perturbation variants (each must reproduce its registered hash).
 subprocess.run([sys.executable, '-m', 'arsarcasm_audit', 'fetch', '--destination', 'data/raw'], cwd=REPO, env=ENV, check=True)
