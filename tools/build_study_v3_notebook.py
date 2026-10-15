@@ -44,6 +44,9 @@ if not REPO.exists():
 subprocess.run(['git', 'fetch', 'origin'], cwd=REPO, check=True)
 subprocess.run(['git', 'checkout', REF], cwd=REPO, check=True)
 subprocess.run([sys.executable, '-m', 'pip', 'install', '-q', '-r', 'requirements-marbert.txt', 'accelerate==1.10.1'], cwd=REPO, check=True)
+# Colab preinstalls torchvision/torchaudio built for its own torch; with the pinned torch they fail to
+# load ("torchvision::nms does not exist") and transformers then cannot import BERT. Text only: remove them.
+subprocess.run([sys.executable, '-m', 'pip', 'uninstall', '-y', '-q', 'torchvision', 'torchaudio'], check=True)
 ROOT = Path(DRIVE); ROOT.mkdir(parents=True, exist_ok=True)
 ENV = {**os.environ, 'PYTHONUTF8': '1', 'HF_HUB_DISABLE_XET': '1', 'CUBLAS_WORKSPACE_CONFIG': ':4096:8'}
 CACHE = '/content/hf-cache'
