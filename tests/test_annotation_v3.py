@@ -71,3 +71,23 @@ def test_intake_rejects_edited_text_and_bad_values(tmp_path):
     bad.to_csv(tmp_path / 'A.csv', index=False, encoding='utf-8-sig')
     with pytest.raises(Exception, match='invalid'):
         intake(pkg, tmp_path / 'A.csv', tmp_path / 'B.csv', tmp_path / 'o2')
+
+
+def test_intake_reads_returned_workbooks(tmp_path):
+    from openpyxl import load_workbook
+    from tools.build_annotation_workbooks import build, HEADERS
+    pkg, sheet, conditions = package(tmp_path)
+    for name in ['A', 'B']:
+        sheet.to_csv(pkg / f'annotation_sheet_{name}.csv', index=False, encoding='utf-8-sig')
+        build(pkg / f'annotation_sheet_{name}.csv', tmp_path / f'{name}.xlsx', name)
+        answers = filled(sheet, conditions, flip={22} if name == 'B' else ())
+        book = load_workbook(tmp_path / f'{name}.xlsx')
+        page = book['التوسيم']
+        columns = list(HEADERS)
+        for i, row in enumerate(answers.itertuples(index=False), 2):
+            for key in ['meaning_preserved', 'sentiment_preserved', 'modified_sentiment', 'negation_present', 'negation_affected']:
+                page.cell(i, columns.index(key) + 1, getattr(row, key))
+        page.cell(2, 2, page.cell(2, 2).value + ' ')  # Excel-style edge whitespace is tolerated
+        book.save(tmp_path / f'{name}.xlsx')
+    summary = intake(pkg, tmp_path / 'A.xlsx', tmp_path / 'B.xlsx', tmp_path / 'out')
+    assert summary['needs_adjudication'] == 1

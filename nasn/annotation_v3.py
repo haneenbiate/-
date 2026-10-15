@@ -20,12 +20,25 @@ FIELDS = {'meaning_preserved': ['yes', 'no', 'unsure'], 'sentiment_preserved': [
 PILOT_ITEMS = 20
 
 
+def read_workbook(path):
+    """Returned Excel workbook (tools/build_annotation_workbooks.py) -> the CSV column layout."""
+    from tools.build_annotation_workbooks import HEADERS
+    sheet = pd.read_excel(path, sheet_name='التوسيم', dtype=str).fillna('')
+    require(list(sheet.columns) == list(HEADERS.values()), f'{path}: annotation columns changed')
+    return sheet.rename(columns={v: k for k, v in HEADERS.items()})
+
+
 def read_sheet(path, package):
-    sheet = pd.read_csv(path, dtype=str, keep_default_na=False, encoding='utf-8-sig')
+    if str(path).endswith('.xlsx'):
+        sheet = read_workbook(path)
+    else:
+        sheet = pd.read_csv(path, dtype=str, keep_default_na=False, encoding='utf-8-sig')
     blank = pd.read_csv(Path(package) / 'annotation_sheet_A.csv', dtype=str, keep_default_na=False, encoding='utf-8-sig')
     require(sheet.item.tolist() == blank.item.tolist(), f'{path}: items missing, added or reordered')
-    require(sheet.original.tolist() == blank.original.tolist() and sheet.modified.tolist() == blank.modified.tolist(),
-            f'{path}: tweet text was edited')
+    # Excel may trim edge whitespace on save; any other change to the text is rejected.
+    same = lambda column: sheet[column].str.strip().tolist() == blank[column].str.strip().tolist()
+    require(same('original') and same('modified'), f'{path}: tweet text was edited')
+    sheet['original'], sheet['modified'] = blank.original, blank.modified
     for field, values in FIELDS.items():
         sheet[field] = sheet[field].str.strip()
         bad = sheet[~sheet[field].isin(values)]

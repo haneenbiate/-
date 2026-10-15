@@ -161,7 +161,8 @@ python -m nasn.study_v3 prevalence --output runs/study-v3/natural-noise
 python -m nasn.arsas fetch && python -m nasn.arsas split --output <new directory>   # reproduces reports/arsas
 python -m nasn.study_v3 prepare --dataset arsas --partition validation --output runs/study-v3/arsas-validation-variants
 python tools/build_study_v3_notebook.py --reference <commit>   # GPU stages in Colab
-python -m nasn.annotation_v3 --package runs/study-v3/annotation-v1 --a A.csv --b B.csv --output <new directory>
+python -m tools.build_annotation_workbooks --package runs/study-v3/annotation-v1 --output <folder>   # one Excel per annotator
+python -m nasn.annotation_v3 --package runs/study-v3/annotation-v1 --a A.xlsx --b B.xlsx --output <new directory>
 ```
 
 On Windows, set `PYTHONUTF8=1`. The registered variants hashes are:
