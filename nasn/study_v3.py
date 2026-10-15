@@ -239,9 +239,17 @@ def train(args, config):
            'cache_directory': args.cache_directory}
     output = fresh(args.output)
     marbert.save_json(output / 'training_config.json', run)
-    training, validation = (load_split(p, config, args.raw_directory, args.dataset) for p in ('train', 'validation'))
     started = time.perf_counter()
-    status = marbert.fit(training, validation, run, output)
+    try:
+        training, validation = (load_split(p, config, args.raw_directory, args.dataset) for p in ('train', 'validation'))
+        status = marbert.fit(training, validation, run, output)
+    except Exception:
+        # Keep the full traceback next to the run so a remote failure can be diagnosed from Drive.
+        import traceback
+        (output / 'error.txt').write_text(traceback.format_exc(), encoding='utf-8', newline='\n')
+        marbert.save_json(output / 'run_status.json', {'status': 'failed', 'error_file': 'error.txt',
+                                                       'versions': library_versions()})
+        raise
     status['wall_seconds'] = time.perf_counter() - started
     marbert.save_json(output / 'run_status.json', status)
     print(json.dumps(status, indent=2))
