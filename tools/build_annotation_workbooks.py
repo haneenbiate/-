@@ -1,4 +1,4 @@
-"""One self-contained Excel workbook per Study v3 annotator: instructions, items with dropdowns, declaration."""
+"""One self-contained Excel workbook per Study v3 annotator: instructions and items with dropdowns."""
 import argparse
 from pathlib import Path
 
@@ -39,16 +39,11 @@ INSTRUCTIONS = [
     ('', False),
     ('طريقة العمل', True),
     (f'1. أنجز أول {PILOT_ITEMS} بندًا (المظللة بالأصفر) وحدك، ثم تجتمعان مع المنسّق لمناقشة فهم التعليمات فقط.', False),
-    ('2. أكمل باقي البنود وحدك دون أي تواصل مع المراجع الآخر حول البنود.', False),
-    ('3. لا تستخدم أي أداة ذكاء اصطناعي (ChatGPT أو غيره) أو ترجمة آلية.', False),
-    ('4. املأ ورقة «الإقرار»، ثم أرسل الملف من بريدك مباشرة إلى المنسّق. لا تعدّله بعد الإرسال.', False),
+    ('2. أكمل باقي البنود وحدك دون الاطلاع على إجابات المراجع الآخر، لأن حساب الاتفاق بينكما يعتمد على استقلال الإجابات.', False),
+    ('3. عند الانتهاء أرسل الملف إلى المنسّق.', False),
     ('', False),
     ('الوقت المتوقع: 4 إلى 6 ساعات، ويُستحسن توزيعه على أكثر من جلسة.', False),
 ]
-DECLARATION = ['الاسم الكامل', 'الجهة / الجامعة', 'البريد الإلكتروني', 'اللهجة الأم', 'المؤهل العلمي',
-               'تاريخ البدء', 'تاريخ الإرسال',
-               'أقرّ بأنني أنجزت هذا التوسيم بنفسي، دون استخدام أدوات ذكاء اصطناعي، ودون الاطلاع على إجابات المراجع الآخر أو نتائج أي نموذج (اكتب: أقرّ)',
-               'التوقيع (اكتب اسمك)']
 INPUT = PatternFill('solid', fgColor='EEF4FC')
 PILOT = PatternFill('solid', fgColor='FFF4CC')
 HEADER = PatternFill('solid', fgColor='2A78D6')
@@ -99,13 +94,6 @@ def build(sheet_csv, output, annotator):
             sheet.add_data_validation(rule)
     sheet.freeze_panes = 'B2'
 
-    form = book.create_sheet('الإقرار')
-    form.sheet_view.rightToLeft = True
-    form.column_dimensions['A'].width = 70
-    form.column_dimensions['B'].width = 45
-    for i, label in enumerate(DECLARATION, 1):
-        form.cell(i, 1, label).alignment = Alignment(wrap_text=True, horizontal='right', vertical='top')
-        form.cell(i, 2).fill = INPUT
     book.active = 1
     book.save(output)
 

@@ -143,7 +143,7 @@ stated direction. All results are reported regardless of direction.
 The claim that a perturbation preserves meaning depends on the new annotation
 (`docs/study_v3_annotation_protocol_ar.md`):
 - 330 items, 30 per condition, one variant per tweet;
-- two annotators who are verifiably independent;
+- two expert annotators working independently;
 - the typo items serve as an attention check;
 - agreement is reported with Cohen's κ and Gwet's AC1.
 
