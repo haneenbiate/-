@@ -143,7 +143,7 @@ def main(argv=None):
                           'URL/mention/hashtag-free canonical form (>=10 chars) occurs in ArSarcasm-v2 train or test '
                           'are excluded group-wide. Remaining groups are ranked by SHA-256(seed|arsas|group) within '
                           'each label: first 20% test, next 10% validation, rest train.'}
-    (output / 'metadata.json').write_text(json.dumps(metadata, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
+    (output / 'metadata.json').write_text(json.dumps(metadata, indent=2, ensure_ascii=False) + '\n', encoding='utf-8', newline='\n')
     print(json.dumps(metadata, indent=2, ensure_ascii=False))
 
 

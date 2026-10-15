@@ -94,7 +94,7 @@ def intake(package, path_a, path_b, output):
                'agreed_preserved_rate_by_condition': preserved.groupby('condition').preserved.mean().round(4).to_dict(),
                'sheet_sha256': {'A': hashlib.sha256(Path(path_a).read_bytes()).hexdigest(),
                                 'B': hashlib.sha256(Path(path_b).read_bytes()).hexdigest()}}
-    (output / 'summary.json').write_text(json.dumps(summary, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
+    (output / 'summary.json').write_text(json.dumps(summary, indent=2, ensure_ascii=False) + '\n', encoding='utf-8', newline='\n')
     print(pd.DataFrame(rows).round(4).to_string(index=False))
     print(json.dumps(summary, indent=2, ensure_ascii=False))
     return summary

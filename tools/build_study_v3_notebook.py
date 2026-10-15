@@ -140,7 +140,7 @@ def main():
     parser.add_argument('--reference', required=True, help='Commit or tag to pin')
     parser.add_argument('--output', default='notebooks/study_v3_colab.ipynb')
     args = parser.parse_args()
-    Path(args.output).write_text(json.dumps(build(args.reference), indent=1, ensure_ascii=False) + '\n', encoding='utf-8')
+    Path(args.output).write_text(json.dumps(build(args.reference), indent=1, ensure_ascii=False) + '\n', encoding='utf-8', newline='\n')
 
 
 if __name__ == '__main__':
