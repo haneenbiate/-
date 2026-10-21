@@ -122,6 +122,9 @@ for dataset in DATASETS:
             out = ROOT / dataset / 'predictions' / f'{model}-s{seed}'
             if (out / 'evidence.json').exists():
                 continue
+            if out.exists():
+                # Interrupted before finishing (e.g. the session disconnected): keep it aside, redo.
+                out.rename(out.with_name(out.name + f'-incomplete-{len(list(out.parent.glob(out.name + "-incomplete-*")))}'))
             call('infer', '--variants', VARIANTS[dataset], '--checkpoint', ROOT / dataset / 'train' / f'{model}-s{seed}' / 'best_checkpoint',
                  '--model', model, '--seed', seed, '--output', out)
 '''),
