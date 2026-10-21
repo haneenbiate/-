@@ -84,10 +84,11 @@ import torch
 log(f'GPU: {torch.cuda.get_device_name(0)}, {torch.cuda.get_device_properties(0).total_memory / 2**30:.1f} GiB')
 
 import shutil
-free_gib = shutil.disk_usage('/content/drive/MyDrive').free / 2**30
-log(f'Google Drive free space: {free_gib:.1f} GiB')
-# Each checkpoint needs 0.4-1.1 GiB; when Drive is full, weights are lost without an error.
-assert free_gib >= 2, 'Google Drive is (almost) full: free space or upgrade storage before training.'
+def drive_free_gib():
+    return shutil.disk_usage('/content/drive/MyDrive').free / 2**30
+# Each checkpoint needs 0.4-1.1 GiB. Below this, runs train on the Colab disk instead (see training cell).
+MIN_FREE_GIB = 3
+log(f'Google Drive free space: {drive_free_gib():.1f} GiB')
 '''),
         cell('code', '''# Data and the frozen perturbation variants (each must reproduce its registered hash).
 subprocess.run([sys.executable, '-m', 'arsarcasm_audit', 'fetch', '--destination', 'data/raw'], cwd=REPO, env=ENV, check=True)
@@ -110,31 +111,63 @@ for dataset in DATASETS:
     print(dataset, 'variants verified')
 '''),
         cell('code', '''# Fine-tune every encoder with every seed on each dataset (frozen MARBERT v1 recipe).
+# When Drive lacks space for weights, a run trains on the Colab disk, is predicted immediately,
+# and everything except model.safetensors is kept on Drive. Training is deterministic, so the
+# same weights can be regenerated later and checked against checkpoint_hashes.json.
+LOCAL = Path('/content/local-runs')
+
+def set_aside(path):
+    path.rename(path.with_name(path.name + f'-incomplete-{len(list(path.parent.glob(path.name + "-incomplete-*")))}'))
+
+def predicted(dataset, model, seed):
+    return (ROOT / dataset / 'predictions' / f'{model}-s{seed}' / 'evidence.json').exists()
+
+def predict(dataset, model, seed, checkpoint):
+    out = ROOT / dataset / 'predictions' / f'{model}-s{seed}'
+    if out.exists():
+        set_aside(out)  # interrupted earlier, e.g. the session disconnected
+    call('infer', '--variants', VARIANTS[dataset], '--checkpoint', checkpoint, '--model', model, '--seed', seed, '--output', out)
+
 for dataset in DATASETS:
     for model in ENCODERS:
         for seed in SEEDS:
             run = ROOT / dataset / 'train' / f'{model}-s{seed}'
             status = run / 'run_status.json'
-            weights = run / 'best_checkpoint' / 'model.safetensors'
-            # A full Drive accepts small files but silently drops the weights: require them too.
-            if status.exists() and json.loads(status.read_text()).get('status') == 'completed' and weights.exists():
+            completed = status.exists() and json.loads(status.read_text()).get('status') == 'completed'
+            # A full Drive accepts small files but silently drops the weights: require them,
+            # unless the run was deliberately kept without weights after being predicted.
+            if completed and ((run / 'best_checkpoint' / 'model.safetensors').exists() or
+                              ((run / 'weights_not_kept.json').exists() and predicted(dataset, model, seed))):
                 continue
             if run.exists():
-                run.rename(run.with_name(run.name + f'-incomplete-{len(list(run.parent.glob(run.name + "-incomplete-*")))}'))
-            call('train', '--dataset', dataset, '--model', model, '--seed', seed, '--output', run)
+                set_aside(run)
+            if drive_free_gib() >= MIN_FREE_GIB:
+                call('train', '--dataset', dataset, '--model', model, '--seed', seed, '--output', run)
+                continue
+            log(f'Drive has {drive_free_gib():.1f} GiB free: training {dataset}/{model}-s{seed} on the Colab disk')
+            local = LOCAL / dataset / f'{model}-s{seed}'
+            shutil.rmtree(local, ignore_errors=True)
+            call('train', '--dataset', dataset, '--model', model, '--seed', seed, '--output', local)
+            if not predicted(dataset, model, seed):
+                predict(dataset, model, seed, local / 'best_checkpoint')
+            shutil.copytree(local, run, ignore=shutil.ignore_patterns('model.safetensors'))
+            (run / 'weights_not_kept.json').write_text(json.dumps({
+                'reason': 'Google Drive full; weights used for predictions on the Colab disk, then discarded',
+                'regenerate': f'train --dataset {dataset} --model {model} --seed {seed} at commit {REF} on a T4',
+                'verify': 'compare best_checkpoint/model.safetensors with checkpoint_hashes.json'}, indent=1))
+            shutil.rmtree(local)
 '''),
-        cell('code', '''# Clean + perturbed predictions under every defense.
+        cell('code', '''# Clean + perturbed predictions under every defense (runs stored with weights on Drive).
 for dataset in DATASETS:
     for model in ENCODERS:
         for seed in SEEDS:
-            out = ROOT / dataset / 'predictions' / f'{model}-s{seed}'
-            if (out / 'evidence.json').exists():
+            if predicted(dataset, model, seed):
                 continue
-            if out.exists():
-                # Interrupted before finishing (e.g. the session disconnected): keep it aside, redo.
-                out.rename(out.with_name(out.name + f'-incomplete-{len(list(out.parent.glob(out.name + "-incomplete-*")))}'))
-            call('infer', '--variants', VARIANTS[dataset], '--checkpoint', ROOT / dataset / 'train' / f'{model}-s{seed}' / 'best_checkpoint',
-                 '--model', model, '--seed', seed, '--output', out)
+            checkpoint = ROOT / dataset / 'train' / f'{model}-s{seed}' / 'best_checkpoint'
+            if not (checkpoint / 'model.safetensors').exists():
+                log(f'WARNING: no weights for {dataset}/{model}-s{seed}; re-run the training cell first')
+                continue
+            predict(dataset, model, seed, checkpoint)
 '''),
         cell('code', '''# Zero-shot LLM (RAW and STD inputs); needs >= 24 GB GPU memory.
 if torch.cuda.get_device_properties(0).total_memory >= 22 * 2**30:
