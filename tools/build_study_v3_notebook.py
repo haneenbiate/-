@@ -28,6 +28,7 @@ the next cell; finished runs are never repeated.
 '''),
         cell('code', f'''REF = '{reference}'
 DRIVE = '/content/drive/MyDrive/NASN/study-v3'
+FRESH_START = False  # True only for a brand-new run in an empty Drive folder
 DATASETS = ['arsarcasm', 'arsas']
 ENCODERS = ['MARBERT', 'MARBERTv2', 'AraBERTv02-twitter', 'CAMeLBERT-DA', 'XLM-R-base']
 SEEDS = [42, 43, 44]
@@ -47,7 +48,13 @@ subprocess.run([sys.executable, '-m', 'pip', 'install', '-q', '-r', 'requirement
 # Colab preinstalls torchvision/torchaudio built for its own torch; with the pinned torch they fail to
 # load ("torchvision::nms does not exist") and transformers then cannot import BERT. Text only: remove them.
 subprocess.run([sys.executable, '-m', 'pip', 'uninstall', '-y', '-q', 'torchvision', 'torchaudio'], check=True)
-ROOT = Path(DRIVE); ROOT.mkdir(parents=True, exist_ok=True)
+ROOT = Path(DRIVE)
+# Guard against silently starting over, e.g. from another Google account without the shared folder.
+if not FRESH_START and not (ROOT / 'arsarcasm' / 'train').exists():
+    raise AssertionError(f'No earlier results in {DRIVE}. From another Google account: share the NASN folder '
+                         'with it and add a shortcut to My Drive (Shared with me > NASN > Organize > Add shortcut). '
+                         'To start from scratch on purpose, set FRESH_START = True in the first cell.')
+ROOT.mkdir(parents=True, exist_ok=True)
 ENV = {**os.environ, 'PYTHONUTF8': '1', 'HF_HUB_DISABLE_XET': '1', 'CUBLAS_WORKSPACE_CONFIG': ':4096:8'}
 CACHE = '/content/hf-cache'
 
