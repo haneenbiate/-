@@ -82,6 +82,12 @@ def content_sha(path):
 
 import torch
 log(f'GPU: {torch.cuda.get_device_name(0)}, {torch.cuda.get_device_properties(0).total_memory / 2**30:.1f} GiB')
+
+import shutil
+free_gib = shutil.disk_usage('/content/drive/MyDrive').free / 2**30
+log(f'Google Drive free space: {free_gib:.1f} GiB')
+# Each checkpoint needs 0.4-1.1 GiB; when Drive is full, weights are lost without an error.
+assert free_gib >= 2, 'Google Drive is (almost) full: free space or upgrade storage before training.'
 '''),
         cell('code', '''# Data and the frozen perturbation variants (each must reproduce its registered hash).
 subprocess.run([sys.executable, '-m', 'arsarcasm_audit', 'fetch', '--destination', 'data/raw'], cwd=REPO, env=ENV, check=True)
@@ -109,7 +115,9 @@ for dataset in DATASETS:
         for seed in SEEDS:
             run = ROOT / dataset / 'train' / f'{model}-s{seed}'
             status = run / 'run_status.json'
-            if status.exists() and json.loads(status.read_text()).get('status') == 'completed':
+            weights = run / 'best_checkpoint' / 'model.safetensors'
+            # A full Drive accepts small files but silently drops the weights: require them too.
+            if status.exists() and json.loads(status.read_text()).get('status') == 'completed' and weights.exists():
                 continue
             if run.exists():
                 run.rename(run.with_name(run.name + f'-incomplete-{len(list(run.parent.glob(run.name + "-incomplete-*")))}'))
