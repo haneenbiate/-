@@ -20,6 +20,8 @@ from arsarcasm_audit.leakage import canonical_text, group_id
 from .preflight import require
 
 URL = 'https://homepages.inf.ed.ac.uk/wmagdy/Resources/ArSAS.zip'
+# Byte-identical Internet Archive snapshot, used when the original host is unreachable.
+MIRRORS = ['https://web.archive.org/web/20201208171451id_/http://homepages.inf.ed.ac.uk/wmagdy/Resources/ArSAS.zip']
 ZIP_SHA256 = '1d517bfddf2fb766ab6ca2bc98a816f1339e68d7bb04d281959358d8e015d8f1'
 MEMBER = 'ArSAS..txt'
 MEMBER_SHA256 = 'e1f6081f2a4dafab422834efc2ed97c17840154d700aa5b8309a623e900a0567'
@@ -31,9 +33,20 @@ MANIFEST = Path(__file__).resolve().parents[1] / 'reports/arsas/manifest.csv'
 def fetch(destination):
     destination = Path(destination)
     destination.mkdir(parents=True, exist_ok=True)
-    with urllib.request.urlopen(URL, timeout=60) as response:
-        content = response.read()
-    require(hashlib.sha256(content).hexdigest() == ZIP_SHA256, 'ArSAS archive checksum changed')
+    content, failures = None, []
+    for url in [URL, *MIRRORS]:
+        try:
+            with urllib.request.urlopen(url, timeout=120) as response:
+                candidate = response.read()
+        except OSError as error:
+            failures.append(f'{url}: {error}')
+            continue
+        # Any source is accepted only if its bytes match the pinned checksum.
+        if hashlib.sha256(candidate).hexdigest() == ZIP_SHA256:
+            content = candidate
+            break
+        failures.append(f'{url}: checksum mismatch')
+    require(content is not None, 'ArSAS archive unavailable or changed: ' + '; '.join(failures))
     with zipfile.ZipFile(io.BytesIO(content)) as archive:
         (destination / MEMBER).write_bytes(archive.read(MEMBER))
     require(sha256(destination / MEMBER) == MEMBER_SHA256, 'ArSAS file checksum changed')
