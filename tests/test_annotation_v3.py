@@ -91,3 +91,32 @@ def test_intake_reads_returned_workbooks(tmp_path):
         book.save(tmp_path / f'{name}.xlsx')
     summary = intake(pkg, tmp_path / 'A.xlsx', tmp_path / 'B.xlsx', tmp_path / 'out')
     assert summary['needs_adjudication'] == 1
+
+
+def test_adjudication_build_and_finalize(tmp_path):
+    from openpyxl import load_workbook
+    from tools.build_adjudication_workbook import COLUMNS, build, finalize
+    pkg, sheet, conditions = package(tmp_path)
+    a = filled(sheet, conditions)
+    b = filled(sheet, conditions)
+    b.loc[[21, 33], 'meaning_preserved'] = 'unsure'
+    b.loc[35, 'modified_sentiment'] = 'NEG'  # not a core field: no adjudication needed
+    a.to_csv(tmp_path / 'A.csv', index=False, encoding='utf-8-sig')
+    b.to_csv(tmp_path / 'B.csv', index=False, encoding='utf-8-sig')
+    assert build(pkg, tmp_path / 'A.csv', tmp_path / 'B.csv', tmp_path / 'adj') == 2
+    workbook = tmp_path / 'adj' / 'توسيم_المحكّم.xlsx'
+    book = load_workbook(workbook)
+    page = book['الحسم']
+    columns = list(COLUMNS)
+    assert [page.cell(r, 1).value for r in (2, 3)] == ['item0021', 'item0033']
+    for r, (meaning, sentiment) in zip((2, 3), [('no', 'yes'), ('yes', 'yes')]):
+        page.cell(r, columns.index('meaning_preserved') + 1, meaning)
+        page.cell(r, columns.index('sentiment_preserved') + 1, sentiment)
+    book.save(workbook)
+    summary = finalize(pkg, tmp_path / 'A.csv', tmp_path / 'B.csv', workbook,
+                       tmp_path / 'adj' / 'adjudication_key_private.csv', tmp_path / 'final')
+    assert summary['adjudicated'] == 2
+    final = pd.read_csv(tmp_path / 'final' / 'final_decisions.csv').set_index('item')
+    assert final.loc['item0021', 'meaning_preserved'] == 'no' and final.loc['item0021', 'source'] == 'adjudicated'
+    assert final.loc['item0033', 'preserved'] and final.loc['item0035', 'source'] == 'agreed'
+    assert summary['agreement_with_adjudicator']['meaning_preserved']['adjudicator_matches_A'] == 0.5
