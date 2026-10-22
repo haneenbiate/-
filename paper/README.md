@@ -6,4 +6,7 @@
   `python tools/plot_study_v3_tokenizer.py` (reads `reports/study-v3/*tokenizer_summary.csv`).
 - Build: copy `acl.sty` and `acl_natbib.bst` from https://github.com/acl-org/acl-style-files
   into this folder, install the Amiri font, then `latexmk -xelatex main.tex`.
-- Verify every entry in `references.bib` against the ACL Anthology before submission.
+- `references.bib` was verified on 2026-10-22 against ACL Anthology, arXiv, Crossref and the
+  LREC 2018 site; verify any new entry the same way.
+- `generated/` is written by `python tools/report_study_v3.py --public <analysis ZIP>` (tables,
+  flip-rate figure, H1-H5 verdicts); do not edit those files by hand.
