@@ -88,7 +88,13 @@ def content_sha(path):
     return hashlib.sha256(gzip.open(path).read()).hexdigest()
 
 import torch
-log(f'GPU: {torch.cuda.get_device_name(0)}, {torch.cuda.get_device_properties(0).total_memory / 2**30:.1f} GiB')
+GPU = torch.cuda.is_available()
+log(f'GPU: {torch.cuda.get_device_name(0)}, {torch.cuda.get_device_properties(0).total_memory / 2**30:.1f} GiB' if GPU
+    else 'No GPU: only finished work is skipped and the analysis runs (enough once all predictions exist)')
+
+def need_gpu(task):
+    if not GPU:
+        raise RuntimeError(f'{task} needs a GPU runtime (Runtime > Change runtime type > T4 GPU)')
 
 import shutil
 def drive_free_gib():
@@ -133,6 +139,7 @@ def predict(dataset, model, seed, checkpoint):
     out = ROOT / dataset / 'predictions' / f'{model}-s{seed}'
     if out.exists():
         set_aside(out)  # interrupted earlier, e.g. the session disconnected
+    need_gpu(f'Predicting {dataset}/{model}-s{seed}')
     call('infer', '--variants', VARIANTS[dataset], '--checkpoint', checkpoint, '--model', model, '--seed', seed, '--output', out)
 
 for dataset in DATASETS:
@@ -146,6 +153,7 @@ for dataset in DATASETS:
             if completed and ((run / 'best_checkpoint' / 'model.safetensors').exists() or
                               ((run / 'weights_not_kept.json').exists() and predicted(dataset, model, seed))):
                 continue
+            need_gpu(f'Training {dataset}/{model}-s{seed}')
             if run.exists():
                 set_aside(run)
             if drive_free_gib() >= MIN_FREE_GIB:
@@ -177,7 +185,7 @@ for dataset in DATASETS:
             predict(dataset, model, seed, checkpoint)
 '''),
         cell('code', '''# Zero-shot LLM (RAW and STD inputs); needs >= 24 GB GPU memory.
-if torch.cuda.get_device_properties(0).total_memory >= 22 * 2**30:
+if GPU and torch.cuda.get_device_properties(0).total_memory >= 22 * 2**30:
     for dataset in DATASETS:
         for model in LLMS:
             out = ROOT / dataset / 'predictions' / f'{model}-zero-shot'

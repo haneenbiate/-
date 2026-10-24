@@ -100,3 +100,37 @@ def test_natural_noise_compares_raw_with_std():
     assert cells.loc['tatweel', 'n'] == 6 and cells.loc['tatweel', 'flip_rate'] == 1
     assert cells.loc['tatweel', 'clean_macro_f1'] > cells.loc['tatweel', 'perturbed_macro_f1']
     assert cells.loc['letter_run_ge3', 'n'] == 0
+
+
+def _reference_cluster_samples(groups, repetitions, seed):
+    """The original loop-based resampler, kept to pin the vectorised version."""
+    codes, uniques = pd.factorize(groups)
+    members = [np.flatnonzero(codes == i) for i in range(len(uniques))]
+    rng = np.random.default_rng(seed)
+    for _ in range(repetitions):
+        yield np.concatenate([members[i] for i in rng.integers(0, len(members), len(members))])
+
+
+def test_vectorised_bootstrap_matches_reference():
+    rng = np.random.default_rng(3)
+    n, reps = 300, 200
+    gold = rng.integers(0, 3, n)
+    clean, noisy = rng.integers(0, 3, (3, n)), rng.integers(0, 3, (3, n))
+    groups = np.array([f'g{i // 2}' for i in rng.permutation(n)])
+    fast = study_v3.cell_statistics(gold, clean, noisy, groups, reps, 42)
+
+    def stats(index):
+        g, c, p = gold[index], clean[:, index], noisy[:, index]
+        return np.array([(c != p).mean(), (macro_f1(g, c) - macro_f1(g, p)).mean(), macro_f1(g, c).mean(), macro_f1(g, p).mean()])
+    draws = np.array([stats(i) for i in _reference_cluster_samples(groups, reps, 42)])
+    low, high = np.percentile(draws, [2.5, 97.5], axis=0)
+    point = stats(np.arange(n))
+    for i, name in enumerate(['flip_rate', 'macro_f1_drop', 'clean_macro_f1', 'perturbed_macro_f1']):
+        assert fast[name] == pytest.approx(point[i], abs=1e-12)
+        assert fast[f'{name}_low'] == pytest.approx(low[i], abs=1e-12)
+        assert fast[f'{name}_high'] == pytest.approx(high[i], abs=1e-12)
+    a, b = rng.random(n), rng.random(n)
+    contrast = study_v3.contrast_statistics(groups, a, b, reps, 42)
+    ref = [a[i].mean() - b[i].mean() for i in _reference_cluster_samples(groups, reps, 42)]
+    assert contrast['low'] == pytest.approx(np.percentile(ref, 2.5), abs=1e-12)
+    assert contrast['high'] == pytest.approx(np.percentile(ref, 97.5), abs=1e-12)

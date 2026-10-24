@@ -344,23 +344,41 @@ def macro_f1(gold, pred):
     return np.mean(scores, axis=0)
 
 
-def cluster_samples(groups, repetitions, seed):
-    """Row-index resamples that draw whole groups (duplicate tweets move together)."""
+def cluster_weights(groups, repetitions, seed):
+    """(repetitions, n) row multiplicities of a cluster bootstrap over groups.
+
+    Each resample draws len(groups) groups with replacement (duplicate tweets move
+    together); a row's weight is how often its group was drawn. Equivalent to
+    concatenating the drawn groups' rows, but vectorised.
+    """
     codes, uniques = pd.factorize(groups)
-    members = [np.flatnonzero(codes == i) for i in range(len(uniques))]
     rng = np.random.default_rng(seed)
-    for _ in range(repetitions):
-        yield np.concatenate([members[i] for i in rng.integers(0, len(members), len(members))])
+    counts = np.stack([np.bincount(rng.integers(0, len(uniques), len(uniques)), minlength=len(uniques))
+                       for _ in range(repetitions)])
+    return counts[:, codes].astype(float)
+
+
+def weighted_macro_f1(gold, pred, weights):
+    """Three-class Macro-F1 for each row of a (r, n) weight matrix."""
+    scores = []
+    for label in range(3):
+        tp = weights @ ((pred == label) & (gold == label))
+        fp = weights @ ((pred == label) & (gold != label))
+        fn = weights @ ((pred != label) & (gold == label))
+        denominator = 2 * tp + fp + fn
+        scores.append(np.where(denominator > 0, 2 * tp / np.maximum(denominator, 1e-12), 0.))
+    return np.mean(scores, axis=0)
 
 
 def cell_statistics(gold, clean, noisy, groups, repetitions, seed):
     """gold (n,), clean/noisy (seeds, n). Metrics average over training seeds."""
-    def stats(index):
-        g = gold[index]
-        c, p = clean[:, index], noisy[:, index]
-        return np.array([(c != p).mean(), (macro_f1(g, c) - macro_f1(g, p)).mean(), macro_f1(g, c).mean(), macro_f1(g, p).mean()])
-    point = stats(np.arange(len(gold)))
-    draws = np.array([stats(i) for i in cluster_samples(groups, repetitions, seed)])
+    def stats(weights):
+        flip = weights @ (clean != noisy).mean(0) / weights.sum(1)
+        f1_clean = np.mean([weighted_macro_f1(gold, c, weights) for c in clean], axis=0)
+        f1_noisy = np.mean([weighted_macro_f1(gold, p, weights) for p in noisy], axis=0)
+        return np.stack([flip, f1_clean - f1_noisy, f1_clean, f1_noisy], axis=1)
+    point = stats(np.ones((1, len(gold))))[0]
+    draws = stats(cluster_weights(groups, repetitions, seed))
     low, high = np.percentile(draws, [2.5, 97.5], axis=0)
     names = ['flip_rate', 'macro_f1_drop', 'clean_macro_f1', 'perturbed_macro_f1']
     return {**{n: float(v) for n, v in zip(names, point)}, **{f'{n}_low': float(v) for n, v in zip(names, low)},
@@ -370,7 +388,8 @@ def cell_statistics(gold, clean, noisy, groups, repetitions, seed):
 def contrast_statistics(groups, flips_a, flips_b, repetitions, seed):
     """Paired difference in flip rate (a minus b); inputs are per-row seed-averaged rates (n,)."""
     point = float(flips_a.mean() - flips_b.mean())
-    draws = [flips_a[i].mean() - flips_b[i].mean() for i in cluster_samples(groups, repetitions, seed)]
+    weights = cluster_weights(groups, repetitions, seed)
+    draws = weights @ (flips_a - flips_b) / weights.sum(1)
     low, high = np.percentile(draws, [2.5, 97.5])
     return {'difference': point, 'low': float(low), 'high': float(high)}
 
