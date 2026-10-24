@@ -202,6 +202,96 @@ def figure(cells_by_dataset, output):
     plt.close(fig)
 
 
+def pct(value, digits=1):
+    return '--' if pd.isna(value) else f'{100 * value:.{digits}f}'
+
+
+def latex_drops(cells_by_dataset, conditions=('tatweel/dense/non_cue', 'elongationx2/dense/non_cue', 'typo/dense/non_cue')):
+    """Macro-F1 drop (points) with 95% intervals for the dense conditions, both datasets."""
+    short = {'tatweel/dense/non_cue': 'Tatweel', 'elongationx2/dense/non_cue': 'Elong.\\ $\\times$2', 'typo/dense/non_cue': 'Typo'}
+    datasets = list(cells_by_dataset)
+    lines = ['\\begin{tabular}{l' + 'r' * (len(conditions) * len(datasets)) + '}', '\\toprule',
+             ' & ' + ' & '.join(f'\\multicolumn{{{len(conditions)}}}{{c}}{{{DATASETS[d]}}}' for d in datasets) + ' \\\\',
+             ' & '.join([''] + [short[c] for _ in datasets for c in conditions]) + ' \\\\', '\\midrule']
+    models = ordered(pd.concat(cells_by_dataset.values()).model)
+    for model in models:
+        values = []
+        for dataset in datasets:
+            raw = cells_by_dataset[dataset]
+            raw = raw[(raw.defense == 'RAW') & (raw.model == model)].set_index('condition')
+            for condition in conditions:
+                if condition not in raw.index:
+                    values.append('--')
+                    continue
+                row = raw.loc[condition]
+                values.append(f"{pct(row.macro_f1_drop)} {{\\scriptsize[{pct(row.macro_f1_drop_low)}, {pct(row.macro_f1_drop_high)}]}}")
+        lines.append(f"{SHORT.get(model, model)} & {' & '.join(values)} \\\\")
+    lines += ['\\bottomrule', '\\end{tabular}']
+    return '\n'.join(lines) + '\n'
+
+
+def latex_defenses(cells_by_dataset, conditions=('tatweel/dense/non_cue', 'elongationx2/dense/non_cue', 'fold/dense/non_cue')):
+    """Flip rate (%) per defense for the dense presumed-preserving conditions."""
+    short = {'tatweel/dense/non_cue': 'Tatweel', 'elongationx2/dense/non_cue': 'Elongation $\\times$2', 'fold/dense/non_cue': 'Folding'}
+    defenses = ['RAW', 'STD', 'NO_CONTEXT', 'NASN2']
+    names = {'RAW': 'RAW', 'STD': 'STD', 'NO_CONTEXT': 'NO\\_CTX', 'NASN2': 'NASN2'}
+    lines = ['\\begin{tabular}{ll' + 'r' * len(defenses) * len(cells_by_dataset) + '}', '\\toprule',
+             ' & & ' + ' & '.join(f'\\multicolumn{{{len(defenses)}}}{{c}}{{{DATASETS[d]}}}' for d in cells_by_dataset) + ' \\\\',
+             'Edit & Model & ' + ' & '.join(names[x] for _ in cells_by_dataset for x in defenses) + ' \\\\', '\\midrule']
+    models = ordered([m for m in pd.concat(cells_by_dataset.values()).model if m in ENCODERS])
+    for k, condition in enumerate(conditions):
+        for j, model in enumerate(models):
+            values = []
+            for cells in cells_by_dataset.values():
+                part = cells[(cells.model == model) & (cells.condition == condition)].set_index('defense')
+                values += [pct(part.flip_rate.get(d)) for d in defenses]
+            label = short[condition] if j == 0 else ''
+            lines.append(f"{label} & {SHORT.get(model, model)} & {' & '.join(values)} \\\\")
+        if k < len(conditions) - 1:
+            lines.append('\\midrule')
+    lines += ['\\bottomrule', '\\end{tabular}']
+    return '\n'.join(lines) + '\n'
+
+
+def latex_natural(bundle):
+    """Natural-noise slice: tweets as written vs. their STD-cleaned form."""
+    noises = {'tatweel': 'Tatweel', 'letter_run_ge3': 'Letter run $\\geq$3'}
+    frames = {d: bundle.get(f'{d}-all-natural_noise_cells.csv') for d in DATASETS}
+    frames = {d: f for d, f in frames.items() if f is not None}
+    header = []
+    for d, f in frames.items():
+        for noise, label in noises.items():
+            n = f[f.noise == noise].n.max()
+            header.append(f'{label} {{\\scriptsize($n$={int(n)})}}')
+    lines = ['\\begin{tabular}{l' + 'r' * len(header) + '}', '\\toprule',
+             ' & ' + ' & '.join(f'\\multicolumn{{{len(noises)}}}{{c}}{{{DATASETS[d]}}}' for d in frames) + ' \\\\',
+             'Model & ' + ' & '.join(header) + ' \\\\', '\\midrule']
+    models = ordered(pd.concat(frames.values()).model)
+    for model in models:
+        values = []
+        for f in frames.values():
+            for noise in noises:
+                row = f[(f.model == model) & (f.noise == noise)]
+                values.append('--' if row.empty or 'flip_rate' not in row or pd.isna(row.flip_rate.iloc[0]) else
+                              f"{pct(row.flip_rate.iloc[0])} {{\\scriptsize[{pct(row.flip_rate_low.iloc[0])}, {pct(row.flip_rate_high.iloc[0])}]}}")
+        lines.append(f"{SHORT.get(model, model)} & {' & '.join(values)} \\\\")
+    lines += ['\\bottomrule', '\\end{tabular}']
+    return '\n'.join(lines) + '\n'
+
+
+def latex_verdicts(verdicts):
+    """Supported / total tests per hypothesis and dataset."""
+    lines = ['\\begin{tabular}{lrr}', '\\toprule', 'Hypothesis & ' + ' & '.join(DATASETS.values()) + ' \\\\', '\\midrule']
+    for hypothesis in sorted(verdicts.hypothesis.unique()):
+        cells = []
+        for dataset in DATASETS:
+            part = verdicts[(verdicts.hypothesis == hypothesis) & (verdicts.dataset == dataset)]
+            cells.append(f"{int(part.verdict.eq('supported').sum())}/{len(part)}")
+        lines.append(f"{hypothesis} & {' & '.join(cells)} \\\\")
+    lines += ['\\bottomrule', '\\end{tabular}']
+    return '\n'.join(lines) + '\n'
+
+
 def write(path, text):
     Path(path).write_text(text, encoding='utf-8', newline='\n')
 
@@ -232,6 +322,11 @@ def report(public, output, tokenizer=TOKENIZER):
     write(output / 'hypotheses_summary.md', summarize(verdicts) if not verdicts.empty else 'No contrasts found.\n')
     if cells_by_dataset:
         figure(cells_by_dataset, output / 'flip_rates.pdf')
+        write(output / 'macro_f1_drops.tex', latex_drops(cells_by_dataset))
+        write(output / 'defenses.tex', latex_defenses(cells_by_dataset))
+        write(output / 'natural_noise.tex', latex_natural(bundle))
+    if not verdicts.empty:
+        write(output / 'hypotheses_table.tex', latex_verdicts(verdicts))
     return verdicts, correlations
 
 

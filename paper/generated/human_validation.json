@@ -1,0 +1,119 @@
+{
+  "agreement": [
+    {
+      "field": "meaning_preserved",
+      "n": 310,
+      "agreement": 0.8903225806451613,
+      "cohen_kappa": 0.42567567567567616,
+      "gwet_ac1": 0.8788463970021956
+    },
+    {
+      "field": "sentiment_preserved",
+      "n": 310,
+      "agreement": 0.8387096774193549,
+      "cohen_kappa": 0.5621716287215412,
+      "gwet_ac1": 0.8030451757186469
+    },
+    {
+      "field": "modified_sentiment",
+      "n": 310,
+      "agreement": 0.8032258064516129,
+      "cohen_kappa": 0.694131728778468,
+      "gwet_ac1": 0.7108518478875824
+    },
+    {
+      "field": "negation_present",
+      "n": 310,
+      "agreement": 0.9290322580645162,
+      "cohen_kappa": 0.8469273241459803,
+      "gwet_ac1": 0.8677730815463958
+    },
+    {
+      "field": "negation_affected",
+      "n": 310,
+      "agreement": 0.9129032258064517,
+      "cohen_kappa": 0.8356341928008956,
+      "gwet_ac1": 0.8815299200645429
+    }
+  ],
+  "by_condition": {
+    "tatweel/single/non_cue": {
+      "n": 30,
+      "meaning_a": 30,
+      "meaning_b": 30,
+      "both_meaning": 30,
+      "both_preserved": 30
+    },
+    "tatweel/dense/non_cue": {
+      "n": 30,
+      "meaning_a": 30,
+      "meaning_b": 30,
+      "both_meaning": 30,
+      "both_preserved": 30
+    },
+    "tatweel/single/cue": {
+      "n": 30,
+      "meaning_a": 30,
+      "meaning_b": 30,
+      "both_meaning": 30,
+      "both_preserved": 30
+    },
+    "elongationx2/single/non_cue": {
+      "n": 30,
+      "meaning_a": 30,
+      "meaning_b": 30,
+      "both_meaning": 30,
+      "both_preserved": 17
+    },
+    "elongationx4/single/non_cue": {
+      "n": 30,
+      "meaning_a": 30,
+      "meaning_b": 30,
+      "both_meaning": 30,
+      "both_preserved": 14
+    },
+    "elongationx2/dense/non_cue": {
+      "n": 30,
+      "meaning_a": 30,
+      "meaning_b": 30,
+      "both_meaning": 30,
+      "both_preserved": 6
+    },
+    "elongationx2/single/cue": {
+      "n": 30,
+      "meaning_a": 30,
+      "meaning_b": 30,
+      "both_meaning": 30,
+      "both_preserved": 0
+    },
+    "fold/single/non_cue": {
+      "n": 30,
+      "meaning_a": 30,
+      "meaning_b": 25,
+      "both_meaning": 25,
+      "both_preserved": 25
+    },
+    "fold/dense/non_cue": {
+      "n": 30,
+      "meaning_a": 29,
+      "meaning_b": 24,
+      "both_meaning": 23,
+      "both_preserved": 23
+    },
+    "typo/single/non_cue": {
+      "n": 30,
+      "meaning_a": 24,
+      "meaning_b": 20,
+      "both_meaning": 18,
+      "both_preserved": 18
+    },
+    "typo/dense/non_cue": {
+      "n": 30,
+      "meaning_a": 13,
+      "meaning_b": 11,
+      "both_meaning": 8,
+      "both_preserved": 8
+    }
+  },
+  "adjudicated": false
+}

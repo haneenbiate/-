@@ -1,0 +1,227 @@
+dataset,hypothesis,model,test,n,difference,low,high,verdict
+arsarcasm,H1,AraBERTv02-twitter,tatweel/dense/non_cue minus tatweel/single/non_cue,2478,0.0926822706483723,0.0821248619636883,0.1026059466542948,supported
+arsarcasm,H1,AraBERTv02-twitter,elongationx2/dense/non_cue minus elongationx2/single/non_cue,2477,0.1118288251917642,0.102625484371753,0.1219220071763429,supported
+arsarcasm,H1,AraBERTv02-twitter,fold/dense/non_cue minus fold/single/non_cue,1963,0.0186788928510782,0.0145886344359626,0.0232288043031605,supported
+arsarcasm,H1,CAMeLBERT-DA,tatweel/dense/non_cue minus tatweel/single/non_cue,2478,0.0977939198278181,0.087864614021753,0.1077879594717536,supported
+arsarcasm,H1,CAMeLBERT-DA,elongationx2/dense/non_cue minus elongationx2/single/non_cue,2477,0.1107522540707845,0.1008629119954937,0.1203292493216775,supported
+arsarcasm,H1,CAMeLBERT-DA,fold/dense/non_cue minus fold/single/non_cue,1963,0.0254712175241976,0.0205258693808312,0.0307988130721695,supported
+arsarcasm,H1,MARBERT,tatweel/dense/non_cue minus tatweel/single/non_cue,2478,0.1015603981705676,0.0914582339646803,0.1115141743920461,supported
+arsarcasm,H1,MARBERT,elongationx2/dense/non_cue minus elongationx2/single/non_cue,2477,0.0873368321894765,0.0791664983844911,0.0953344120819849,supported
+arsarcasm,H1,MARBERT,fold/dense/non_cue minus fold/single/non_cue,1963,0.0178298522669383,0.0139455782312925,0.0218720992236985,supported
+arsarcasm,H1,MARBERTv2,tatweel/dense/non_cue minus tatweel/single/non_cue,2478,0.114743072370191,0.1041551060075272,0.1257404415724285,supported
+arsarcasm,H1,MARBERTv2,elongationx2/dense/non_cue minus elongationx2/single/non_cue,2477,0.0785896918315166,0.070734222342083,0.0864944847995695,supported
+arsarcasm,H1,MARBERTv2,fold/dense/non_cue minus fold/single/non_cue,1963,0.0151129223976906,0.0115705291815552,0.0190686445143164,supported
+arsarcasm,H1,XLM-R-base,tatweel/dense/non_cue minus tatweel/single/non_cue,2478,0.0675275760021522,0.059820339035048,0.0752085964984762,supported
+arsarcasm,H1,XLM-R-base,elongationx2/dense/non_cue minus elongationx2/single/non_cue,2477,0.1177499663571524,0.1079203126255154,0.1271274141384118,supported
+arsarcasm,H1,XLM-R-base,fold/dense/non_cue minus fold/single/non_cue,1963,0.0303956529122092,0.0247793618465716,0.0358896224818012,supported
+arsarcasm,H2,AraBERTv02-twitter,"AraBERTv02-twitter minus XLM-R-base, tatweel/dense",2478,0.0410277105192359,0.0281684924360981,0.0548176269969485,supported
+arsarcasm,H2,CAMeLBERT-DA,"CAMeLBERT-DA minus XLM-R-base, tatweel/dense",2478,0.0306698950766747,0.0182706782799784,0.0438465964056768,supported
+arsarcasm,H2,MARBERT,"MARBERT minus XLM-R-base, tatweel/dense",2478,0.0359160613397901,0.0237126171199274,0.0490009537232594,supported
+arsarcasm,H2,MARBERTv2,"MARBERTv2 minus XLM-R-base, tatweel/dense",2478,0.0566316922249125,0.0433656908063687,0.0701081117378458,supported
+arsarcasm,H3,AraBERTv02-twitter,tatweel/single/cue minus tatweel/single/non_cue,403,0.0289495450785773,0.0082508250825082,0.049877405176657,supported
+arsarcasm,H3,CAMeLBERT-DA,tatweel/single/cue minus tatweel/single/non_cue,403,0.0024813895781637,-0.0115511551155115,0.0157545605306799,not supported
+arsarcasm,H3,MARBERT,tatweel/single/cue minus tatweel/single/non_cue,403,0.0239867659222497,0.0074812967581047,0.0402298850574712,supported
+arsarcasm,H3,MARBERTv2,tatweel/single/cue minus tatweel/single/non_cue,403,0.0330851943755169,0.0130881334746671,0.0551508746132401,supported
+arsarcasm,H4,AraBERTv02-twitter,"STD minus RAW, tatweel/single/non_cue",2478,-0.0663169222491256,-0.0738949348381029,-0.0589798125982913,supported
+arsarcasm,H4,AraBERTv02-twitter,"STD minus RAW, tatweel/dense/non_cue",2478,-0.1589991928974979,-0.1707003986283291,-0.1469833461211215,supported
+arsarcasm,H4,AraBERTv02-twitter,"STD minus RAW, tatweel/single/cue",404,-0.0841584158415841,-0.1053563134091187,-0.0636889991728701,supported
+arsarcasm,H4,AraBERTv02-twitter,"STD minus RAW, elongationx2/single/non_cue",2477,-0.0483111290539631,-0.054526183044806,-0.0424559832720203,supported
+arsarcasm,H4,AraBERTv02-twitter,"STD minus RAW, elongationx4/single/non_cue",2477,-0.0767056923698021,-0.0846071846012124,-0.069735429712102,supported
+arsarcasm,H4,AraBERTv02-twitter,"STD minus RAW, elongationx2/dense/non_cue",2477,-0.1587942403445027,-0.1700998839579715,-0.1476532583876363,supported
+arsarcasm,H4,AraBERTv02-twitter,"STD minus RAW, elongationx2/single/cue",404,-0.0701320132013201,-0.0882365074742768,-0.0526748971193415,supported
+arsarcasm,H4,CAMeLBERT-DA,"STD minus RAW, tatweel/single/non_cue",2478,-0.0508474576271186,-0.0570829485719896,-0.0445597719280295,supported
+arsarcasm,H4,CAMeLBERT-DA,"STD minus RAW, tatweel/dense/non_cue",2478,-0.1486413774549367,-0.1594062508136114,-0.1375299837122963,supported
+arsarcasm,H4,CAMeLBERT-DA,"STD minus RAW, tatweel/single/cue",404,-0.047029702970297,-0.0595555292009276,-0.0346534653465346,supported
+arsarcasm,H4,CAMeLBERT-DA,"STD minus RAW, elongationx2/single/non_cue",2477,-0.0543668416094738,-0.0607901603119447,-0.0483661820957565,supported
+arsarcasm,H4,CAMeLBERT-DA,"STD minus RAW, elongationx4/single/non_cue",2477,-0.0573274121921679,-0.0635955149590174,-0.0509408602150537,supported
+arsarcasm,H4,CAMeLBERT-DA,"STD minus RAW, elongationx2/dense/non_cue",2477,-0.1633696676086664,-0.1744181705429389,-0.1520532806821757,supported
+arsarcasm,H4,CAMeLBERT-DA,"STD minus RAW, elongationx2/single/cue",404,-0.0453795379537953,-0.0592592592592592,-0.0330012630892719,supported
+arsarcasm,H4,MARBERT,"STD minus RAW, tatweel/single/non_cue",2478,-0.0523271455474845,-0.0586753042608103,-0.0463512517426463,supported
+arsarcasm,H4,MARBERT,"STD minus RAW, tatweel/dense/non_cue",2478,-0.1538875437180522,-0.1651215907564152,-0.1429119338006472,supported
+arsarcasm,H4,MARBERT,"STD minus RAW, tatweel/single/cue",404,-0.0693069306930693,-0.0854110619740802,-0.0534979423868312,supported
+arsarcasm,H4,MARBERT,"STD minus RAW, elongationx2/single/non_cue",2477,-0.0406405598169829,-0.0456454171537979,-0.0356899985773225,supported
+arsarcasm,H4,MARBERT,"STD minus RAW, elongationx4/single/non_cue",2477,-0.055308841340331,-0.0610956916985718,-0.049233252623083,supported
+arsarcasm,H4,MARBERT,"STD minus RAW, elongationx2/dense/non_cue",2477,-0.1271699636657246,-0.1362670306107119,-0.1178516937093592,supported
+arsarcasm,H4,MARBERT,"STD minus RAW, elongationx2/single/cue",404,-0.0511551155115511,-0.0653432588916459,-0.0386831275720164,supported
+arsarcasm,H4,MARBERTv2,"STD minus RAW, tatweel/single/non_cue",2478,-0.0598601022329835,-0.0669368344658803,-0.0529720986655883,supported
+arsarcasm,H4,MARBERTv2,"STD minus RAW, tatweel/dense/non_cue",2478,-0.1746031746031746,-0.1869642510529304,-0.1626328523205105,supported
+arsarcasm,H4,MARBERTv2,"STD minus RAW, tatweel/single/cue",404,-0.0792079207920792,-0.0999222152447959,-0.0592592592592592,supported
+arsarcasm,H4,MARBERTv2,"STD minus RAW, elongationx2/single/non_cue",2477,-0.0425245592786973,-0.0482354647111466,-0.0373946187961517,supported
+arsarcasm,H4,MARBERTv2,"STD minus RAW, elongationx4/single/non_cue",2477,-0.0610954111155968,-0.0679847112358076,-0.0549934140871954,supported
+arsarcasm,H4,MARBERTv2,"STD minus RAW, elongationx2/dense/non_cue",2477,-0.1193648230386219,-0.1285259096095626,-0.1102128565856729,supported
+arsarcasm,H4,MARBERTv2,"STD minus RAW, elongationx2/single/cue",404,-0.0478547854785478,-0.0618850269021939,-0.0346534653465346,supported
+arsarcasm,H4,XLM-R-base,"STD minus RAW, tatweel/single/non_cue",2478,-0.0504439063761097,-0.0563183406449877,-0.0448475795500422,supported
+arsarcasm,H4,XLM-R-base,"STD minus RAW, tatweel/dense/non_cue",2478,-0.117971482378262,-0.1272338229908404,-0.1091860235917237,supported
+arsarcasm,H4,XLM-R-base,"STD minus RAW, tatweel/single/cue",404,-0.0544554455445544,-0.0694789081885856,-0.0402191628066564,supported
+arsarcasm,H4,XLM-R-base,"STD minus RAW, elongationx2/single/non_cue",2477,-0.0675548378414749,-0.0741347219050795,-0.061021505376344,supported
+arsarcasm,H4,XLM-R-base,"STD minus RAW, elongationx4/single/non_cue",2477,-0.1017359709325797,-0.110080508584198,-0.0940480147096918,supported
+arsarcasm,H4,XLM-R-base,"STD minus RAW, elongationx2/dense/non_cue",2477,-0.183151661956668,-0.1939962443009887,-0.1716556776772224,supported
+arsarcasm,H4,XLM-R-base,"STD minus RAW, elongationx2/single/cue",404,-0.075082508250825,-0.0945304342485105,-0.0578990901571546,supported
+arsarcasm,H5,AraBERTv02-twitter,"NASN2 minus NO_CONTEXT, tatweel/single/non_cue",2478,0.0,0.0,0.0,not supported
+arsarcasm,H5,AraBERTv02-twitter,"NASN2 minus NO_CONTEXT, tatweel/dense/non_cue",2478,0.0,0.0,0.0,not supported
+arsarcasm,H5,AraBERTv02-twitter,"NASN2 minus NO_CONTEXT, tatweel/single/cue",404,0.0,0.0,0.0,not supported
+arsarcasm,H5,AraBERTv02-twitter,"NASN2 minus NO_CONTEXT, elongationx2/single/non_cue",2477,0.0005382855604898,-0.0002693602693602,0.0016155088852988,not supported
+arsarcasm,H5,AraBERTv02-twitter,"NASN2 minus NO_CONTEXT, elongationx4/single/non_cue",2477,0.0009419997308572,0.0,0.0021531857397824,not supported
+arsarcasm,H5,AraBERTv02-twitter,"NASN2 minus NO_CONTEXT, elongationx2/dense/non_cue",2477,0.0009419997308572,-0.0002687115627153,0.0021514268415356,not supported
+arsarcasm,H5,AraBERTv02-twitter,"NASN2 minus NO_CONTEXT, elongationx2/single/cue",404,0.0,0.0,0.0,not supported
+arsarcasm,H5,AraBERTv02-twitter,"NASN2 minus NO_CONTEXT, fold/single/non_cue",1965,0.0,0.0,0.0,not supported
+arsarcasm,H5,AraBERTv02-twitter,"NASN2 minus NO_CONTEXT, fold/dense/non_cue",1963,0.0,0.0,0.0,not supported
+arsarcasm,H5,AraBERTv02-twitter,"NASN2 minus NO_CONTEXT, typo/single/non_cue",2476,0.0,-0.0004037141703673,0.0004038772213247,not supported
+arsarcasm,H5,AraBERTv02-twitter,"NASN2 minus NO_CONTEXT, typo/dense/non_cue",2461,-0.0001354462955438,-0.0004070004070004,0.0,not supported
+arsarcasm,H5,CAMeLBERT-DA,"NASN2 minus NO_CONTEXT, tatweel/single/non_cue",2478,0.0,0.0,0.0,not supported
+arsarcasm,H5,CAMeLBERT-DA,"NASN2 minus NO_CONTEXT, tatweel/dense/non_cue",2478,0.0,0.0,0.0,not supported
+arsarcasm,H5,CAMeLBERT-DA,"NASN2 minus NO_CONTEXT, tatweel/single/cue",404,0.0,0.0,0.0,not supported
+arsarcasm,H5,CAMeLBERT-DA,"NASN2 minus NO_CONTEXT, elongationx2/single/non_cue",2477,0.0006728569506123,0.0,0.001347345728914,not supported
+arsarcasm,H5,CAMeLBERT-DA,"NASN2 minus NO_CONTEXT, elongationx4/single/non_cue",2477,0.0012111425111021,0.0002692514808831,0.0022867904223836,opposite
+arsarcasm,H5,CAMeLBERT-DA,"NASN2 minus NO_CONTEXT, elongationx2/dense/non_cue",2477,0.001480285291347,0.0,0.0029570489121473,not supported
+arsarcasm,H5,CAMeLBERT-DA,"NASN2 minus NO_CONTEXT, elongationx2/single/cue",404,0.0,0.0,0.0,not supported
+arsarcasm,H5,CAMeLBERT-DA,"NASN2 minus NO_CONTEXT, fold/single/non_cue",1965,0.0,0.0,0.0,not supported
+arsarcasm,H5,CAMeLBERT-DA,"NASN2 minus NO_CONTEXT, fold/dense/non_cue",1963,0.0,0.0,0.0,not supported
+arsarcasm,H5,CAMeLBERT-DA,"NASN2 minus NO_CONTEXT, typo/single/non_cue",2476,0.0,0.0,0.0,not supported
+arsarcasm,H5,CAMeLBERT-DA,"NASN2 minus NO_CONTEXT, typo/dense/non_cue",2461,0.0,0.0,0.0,not supported
+arsarcasm,H5,MARBERT,"NASN2 minus NO_CONTEXT, tatweel/single/non_cue",2478,0.0,0.0,0.0,not supported
+arsarcasm,H5,MARBERT,"NASN2 minus NO_CONTEXT, tatweel/dense/non_cue",2478,0.0,0.0,0.0,not supported
+arsarcasm,H5,MARBERT,"NASN2 minus NO_CONTEXT, tatweel/single/cue",404,0.0,0.0,0.0,not supported
+arsarcasm,H5,MARBERT,"NASN2 minus NO_CONTEXT, elongationx2/single/non_cue",2477,0.0004037141703673,0.0,0.0009419997308572,not supported
+arsarcasm,H5,MARBERT,"NASN2 minus NO_CONTEXT, elongationx4/single/non_cue",2477,0.0012111425111021,0.0004027345693063,0.0022858679575097,opposite
+arsarcasm,H5,MARBERT,"NASN2 minus NO_CONTEXT, elongationx2/dense/non_cue",2477,0.0001345713901224,-0.0013516426261686,0.0016155088852988,not supported
+arsarcasm,H5,MARBERT,"NASN2 minus NO_CONTEXT, elongationx2/single/cue",404,0.0,0.0,0.0,not supported
+arsarcasm,H5,MARBERT,"NASN2 minus NO_CONTEXT, fold/single/non_cue",1965,0.0,0.0,0.0,not supported
+arsarcasm,H5,MARBERT,"NASN2 minus NO_CONTEXT, fold/dense/non_cue",1963,0.0,0.0,0.0,not supported
+arsarcasm,H5,MARBERT,"NASN2 minus NO_CONTEXT, typo/single/non_cue",2476,0.0,-0.0004037182466413,0.0004037141703673,not supported
+arsarcasm,H5,MARBERT,"NASN2 minus NO_CONTEXT, typo/dense/non_cue",2461,0.0,-0.0004065040650406,0.0004061738424045,not supported
+arsarcasm,H5,MARBERTv2,"NASN2 minus NO_CONTEXT, tatweel/single/non_cue",2478,0.0,0.0,0.0,not supported
+arsarcasm,H5,MARBERTv2,"NASN2 minus NO_CONTEXT, tatweel/dense/non_cue",2478,0.0,0.0,0.0,not supported
+arsarcasm,H5,MARBERTv2,"NASN2 minus NO_CONTEXT, tatweel/single/cue",404,0.0,0.0,0.0,not supported
+arsarcasm,H5,MARBERTv2,"NASN2 minus NO_CONTEXT, elongationx2/single/non_cue",2477,0.0002691427802449,0.0,0.0006739452756436,not supported
+arsarcasm,H5,MARBERTv2,"NASN2 minus NO_CONTEXT, elongationx4/single/non_cue",2477,0.0013457139012246,0.0005376344086021,0.0022905340677893,opposite
+arsarcasm,H5,MARBERTv2,"NASN2 minus NO_CONTEXT, elongationx2/dense/non_cue",2477,0.0,-0.0010765711209796,0.001077441077441,not supported
+arsarcasm,H5,MARBERTv2,"NASN2 minus NO_CONTEXT, elongationx2/single/cue",404,0.0,0.0,0.0,not supported
+arsarcasm,H5,MARBERTv2,"NASN2 minus NO_CONTEXT, fold/single/non_cue",1965,0.0,0.0,0.0,not supported
+arsarcasm,H5,MARBERTv2,"NASN2 minus NO_CONTEXT, fold/dense/non_cue",1963,0.0,0.0,0.0,not supported
+arsarcasm,H5,MARBERTv2,"NASN2 minus NO_CONTEXT, typo/single/non_cue",2476,-0.0001346257404415,-0.0004045307443365,0.0,not supported
+arsarcasm,H5,MARBERTv2,"NASN2 minus NO_CONTEXT, typo/dense/non_cue",2461,-0.0002708925910876,-0.0008140008140008,0.0,not supported
+arsarcasm,H5,XLM-R-base,"NASN2 minus NO_CONTEXT, tatweel/single/non_cue",2478,0.0,0.0,0.0,not supported
+arsarcasm,H5,XLM-R-base,"NASN2 minus NO_CONTEXT, tatweel/dense/non_cue",2478,0.0,0.0,0.0,not supported
+arsarcasm,H5,XLM-R-base,"NASN2 minus NO_CONTEXT, tatweel/single/cue",404,0.0,0.0,0.0,not supported
+arsarcasm,H5,XLM-R-base,"NASN2 minus NO_CONTEXT, elongationx2/single/non_cue",2477,0.0010765711209796,0.0001347345728914,0.0020226537216828,opposite
+arsarcasm,H5,XLM-R-base,"NASN2 minus NO_CONTEXT, elongationx4/single/non_cue",2477,0.0018839994617144,0.0006720430107526,0.0033670033670033,opposite
+arsarcasm,H5,XLM-R-base,"NASN2 minus NO_CONTEXT, elongationx2/dense/non_cue",2477,0.0013457139012245,-0.0001346801346801,0.0029558271898688,not supported
+arsarcasm,H5,XLM-R-base,"NASN2 minus NO_CONTEXT, elongationx2/single/cue",404,0.0,0.0,0.0,not supported
+arsarcasm,H5,XLM-R-base,"NASN2 minus NO_CONTEXT, fold/single/non_cue",1965,0.0,0.0,0.0,not supported
+arsarcasm,H5,XLM-R-base,"NASN2 minus NO_CONTEXT, fold/dense/non_cue",1963,0.0,0.0,0.0,not supported
+arsarcasm,H5,XLM-R-base,"NASN2 minus NO_CONTEXT, typo/single/non_cue",2476,0.0002692514808831,0.0,0.000673672864457,not supported
+arsarcasm,H5,XLM-R-base,"NASN2 minus NO_CONTEXT, typo/dense/non_cue",2461,0.0002708925910876,0.0,0.0010809350087825,not supported
+arsas,H1,AraBERTv02-twitter,tatweel/dense/non_cue minus tatweel/single/non_cue,1951,0.0606526567572185,0.0514783883073912,0.0697080374800986,supported
+arsas,H1,AraBERTv02-twitter,elongationx2/dense/non_cue minus elongationx2/single/non_cue,1951,0.0609943618657098,0.0522799575379602,0.0691029670950549,supported
+arsas,H1,AraBERTv02-twitter,fold/dense/non_cue minus fold/single/non_cue,1657,0.0108630054315027,0.0074337502722988,0.0144237281757977,supported
+arsas,H1,CAMeLBERT-DA,tatweel/dense/non_cue minus tatweel/single/non_cue,1951,0.0729540406629079,0.0633532277206584,0.0820101454041454,supported
+arsas,H1,CAMeLBERT-DA,elongationx2/dense/non_cue minus elongationx2/single/non_cue,1951,0.1189133777549974,0.1073675610756708,0.1302382627195648,supported
+arsas,H1,CAMeLBERT-DA,fold/dense/non_cue minus fold/single/non_cue,1657,0.0207201770267551,0.0154984941600929,0.0261840749736966,supported
+arsas,H1,MARBERT,tatweel/dense/non_cue minus tatweel/single/non_cue,1951,0.0553562275756022,0.0474222698631285,0.0633064316665035,supported
+arsas,H1,MARBERT,elongationx2/dense/non_cue minus elongationx2/single/non_cue,1951,0.0722706304459251,0.064235468517616,0.0805486999325626,supported
+arsas,H1,MARBERT,fold/dense/non_cue minus fold/single/non_cue,1657,0.0140816737075035,0.0104605141667267,0.0181066539655014,supported
+arsas,H1,MARBERTv2,tatweel/dense/non_cue minus tatweel/single/non_cue,1951,0.0729540406629079,0.0633280010905037,0.0827807042440216,supported
+arsas,H1,MARBERTv2,elongationx2/dense/non_cue minus elongationx2/single/non_cue,1951,0.0775670596275414,0.0685414413575917,0.0868385389998293,supported
+arsas,H1,MARBERTv2,fold/dense/non_cue minus fold/single/non_cue,1657,0.0132770066385033,0.009449135504624,0.0173640044084295,supported
+arsas,H1,XLM-R-base,tatweel/dense/non_cue minus tatweel/single/non_cue,1951,0.0586024261062702,0.0501624155788581,0.0672134530547562,supported
+arsas,H1,XLM-R-base,elongationx2/dense/non_cue minus elongationx2/single/non_cue,1951,0.0792755851699982,0.0699495051154876,0.088288138074279,supported
+arsas,H1,XLM-R-base,fold/dense/non_cue minus fold/single/non_cue,1657,0.0261516797425065,0.0203172311401305,0.0321093543301564,supported
+arsas,H2,AraBERTv02-twitter,"AraBERTv02-twitter minus XLM-R-base, tatweel/dense",1951,0.0068341021698274,-0.0056237218813905,0.018975705062861,not supported
+arsas,H2,CAMeLBERT-DA,"CAMeLBERT-DA minus XLM-R-base, tatweel/dense",1951,0.0167435503160772,0.0047632808253529,0.0280488882315368,supported
+arsas,H2,MARBERT,"MARBERT minus XLM-R-base, tatweel/dense",1951,-0.0068341021698274,-0.018424218081447,0.0044616209956409,not supported
+arsas,H2,MARBERTv2,"MARBERTv2 minus XLM-R-base, tatweel/dense",1951,0.0164018452075858,0.0039155600953353,0.028935818135509,supported
+arsas,H3,AraBERTv02-twitter,tatweel/single/cue minus tatweel/single/non_cue,316,0.0242616033755274,0.0042057681751747,0.0453586497890295,supported
+arsas,H3,CAMeLBERT-DA,tatweel/single/cue minus tatweel/single/non_cue,316,0.020042194092827,0.0041794017763845,0.0376175548589341,supported
+arsas,H3,MARBERT,tatweel/single/cue minus tatweel/single/non_cue,316,0.0242616033755274,0.0094043887147335,0.040084388185654,supported
+arsas,H3,MARBERTv2,tatweel/single/cue minus tatweel/single/non_cue,316,0.030590717299578,0.0105144204379368,0.0515287871527639,supported
+arsas,H4,AraBERTv02-twitter,"STD minus RAW, tatweel/single/non_cue",1951,-0.038612677259525,-0.0449112021857923,-0.0328032702859399,supported
+arsas,H4,AraBERTv02-twitter,"STD minus RAW, tatweel/dense/non_cue",1951,-0.0992653340167435,-0.1093456613237713,-0.088741270652359,supported
+arsas,H4,AraBERTv02-twitter,"STD minus RAW, tatweel/single/cue",316,-0.0548523206751054,-0.0756123535676251,-0.0359788359788359,supported
+arsas,H4,AraBERTv02-twitter,"STD minus RAW, elongationx2/single/non_cue",1951,-0.0280198188962925,-0.0331968670451425,-0.0232834814217958,supported
+arsas,H4,AraBERTv02-twitter,"STD minus RAW, elongationx4/single/non_cue",1951,-0.0382709721510336,-0.0445820110102142,-0.0327310773449882,supported
+arsas,H4,AraBERTv02-twitter,"STD minus RAW, elongationx2/dense/non_cue",1951,-0.0876473603280369,-0.0974571034416706,-0.0781076675311467,supported
+arsas,H4,AraBERTv02-twitter,"STD minus RAW, elongationx2/single/cue",316,-0.0284810126582278,-0.0424628450106157,-0.0167189132706374,supported
+arsas,H4,CAMeLBERT-DA,"STD minus RAW, tatweel/single/non_cue",1951,-0.0362207415000854,-0.0420507420945074,-0.0304417925193527,supported
+arsas,H4,CAMeLBERT-DA,"STD minus RAW, tatweel/dense/non_cue",1951,-0.1091747821629933,-0.1192425793244626,-0.0984592973436161,supported
+arsas,H4,CAMeLBERT-DA,"STD minus RAW, tatweel/single/cue",316,-0.0432489451476793,-0.0612695940266033,-0.0282131661442006,supported
+arsas,H4,CAMeLBERT-DA,"STD minus RAW, elongationx2/single/non_cue",1951,-0.0377584144882966,-0.0439461760324287,-0.0317781680895043,supported
+arsas,H4,CAMeLBERT-DA,"STD minus RAW, elongationx4/single/non_cue",1951,-0.0427131385614214,-0.0497385371072878,-0.0366748082937209,supported
+arsas,H4,CAMeLBERT-DA,"STD minus RAW, elongationx2/dense/non_cue",1951,-0.1556466769178199,-0.1684589194293952,-0.1431486824781843,supported
+arsas,H4,CAMeLBERT-DA,"STD minus RAW, elongationx2/single/cue",316,-0.0232067510548523,-0.034923415225963,-0.0126572295651479,supported
+arsas,H4,MARBERT,"STD minus RAW, tatweel/single/non_cue",1951,-0.0302409021014864,-0.0360318824695476,-0.0250631974922729,supported
+arsas,H4,MARBERT,"STD minus RAW, tatweel/dense/non_cue",1951,-0.0855971296770886,-0.0947013983048011,-0.0763604503177748,supported
+arsas,H4,MARBERT,"STD minus RAW, tatweel/single/cue",316,-0.0421940928270042,-0.0578338590956887,-0.0282109619905956,supported
+arsas,H4,MARBERT,"STD minus RAW, elongationx2/single/non_cue",1951,-0.0247736203656244,-0.0293513183745235,-0.0204493755365748,supported
+arsas,H4,MARBERT,"STD minus RAW, elongationx4/single/non_cue",1951,-0.039125234922262,-0.0452759268751067,-0.0335878011994423,supported
+arsas,H4,MARBERT,"STD minus RAW, elongationx2/dense/non_cue",1951,-0.0968733982573039,-0.1067305489498302,-0.0873781418693062,supported
+arsas,H4,MARBERT,"STD minus RAW, elongationx2/single/cue",316,-0.0189873417721518,-0.0277777777777777,-0.0106157112526539,supported
+arsas,H4,MARBERTv2,"STD minus RAW, tatweel/single/non_cue",1951,-0.035879036391594,-0.041796192729657,-0.0300858893226663,supported
+arsas,H4,MARBERTv2,"STD minus RAW, tatweel/dense/non_cue",1951,-0.1088330770545019,-0.1197953536297776,-0.0981692420242379,supported
+arsas,H4,MARBERTv2,"STD minus RAW, tatweel/single/cue",316,-0.0590717299578059,-0.0793675364882795,-0.0410094637223974,supported
+arsas,H4,MARBERTv2,"STD minus RAW, elongationx2/single/non_cue",1951,-0.0333162480779087,-0.0390775111738414,-0.0278336316262071,supported
+arsas,H4,MARBERTv2,"STD minus RAW, elongationx4/single/non_cue",1951,-0.0490346830685118,-0.0563820001942618,-0.042093915902748,supported
+arsas,H4,MARBERTv2,"STD minus RAW, elongationx2/dense/non_cue",1951,-0.1103707500427131,-0.1217120285423038,-0.0993883008723116,supported
+arsas,H4,MARBERTv2,"STD minus RAW, elongationx2/single/cue",316,-0.0242616033755274,-0.0365594768598105,-0.0137130801687763,supported
+arsas,H4,XLM-R-base,"STD minus RAW, tatweel/single/non_cue",1951,-0.0338288057406458,-0.0390451832907075,-0.0284588148937467,supported
+arsas,H4,XLM-R-base,"STD minus RAW, tatweel/dense/non_cue",1951,-0.0924312318469161,-0.1017238436593274,-0.0831618567307284,supported
+arsas,H4,XLM-R-base,"STD minus RAW, tatweel/single/cue",316,-0.050632911392405,-0.0658356452038285,-0.0359788359788359,supported
+arsas,H4,XLM-R-base,"STD minus RAW, elongationx2/single/non_cue",1951,-0.0370750042713138,-0.0427793518085745,-0.0315986496630096,supported
+arsas,H4,XLM-R-base,"STD minus RAW, elongationx4/single/non_cue",1951,-0.0531351443704083,-0.0599528965784427,-0.0463224155578301,supported
+arsas,H4,XLM-R-base,"STD minus RAW, elongationx2/dense/non_cue",1951,-0.115325474115838,-0.1259184270063458,-0.1047863247863248,supported
+arsas,H4,XLM-R-base,"STD minus RAW, elongationx2/single/cue",316,-0.0485232067510548,-0.0647558386411889,-0.0328042328042328,supported
+arsas,H5,AraBERTv02-twitter,"NASN2 minus NO_CONTEXT, tatweel/single/non_cue",1951,0.0,0.0,0.0,not supported
+arsas,H5,AraBERTv02-twitter,"NASN2 minus NO_CONTEXT, tatweel/dense/non_cue",1951,0.0,0.0,0.0,not supported
+arsas,H5,AraBERTv02-twitter,"NASN2 minus NO_CONTEXT, tatweel/single/cue",316,0.0,0.0,0.0,not supported
+arsas,H5,AraBERTv02-twitter,"NASN2 minus NO_CONTEXT, elongationx2/single/non_cue",1951,0.0,0.0,0.0,not supported
+arsas,H5,AraBERTv02-twitter,"NASN2 minus NO_CONTEXT, elongationx4/single/non_cue",1951,0.000512557662737,0.0,0.0011959832126413,not supported
+arsas,H5,AraBERTv02-twitter,"NASN2 minus NO_CONTEXT, elongationx2/dense/non_cue",1951,0.0,-0.0013612561077158,0.0010298926603459,not supported
+arsas,H5,AraBERTv02-twitter,"NASN2 minus NO_CONTEXT, elongationx2/single/cue",316,0.0,0.0,0.0,not supported
+arsas,H5,AraBERTv02-twitter,"NASN2 minus NO_CONTEXT, fold/single/non_cue",1659,0.0,0.0,0.0,not supported
+arsas,H5,AraBERTv02-twitter,"NASN2 minus NO_CONTEXT, fold/dense/non_cue",1657,0.0,0.0,0.0,not supported
+arsas,H5,AraBERTv02-twitter,"NASN2 minus NO_CONTEXT, typo/single/non_cue",1951,0.0,0.0,0.0,not supported
+arsas,H5,AraBERTv02-twitter,"NASN2 minus NO_CONTEXT, typo/dense/non_cue",1945,0.0,0.0,0.0,not supported
+arsas,H5,CAMeLBERT-DA,"NASN2 minus NO_CONTEXT, tatweel/single/non_cue",1951,0.0,0.0,0.0,not supported
+arsas,H5,CAMeLBERT-DA,"NASN2 minus NO_CONTEXT, tatweel/dense/non_cue",1951,0.0,0.0,0.0,not supported
+arsas,H5,CAMeLBERT-DA,"NASN2 minus NO_CONTEXT, tatweel/single/cue",316,0.0,0.0,0.0,not supported
+arsas,H5,CAMeLBERT-DA,"NASN2 minus NO_CONTEXT, elongationx2/single/non_cue",1951,-0.0001708525542456,-0.000514403292181,0.0,not supported
+arsas,H5,CAMeLBERT-DA,"NASN2 minus NO_CONTEXT, elongationx4/single/non_cue",1951,0.0006834102169827,-0.0001718213058419,0.0020565817173929,not supported
+arsas,H5,CAMeLBERT-DA,"NASN2 minus NO_CONTEXT, elongationx2/dense/non_cue",1951,-0.0008542627712284,-0.0020534144564005,0.0001718213058419,not supported
+arsas,H5,CAMeLBERT-DA,"NASN2 minus NO_CONTEXT, elongationx2/single/cue",316,0.0,0.0,0.0,not supported
+arsas,H5,CAMeLBERT-DA,"NASN2 minus NO_CONTEXT, fold/single/non_cue",1659,0.0,0.0,0.0,not supported
+arsas,H5,CAMeLBERT-DA,"NASN2 minus NO_CONTEXT, fold/dense/non_cue",1657,0.0,0.0,0.0,not supported
+arsas,H5,CAMeLBERT-DA,"NASN2 minus NO_CONTEXT, typo/single/non_cue",1951,0.0,0.0,0.0,not supported
+arsas,H5,CAMeLBERT-DA,"NASN2 minus NO_CONTEXT, typo/dense/non_cue",1945,0.0,0.0,0.0,not supported
+arsas,H5,MARBERT,"NASN2 minus NO_CONTEXT, tatweel/single/non_cue",1951,0.0,0.0,0.0,not supported
+arsas,H5,MARBERT,"NASN2 minus NO_CONTEXT, tatweel/dense/non_cue",1951,0.0,0.0,0.0,not supported
+arsas,H5,MARBERT,"NASN2 minus NO_CONTEXT, tatweel/single/cue",316,0.0,0.0,0.0,not supported
+arsas,H5,MARBERT,"NASN2 minus NO_CONTEXT, elongationx2/single/non_cue",1951,0.0,-0.0005122950819672,0.000512557662737,not supported
+arsas,H5,MARBERT,"NASN2 minus NO_CONTEXT, elongationx4/single/non_cue",1951,0.0003417051084913,-0.000342055755088,0.0011996726684792,not supported
+arsas,H5,MARBERT,"NASN2 minus NO_CONTEXT, elongationx2/dense/non_cue",1951,-0.0006834102169827,-0.0016998347018562,0.0001712057604631,not supported
+arsas,H5,MARBERT,"NASN2 minus NO_CONTEXT, elongationx2/single/cue",316,0.0,0.0,0.0,not supported
+arsas,H5,MARBERT,"NASN2 minus NO_CONTEXT, fold/single/non_cue",1659,0.0,0.0,0.0,not supported
+arsas,H5,MARBERT,"NASN2 minus NO_CONTEXT, fold/dense/non_cue",1657,0.0,0.0,0.0,not supported
+arsas,H5,MARBERT,"NASN2 minus NO_CONTEXT, typo/single/non_cue",1951,0.0,0.0,0.0,not supported
+arsas,H5,MARBERT,"NASN2 minus NO_CONTEXT, typo/dense/non_cue",1945,0.0,0.0,0.0,not supported
+arsas,H5,MARBERTv2,"NASN2 minus NO_CONTEXT, tatweel/single/non_cue",1951,0.0,0.0,0.0,not supported
+arsas,H5,MARBERTv2,"NASN2 minus NO_CONTEXT, tatweel/dense/non_cue",1951,0.0,0.0,0.0,not supported
+arsas,H5,MARBERTv2,"NASN2 minus NO_CONTEXT, tatweel/single/cue",316,0.0,0.0,0.0,not supported
+arsas,H5,MARBERTv2,"NASN2 minus NO_CONTEXT, elongationx2/single/non_cue",1951,0.0,-0.0005122950819672,0.0005123016464864,not supported
+arsas,H5,MARBERTv2,"NASN2 minus NO_CONTEXT, elongationx4/single/non_cue",1951,0.000512557662737,0.0,0.0013696284882725,not supported
+arsas,H5,MARBERTv2,"NASN2 minus NO_CONTEXT, elongationx2/dense/non_cue",1951,0.0001708525542456,-0.0010214504596527,0.0013682405796826,not supported
+arsas,H5,MARBERTv2,"NASN2 minus NO_CONTEXT, elongationx2/single/cue",316,0.0,0.0,0.0,not supported
+arsas,H5,MARBERTv2,"NASN2 minus NO_CONTEXT, fold/single/non_cue",1659,0.0,0.0,0.0,not supported
+arsas,H5,MARBERTv2,"NASN2 minus NO_CONTEXT, fold/dense/non_cue",1657,0.0,0.0,0.0,not supported
+arsas,H5,MARBERTv2,"NASN2 minus NO_CONTEXT, typo/single/non_cue",1951,0.0,0.0,0.0,not supported
+arsas,H5,MARBERTv2,"NASN2 minus NO_CONTEXT, typo/dense/non_cue",1945,0.0,0.0,0.0,not supported
+arsas,H5,XLM-R-base,"NASN2 minus NO_CONTEXT, tatweel/single/non_cue",1951,0.0,0.0,0.0,not supported
+arsas,H5,XLM-R-base,"NASN2 minus NO_CONTEXT, tatweel/dense/non_cue",1951,0.0,0.0,0.0,not supported
+arsas,H5,XLM-R-base,"NASN2 minus NO_CONTEXT, tatweel/single/cue",316,0.0,0.0,0.0,not supported
+arsas,H5,XLM-R-base,"NASN2 minus NO_CONTEXT, elongationx2/single/non_cue",1951,-0.0001708525542456,-0.0005146680391147,0.0,not supported
+arsas,H5,XLM-R-base,"NASN2 minus NO_CONTEXT, elongationx4/single/non_cue",1951,-0.0001708525542456,-0.0005146680391147,0.0,not supported
+arsas,H5,XLM-R-base,"NASN2 minus NO_CONTEXT, elongationx2/dense/non_cue",1951,-0.000512557662737,-0.0020502569359565,0.0010245901639344,not supported
+arsas,H5,XLM-R-base,"NASN2 minus NO_CONTEXT, elongationx2/single/cue",316,0.0,0.0,0.0,not supported
+arsas,H5,XLM-R-base,"NASN2 minus NO_CONTEXT, fold/single/non_cue",1659,0.0,0.0,0.0,not supported
+arsas,H5,XLM-R-base,"NASN2 minus NO_CONTEXT, fold/dense/non_cue",1657,0.0,0.0,0.0,not supported
+arsas,H5,XLM-R-base,"NASN2 minus NO_CONTEXT, typo/single/non_cue",1951,0.0,0.0,0.0,not supported
+arsas,H5,XLM-R-base,"NASN2 minus NO_CONTEXT, typo/dense/non_cue",1945,0.0,0.0,0.0,not supported

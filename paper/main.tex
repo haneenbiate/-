@@ -1,22 +1,23 @@
-% Study v3 paper draft. Compile with XeLaTeX (Arabic examples need fontspec):
-%   latexmk -xelatex main.tex
-% Requires acl.sty and acl_natbib.bst from https://github.com/acl-org/acl-style-files
-% Everything marked \pending{...} depends on GPU runs or human annotation that have
-% NOT been carried out yet; no number inside \pending is a result.
+% Study v3 paper. Compile with XeLaTeX or Tectonic from this folder:
+%   tectonic main.tex        (or: latexmk -xelatex main.tex)
+% All numeric tables in generated/ are written by tools/report_study_v3.py and
+% tools/report_annotation_v3.py from the released analysis bundle; do not edit them by hand.
 \documentclass[11pt]{article}
 \usepackage[review]{acl}
 \usepackage{fontspec}
+\setmainfont{texgyretermes}[Extension=.otf, UprightFont=*-regular, BoldFont=*-bold,
+  ItalicFont=*-italic, BoldItalicFont=*-bolditalic]
+\usepackage{amsmath}
 \usepackage{booktabs}
 \usepackage{graphicx}
-\usepackage{xcolor}
 \usepackage{microtype}
-\newfontfamily\arabicfont[Script=Arabic]{Amiri}
-\newcommand{\ar}[1]{{\arabicfont\RL{#1}}}
-\providecommand{\RL}[1]{\beginR #1\endR}
-\newcommand{\pending}[1]{\textcolor{red}{[PENDING: #1]}}
+\usepackage{multirow}
+\newfontfamily\arabicfont[Script=Arabic,Path=fonts/,BoldFont=Amiri-Bold.ttf]{Amiri-Regular.ttf}
+\TeXXeTstate=1
+\newcommand{\ar}[1]{{\arabicfont\beginR #1\endR}}
 \newcommand{\unk}{\texttt{[UNK]}}
 
-\title{One Character Erases a Word: Orthographic Noise, Tokenizers and\\Negation in Arabic Sentiment Models}
+\title{When One Character Erases a Word: Orthographic Noise, Tokenizers\\and Negation in Arabic Sentiment Classification}
 
 \author{Anonymous submission}
 
@@ -24,166 +25,214 @@
 \maketitle
 
 \begin{abstract}
-Arabic social media text routinely contains typographic elongation (tatweel), emphatic
-letter repetition and inconsistent hamza and ta marbuta spelling. We audit how such
-variation reaches five fine-tuned encoders and a zero-shot LLM on two tweet sentiment
-datasets (ArSarcasm-v2 and ArSAS). A tokenizer-level audit of about 40,000 controlled
-edits shows a sharp split. In all four Arabic WordPiece models we test, a single
-tatweel turns the edited word into \unk{} in 100\% of cases, including every edited
-negation cue. Multilingual byte-level tokenizers never produce an unknown token but
-split the same word into 1.7--2.9 times as many pieces. Natural tatweel occurs in
-3.2--4.6\% of tweets in both corpora. \pending{prediction flip rates per model and
-condition, the cue-versus-non-cue contrast, and the effect of normalization defenses}.
-We release perturbation code, leakage-safe splits and a preregistered analysis plan.
+Arabic tweets are full of orthographic variation that readers barely notice: the
+elongation character tatweel, emphatic letter repetition, and inconsistent spelling of
+hamza and final letters. We measure how this variation affects five Arabic and
+multilingual encoders fine-tuned for three-way sentiment classification on two tweet
+corpora, ArSarcasm-v2 and ArSAS, using about 40,000 controlled edits per model and three
+training seeds. At the input level the effect is stark: in all four Arabic WordPiece
+models, one tatweel turns the edited word into an unknown token, including every edited
+negation word. Predictions are sturdier than this suggests. A tatweel in a single word
+changes 3--7\% of predictions, and the same edit in 30\% of the words changes 9--18\%.
+The extent to which a tokenizer destroys a word hardly predicts how often the prediction
+changes (Spearman $\rho \le 0.18$). What differs is the cost: dense tatweel lowers
+Macro-F1 by 3.5--6.2 points in the Arabic models but by only 1.4--1.5 points in XLM-R.
+Writing tatweel on the negation word changes 2--3 points more predictions than writing it
+on another word in the same tweet. Two annotators judged every sampled tatweel edit to
+preserve meaning and sentiment, so these changes are errors. Removing tatweel and collapsing
+letter runs before tokenization undoes these edits at no measurable cost on clean text. A
+negation-aware normalizer we had proposed earlier adds nothing over the same rules
+without its negation guard. We release the perturbation suite, leakage-safe splits,
+predictions and the preregistered analysis plan.
 \end{abstract}
 
 \section{Introduction}
 
-Arabic sentiment classifiers are usually evaluated on the tweets their training data
-came from, so their behaviour under ordinary orthographic variation is rarely measured
-directly. Such variation is common. Writers stretch words with the tatweel character
-(\ar{حلـــو}), repeat letters for emphasis (\ar{حلووو}, \ar{كثيييير}), and drop hamza
-or write final \ar{ة} as \ar{ه}. In the two corpora we study, 3.2--4.6\% of tweets
-contain at least one tatweel and 2.8--4.0\% repeat a letter three or more times
-(Table~\ref{tab:natural}).
+Social media Arabic is written with considerable freedom. Writers stretch a word with
+the tatweel character for visual effect (\ar{جميـــل} for \ar{جميل} ``beautiful''),
+repeat a letter for emphasis (\ar{حلووو}, \ar{كثيييير}), and often omit hamza or write
+final \ar{ة} as \ar{ه}. In the two corpora we study, 3--5\% of tweets contain a tatweel
+and a similar share repeat a letter three or more times (Table~\ref{tab:natural}).
+Native readers glide over these variants. Whether sentiment classifiers do so is less
+clear, because the tokenizers that feed them were built from vocabularies in which these
+forms are rare or absent.
 
-Earlier attempts to measure this robustness, including our own pilot, edited a single
-word with a single model. They found effects too small to separate from zero. We argue
-that such null results say more about the design than about the models. We therefore
-ask four questions:
+We arrived at this question through a negative result. A negation-aware normalization
+method we developed earlier did no better than a simpler normalizer under any
+condition. In that experiment, single-word edits applied to one MARBERT model produced
+accuracy changes too small to separate from zero. We concluded that the design, not the
+models, made the experiment uninformative. A single model gives no basis for
+comparison. A single edited word per tweet is a weak treatment. The repetition edits
+also skipped the long vowels \ar{ا}, \ar{و} and \ar{ي}, which carry most emphatic
+repetition in real tweets.
+
+This paper replaces that experiment with a broader, preregistered audit. We fine-tune
+five encoders with three seeds each on two tweet datasets. We then apply four families
+of orthographic edits at two densities, and in some conditions we edit the negation word
+itself. Two annotators judged whether the edits preserve meaning and sentiment. We ask
+four questions:
+(RQ1) how often do realistic edits change predictions;
+(RQ2) do tokenizer effects explain differences between models;
+(RQ3) is editing the negation word worse than editing another word; and
+(RQ4) does simple normalization before tokenization undo the damage?
+
+The main findings are:
 \begin{itemize}
-\item[\textbf{RQ1}] How much do realistic orthographic edits change the predictions of
-Arabic, multilingual and LLM-based sentiment models?
-\item[\textbf{RQ2}] Do tokenizer effects explain the differences between models?
-\item[\textbf{RQ3}] Is editing a negation cue more damaging than editing another word
-in the same tweet?
-\item[\textbf{RQ4}] Does inference-time normalization recover clean behaviour?
+\item Arabic WordPiece tokenizers map any word containing tatweel to \unk{}. This
+includes negation words, so an edited tweet such as \ar{لـا} reaches the model with its
+negation removed (\S\ref{sec:tokenizer}).
+\item Predictions change far less than this input damage would suggest: tatweel in one
+word changes 3--7\% of them, and tatweel in 30\% of the words changes 9--18\%. The \unk{} rate barely
+predicts how many predictions change, but each WordPiece change costs about three times as
+much Macro-F1 as a change made by XLM-R (\S\ref{sec:robustness}).
+\item Tatweel on the negation word changes more predictions than tatweel elsewhere in
+seven of eight model--dataset pairs. Elongating the negation word does not, but annotators
+read that elongation as an intensity change rather than noise (\S\ref{sec:negation}).
+\item Stripping tatweel and collapsing letter runs removes nearly all of these changes at
+no measurable cost on clean text. The negation guard of our earlier method adds nothing
+(\S\ref{sec:defenses}).
 \end{itemize}
-
-Our contributions are:
-\begin{enumerate}
-\item A deterministic perturbation suite with four families (tatweel, elongation,
-spelling folding, and keyboard typos as a meaning-damaging control). Each family is
-applied at two densities and with an explicit choice of whether the negation cue
-itself is edited.
-\item A tokenizer audit across six models and two datasets. It shows that tatweel
-deletes a word for Arabic WordPiece vocabularies and that the effect replicates exactly
-across corpora (\S\ref{sec:tokenizer}).
-\item \pending{a multi-seed robustness analysis with paired cluster-bootstrap
-intervals, a negation stress test and a defense ablation}.
-\item Independent human validation of meaning preservation
-\pending{$\kappa$ / AC1 from two expert annotators}, together with all code,
-leakage-safe splits and a preregistration written before any prediction was observed.
-\end{enumerate}
 
 \section{Related work}
 
-\paragraph{Noise robustness.} Synthetic and natural character noise both degrade
-neural models \citep{belinkov2018synthetic}. Character-level defenses have been
-proposed against misspellings \citep{pruthi-etal-2019-combating}, and behavioural test
-suites probe such invariances directly \citep{ribeiro-etal-2020-beyond}. Our edits are
-specific to Arabic script. We also separate presumed meaning-preserving edits from a
-damaging control and validate the difference with human judgments.
+\paragraph{Noise and robustness.}
+Both synthetic and natural character noise degrade neural models
+\citep{belinkov2018synthetic}. Character-level recognizers have been proposed to defend
+against misspellings \citep{pruthi-etal-2019-combating}, and behavioural test suites probe
+whether a model is invariant to such edits \citep{ribeiro-etal-2020-beyond}. Our edits are
+specific to Arabic script. We separate edits presumed to preserve meaning from a typo
+control and verify that separation with human judgments. We also report the costs of a
+defense alongside its benefits.
 
-\paragraph{Arabic pretrained models.} MARBERT \citep{abdul-mageed-etal-2021-arbert},
-AraBERT \citep{antoun-etal-2020-arabert} and CAMeLBERT \citep{inoue-etal-2021-interplay}
-use WordPiece vocabularies built from Arabic text. XLM-R \citep{conneau-etal-2020-unsupervised}
-and Qwen2.5 \citep{qwen2.5} use multilingual subword vocabularies that cannot produce
-unknown tokens. Recommended preprocessing for some Arabic models removes tatweel, but
-nothing in the model interface enforces this.
+\paragraph{Arabic pretrained models.}
+MARBERT \citep{abdul-mageed-etal-2021-arbert}, AraBERT \citep{antoun-etal-2020-arabert}
+and CAMeLBERT \citep{inoue-etal-2021-interplay} use WordPiece vocabularies learned from
+Arabic text. MARBERT and its successor share a vocabulary built from tweets. XLM-R
+\citep{conneau-etal-2020-unsupervised} uses a multilingual SentencePiece vocabulary that
+falls back on individual characters and therefore never produces an unknown token. The
+recommended preprocessing for some Arabic models removes tatweel, but nothing in the
+model interface enforces this. We are not aware of work that measures what omitting that
+step costs a fine-tuned model.
 
-\paragraph{Negation.} Benchmarks under-represent negation, and models often ignore it
+\paragraph{Negation.}
+Benchmarks under-represent negation, and models trained on them often ignore it
 \citep{hossain-etal-2020-analysis}. We do not parse negation scope. Instead, we compare
-editing the cue itself with editing another word in the same tweet.
+an edit on the negation word with the same edit on another word in the same tweet.
 
 \section{Study design}
 \label{sec:design}
 
-The full analysis plan was preregistered before any model prediction on the new
-perturbations was observed. The tokenizer audit in \S\ref{sec:tokenizer} was run
-before the preregistration and is disclosed there as such.
+We preregistered the conditions, metrics, hypotheses and decision rules before observing
+any model prediction on the new edits. The tokenizer audit in \S\ref{sec:tokenizer} was
+run before the preregistration and is disclosed there.
 
-\paragraph{Data.} ArSarcasm-v2 \citep{abu-farha-etal-2021-overview} is used with a
-leakage-safe split that quarantines training tweets whose text occurs in the official
-test set (10,037 train / 2,509 validation). ArSAS \citep{elmadany2018arsas} is
-processed as follows:
-\begin{itemize}
-\item Mixed-sentiment tweets are removed.
-\item Repeated tweet IDs and identical texts are merged into groups, and groups with
-conflicting labels are excluded.
-\item The remaining groups receive a stratified group split: 13,738 / 1,966 / 3,923.
-\end{itemize}
-We rejected ASTD \citep{nabil-etal-2015-astd} as the second dataset because 2,473
-ArSarcasm-v2 training tweets (20\%) also occur in it. ArSAS shares a single
-(excluded) tweet with ArSarcasm-v2. Development uses the validation partitions, and
-both test partitions are evaluated once after the study is frozen.
-
-\paragraph{Perturbations.} Each edit is chosen deterministically by hashing the tweet
-ID and condition. URLs, mentions, hashtags and tokens attached to Latin characters are
-never edited. The four families are:
-\begin{itemize}
-\item \emph{tatweel}: one \ar{ـ} inserted after the last joining letter of the word;
-\item \emph{elongation}: the last internal long vowel (else the final letter) repeated
-2 or 4 extra times;
-\item \emph{folding}: \ar{أ}/\ar{إ}/\ar{آ}$\to$\ar{ا}, final \ar{ة}$\to$\ar{ه} and
-final \ar{ى}$\to$\ar{ي};
-\item \emph{typo}: one interior letter replaced by its neighbour on the Arabic
-keyboard (the meaning-damaging control).
-\end{itemize}
-\emph{Single} conditions edit one word; \emph{dense} conditions edit
-$\lceil 0.3\,\cdot\,$words$\rceil$. Single edits are nested within dense edits, and both
-elongation levels edit the same character. \emph{Non-cue} conditions never touch an
-unambiguous negation cue (\ar{لا}, \ar{لم}, \ar{لن}, \ar{ليس}, \ar{مش}, \ar{مو}, \ldots;
-\ar{ما} is excluded as too ambiguous). \emph{Cue} conditions edit exactly that cue.
-Table~\ref{tab:conditions} lists the number of applicable tweets.
-
-\paragraph{Models.} We fine-tune MARBERT, MARBERTv2, AraBERTv02-twitter, CAMeLBERT-DA
-and XLM-R-base with one fixed recipe:
-\begin{itemize}
-\item learning rate $2{\times}10^{-5}$, batch size 16, at most 5 epochs;
-\item checkpoint selected by validation Macro-F1;
-\item three seeds per model and dataset.
-\end{itemize}
-Qwen2.5-7B-Instruct is used zero-shot, with a fixed instruction and softmax over the
-first-token logits of the three label words. All model revisions are pinned.
-
-\paragraph{Defenses.} We compare four inference-time preprocessors:
-\begin{itemize}
-\item RAW: no change;
-\item STD: removes tatweel and collapses runs of three or more identical letters;
-\item NO\_CONTEXT and NASN2: two conservative normalizers carried over from our pilot.
-NASN2 additionally abstains from editing near negation cues.
-\end{itemize}
-
-\paragraph{Metrics.} The primary metric is the \emph{flip rate}: the share of tweets
-whose predicted class differs between the clean and perturbed text. Secondary metrics
-are clean and perturbed Macro-F1 on the same tweets. Intervals are 95\% percentile
-intervals from 2,000 cluster-bootstrap resamples over duplicate-text groups, with
-seed-averaged rates inside each resample. Contrasts (cue vs.\ non-cue, dense vs.\ single,
-defense vs.\ RAW, model vs.\ XLM-R) are paired on identical tweets.
+\paragraph{Data.}
+ArSarcasm-v2 \citep{abu-farha-etal-2021-overview} contains dialectal and MSA tweets
+labelled negative, neutral or positive. We use a leakage-safe split that removes from
+training any tweet whose normalized text occurs in the official test set (10,037 training
+and 2,509 validation tweets). ArSAS \citep{elmadany2018arsas} contains 21,064 tweets with
+an additional Mixed class, which we drop. We merge repeated tweet IDs and identical texts
+into groups and exclude the 90 tweets whose groups carry conflicting labels, together
+with 44 further copies linked to excluded tweets. A stratified
+group split then gives 13,738 training, 1,966 validation and 3,923 test tweets. We
+considered ASTD \citep{nabil-etal-2015-astd} as the second dataset and rejected it,
+because 20\% of ArSarcasm-v2 training tweets (2,473) also occur in ASTD. ArSAS shares one
+tweet with ArSarcasm-v2, and that tweet is excluded. Each model is trained and evaluated
+separately on each dataset.
 
 \begin{table}[t]
 \centering\small
-\begin{tabular}{lrr}
+\begin{tabular}{lll}
 \toprule
-Condition & ArSarcasm-v2 & ArSAS \\
+Family & Original & Edited \\
 \midrule
-tatweel / single / non-cue & 2,478 & 1,951 \\
-tatweel / dense / non-cue & 2,478 & 1,951 \\
-tatweel / single / cue & 404 & 316 \\
-elongation$\times$2 / single / non-cue & 2,477 & 1,951 \\
-elongation$\times$4 / single / non-cue & 2,477 & 1,951 \\
-elongation$\times$2 / dense / non-cue & 2,477 & 1,951 \\
-elongation$\times$2 / single / cue & 404 & 316 \\
-folding / single / non-cue & 1,965 & 1,659 \\
-folding / dense / non-cue & 1,963 & 1,657 \\
-typo / single / non-cue & 2,476 & 1,951 \\
-typo / dense / non-cue & 2,461 & 1,945 \\
+Tatweel & \ar{حلو} & \ar{حلـو} \\
+Elongation $\times$2 & \ar{حلو} & \ar{حلووو} \\
+Elongation $\times$4 & \ar{كثير} & \ar{كثيييير} \\
+Folding & \ar{أحب}\,/\,\ar{جميلة} & \ar{احب}\,/\,\ar{جميله} \\
+Typo (control) & \ar{جيد} & \ar{جبد} \\
+Cue (tatweel) & \ar{لا} & \ar{لـا} \\
 \bottomrule
 \end{tabular}
-\caption{Validation tweets to which each condition applies (of 2,509 and 1,966).}
-\label{tab:conditions}
+\caption{The edit families, illustrated on single words.}
+\label{tab:examples}
 \end{table}
+
+\paragraph{Edits.}
+Table~\ref{tab:examples} illustrates the four families.
+\begin{itemize}
+\item \emph{Tatweel} inserts one \ar{ـ} after the last letter that joins to the next.
+\item \emph{Elongation} repeats the last internal long vowel, or the final letter if
+there is none, two or four extra times.
+\item \emph{Folding} writes \ar{أ}, \ar{إ} and \ar{آ} as \ar{ا}, final \ar{ة} as \ar{ه},
+and final \ar{ى} as \ar{ي}.
+\item \emph{Typo} replaces one interior letter with its neighbour on the Arabic keyboard.
+\end{itemize}
+The typo family was intended as a control that damages meaning. The human judgments in
+\S\ref{sec:human} show that it does so only partly.
+
+Each family is applied at two densities: \emph{single} edits one word, and \emph{dense}
+edits $\lceil 0.3n \rceil$ of the $n$ Arabic words in the tweet. In \emph{cue} conditions
+the edit falls on an unambiguous negation word (\ar{لا}, \ar{لم}, \ar{لن}, \ar{ليس},
+\ar{مش}, \ar{مو}, \ar{مافي}, \ar{بدون} and their variants). We leave out \ar{ما}, whose
+relative, interrogative and exclamative uses outnumber its negating use. Non-cue
+conditions never edit a negation word. They also skip URLs, mentions, hashtags and
+tokens attached to Latin characters. Which word gets edited is decided by hashing the
+tweet ID and the condition. Single edits are a subset of the dense edits for the same
+tweet, and both elongation levels edit the same character. Per condition, edits apply to
+between 1,963 and 2,478 ArSarcasm-v2 tweets and between 1,657 and 1,951 ArSAS tweets.
+Cue conditions apply to the 404 and 316 tweets that contain an editable negation word.
+
+\paragraph{Models.}
+We fine-tune MARBERT, MARBERTv2, AraBERTv02-twitter, CAMeLBERT-DA and XLM-R-base with one
+fixed recipe:
+\begin{itemize}
+\item AdamW, learning rate $2{\times}10^{-5}$, batch size 16, at most five epochs;
+\item early stopping and checkpoint selection on validation Macro-F1;
+\item seeds 42, 43 and 44.
+\end{itemize}
+This gives 30 models. Revisions of all pretrained weights are pinned.
+Table~\ref{tab:clean} reports clean validation performance.
+
+\begin{table}[t]
+\centering\small
+\input{generated/clean_performance.tex}
+\caption{Clean validation Macro-F1 (\%), mean $\pm$ standard deviation over three seeds.}
+\label{tab:clean}
+\end{table}
+
+\paragraph{Defenses.}
+At inference time we compare four preprocessors, each applied identically to clean and
+edited text:
+\begin{itemize}
+\item \textsc{raw} leaves the input unchanged;
+\item \textsc{std} removes tatweel and collapses runs of three or more identical letters
+to a single letter;
+\item \textsc{no\_ctx} and \textsc{nasn2} are the two conservative normalizers from our
+earlier work.
+\end{itemize}
+\textsc{no\_ctx} and \textsc{nasn2} share all of their rules except one: \textsc{nasn2}
+also declines to collapse repeated letters near a negation word. Their repetition rule
+covers consonants only, so they do not undo elongated long vowels.
+
+\paragraph{Metrics and statistics.}
+The primary metric is the \emph{flip rate}, the share of edited tweets whose predicted
+class differs from the prediction for the clean tweet. It needs no gold label and
+isolates the effect of the edit. We also report Macro-F1 on clean and edited versions of
+the same tweets and the difference between the two.
+
+Intervals are 95\% percentiles of 2,000 cluster-bootstrap resamples. Clusters are groups
+of duplicate texts, and the rate for each resample is averaged over the three seeds.
+Contrasts are paired on identical tweets. These include cue versus non-cue, dense versus
+single, a defense versus \textsc{raw}, and each WordPiece model versus XLM-R. A
+hypothesis counts as supported for a model when its interval excludes zero in the stated
+direction.
+
+\paragraph{Deviations from the preregistration.}
+We report two deviations. First, the preregistered zero-shot LLM was not evaluated
+because the required GPU was unavailable. Second, this version reports the validation
+partitions only. The preregistered single evaluation on the held-out test partitions
+will be added once human adjudication is complete.
 
 \section{What the tokenizer sees}
 \label{sec:tokenizer}
@@ -191,108 +240,298 @@ typo / dense / non-cue & 2,461 & 1,945 \\
 \begin{figure*}[t]
 \centering
 \includegraphics[width=\textwidth]{figures/tokenizer_edits.pdf}
-\caption{Tokens produced for an edited word relative to its original, averaged over
-single-word edits. A hollow marker means the edited word is mapped to \unk{} (rate 1.00
-in every such cell). MARBERT and MARBERTv2 share a vocabulary, so their rows coincide.}
+\caption{Number of tokens produced for an edited word, relative to the original word,
+averaged over single-word edits. A hollow marker means the edited word becomes \unk{}
+(rate 1.00 in every such cell). MARBERT and MARBERTv2 share a vocabulary, so their rows
+coincide.}
 \label{fig:tokenizer}
 \end{figure*}
 
-Figure~\ref{fig:tokenizer} reports, for every model and edit family, how many tokens
-the edited word receives relative to the original. Three patterns hold identically on
-both datasets.
+Figure~\ref{fig:tokenizer} shows, for every model and edit family, how many tokens an
+edited word receives relative to the original. The pattern is identical on both datasets.
 
-\paragraph{Tatweel deletes the word for Arabic WordPiece models.} In MARBERT,
-MARBERTv2, AraBERTv02-twitter and CAMeLBERT-DA, every word containing an inserted
-tatweel is tokenized as a single \unk{}. This happens in 100\% of single, dense and cue
-edits on both datasets, including all 404 (ArSarcasm-v2) and 316 (ArSAS) edited
-negation cues. None of the four vocabularies contains the tatweel character, so WordPiece
-falls back to the unknown token for the whole word. A tweet with \ar{لـا} therefore
-reaches these models with no negation at all.
+None of the four Arabic WordPiece vocabularies contains the tatweel character. WordPiece
+therefore replaces any word containing it with a single \unk{}. This happens in 100\% of
+tatweel edits, including all 404 (ArSarcasm-v2) and 316 (ArSAS) edited negation words. A
+tweet containing \ar{لـا} thus reaches these models with no negation. XLM-R never
+produces an unknown token. It instead splits a word containing tatweel into 2.5--2.6
+times as many pieces, and an edited negation word into 2.9 times as many. Elongation
+fragments the word in every model: four extra letters multiply its token count by
+2.5--4.1. Folding is largely absorbed by MARBERT, whose lowercasing strips hamza from
+alef. As a result, 35.5\% and 30.9\% of its single-word folding edits leave the token
+sequence unchanged. The other models see nearly every folding edit.
 
-\paragraph{Multilingual tokenizers fragment instead.} XLM-R and Qwen2.5 never produce
-an unknown token. They split a word with one tatweel into 2.46 / 2.63 (XLM-R) and
-1.92 / 2.02 (Qwen2.5) times as many pieces (ArSarcasm-v2 / ArSAS), and an edited
-negation cue into 2.7--2.9 times as many.
-
-\paragraph{Elongation fragments every model; spelling folding is partly absorbed.}
-Four extra letters multiply the token count by 2.5--4.1, with AraBERTv02-twitter
-highest (3.88 / 4.11). MARBERT's lower-casing strips hamza from alef, so 35.5\% / 30.9\%
-of its single-word folding edits leave the token sequence unchanged. Every other
-model sees nearly all folding edits.
-
-These are statements about model inputs only. Whether an unknown token or a
-fragmented word changes the prediction is the subject of \S\ref{sec:robustness}.
-
-\section{Robustness of predictions}
-\label{sec:robustness}
-
-\pending{Table: flip rate and Macro-F1 drop with 95\% intervals per model, dataset and
-condition (RAW). Test of H1 (dense $>$ single) and H2 (WordPiece $>$ XLM-R under dense
-tatweel). Spearman correlation between per-cell \unk{} rate or fragmentation and flip
-rate (RQ2).}
-
-\paragraph{Natural noise.} \pending{On validation tweets that already contain tatweel
-or letter runs, the flip rate and Macro-F1 difference between the tweet as written and
-its STD-cleaned form.}
-
-\section{Negation stress test}
-Editing the negation cue itself is rare in the wild: five or fewer tweets per corpus
-contain a naturally elongated or tatweel-marked cue (Table~\ref{tab:natural}). We
-therefore treat the cue conditions as a controlled probe of how models encode negation,
-not as an estimate of real-world risk. \pending{Paired cue minus non-cue flip-rate
-differences (H3), restricted to tweets with a cue.}
+\section{Do humans notice the edits?}
+\label{sec:human}
 
 \begin{table}[t]
 \centering\small
+\setlength{\tabcolsep}{4pt}
+\input{generated/human_agreement.tex}
+\caption{Agreement between the two annotators on 310 items (20 pilot items excluded).}
+\label{tab:agreement}
+\end{table}
+
+\begin{table*}[t]
+\centering\small
+\input{generated/human_preservation.tex}
+\caption{Items, out of 30 per condition, judged meaning-preserving by annotator A and by
+annotator B, and items for which both annotators judged meaning preserved, or both
+meaning and sentiment preserved.}
+\label{tab:preservation}
+\end{table*}
+
+The study rests on the claim that most of these edits preserve meaning. To test it, two
+native-speaker annotators independently judged 330 edited tweets drawn from the
+ArSarcasm-v2 validation set, 30 per condition and one edit per tweet. They answered five
+questions per item. Their first 20 items served as a pilot and are excluded from the
+agreement figures. Agreement (Table~\ref{tab:agreement}) is high on every field. Cohen's
+$\kappa$ is low for meaning preservation because almost every answer is ``yes''. Gwet's
+AC1 \citep{gwet2008computing} corrects for this skew and gives 0.88. The 87 items on which
+the annotators disagreed about preservation were sent to a third annotator. The counts
+below use the stricter criterion that both annotators agreed.
+
+The results (Table~\ref{tab:preservation}) separate the families clearly.
+\begin{itemize}
+\item \emph{Tatweel} preserved both meaning and sentiment in all 90 items, including the
+30 in which it fell on a negation word. Any prediction change under tatweel is therefore
+an error.
+\item \emph{Elongation} preserved meaning in all 120 items, but it often changed
+sentiment. Both annotators judged the sentiment unchanged in only 17 and 14 of 30 items
+for one-word elongation by two and four letters, in 6 of 30 when 30\% of the words were
+elongated, and in none of the 30 items with an elongated negation word. Readers take
+repetition as emphasis, so a prediction change under elongation is not necessarily an
+error.
+\item \emph{Folding} preserved meaning in about 80\% of items.
+\item \emph{Typos}, meant as the control, were often read through: both annotators judged
+meaning preserved in 18 of 30 single-word items, though only in 8 of 30 dense items.
+\end{itemize}
+
+\section{How often do predictions change?}
+\label{sec:robustness}
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{generated/flip_rates.pdf}
+\caption{Flip rates with 95\% cluster-bootstrap intervals (\textsc{raw} inputs, three
+seeds averaged per model). The full tables are in Appendix~\ref{app:tables}.}
+\label{fig:flips}
+\end{figure*}
+
+\begin{table*}[t]
+\centering\small
+\input{generated/macro_f1_drops.tex}
+\caption{Macro-F1 drop in points (clean minus edited, same tweets) under dense edits,
+with 95\% intervals.}
+\label{tab:drops}
+\end{table*}
+
+Figure~\ref{fig:flips} shows the flip rates. A single edited word rarely matters.
+\begin{itemize}
+\item Tatweel in one word changes 5.0--6.6\% of predictions on ArSarcasm-v2 and 3.0--3.9\%
+on ArSAS.
+\item Two extra letters change 2.5--6.8\%.
+\item Folding changes 0.9--3.6\%.
+\end{itemize}
+
+Density matters a great deal. When 30\% of the words carry tatweel, flip rates rise to
+11.8--17.5\% on ArSarcasm-v2 and 8.6--10.9\% on ArSAS. Dense elongation reaches 18.6\%
+for XLM-R. Every dense-versus-single contrast for the three presumed-preserving families
+is positive, in all five models and on both datasets (30 of 30; H1). The increases range
+from 1.1 to 3.0 points for folding and from 5.5 to 11.9 points for tatweel and elongation.
+
+\paragraph{Tokenizer damage barely predicts flip rates.}
+The tokenizer audit predicts a large gap between WordPiece models, which lose the edited
+word entirely, and XLM-R, which keeps a fragmented version. The gap is real but small.
+Under dense tatweel, every WordPiece model flips more often than XLM-R on ArSarcasm-v2, by
+3.1--5.7 points. On ArSAS only two of the four do so, by 1.6 and 1.7 points (H2: 6 of 8
+contrasts). On ArSarcasm-v2, XLM-R is in fact the most sensitive model to dense elongation and to
+dense typos.
+
+Across the 55 model--condition cells per dataset, the share of edited words that become
+\unk{} correlates only weakly with flip rate (Spearman $\rho$ = 0.18 and 0.14), and
+fragmentation does not correlate at all ($\rho \le 0.03$). One explanation is that
+fine-tuning already exposes the models to \unk{} for tatweel words: 4.6\% of
+ArSarcasm-v2 training and validation tweets contain a natural tatweel.
+
+\paragraph{But WordPiece errors cost more.}
+The flip rate does not say whether a changed prediction is wrong. Table~\ref{tab:drops}
+does. Under dense tatweel, Macro-F1 falls by 4.3--6.2 points for the WordPiece models on
+ArSarcasm-v2 and by 3.5--4.0 points on ArSAS. For XLM-R it falls by only 1.5 and 1.4
+points. Per changed prediction, a WordPiece model loses about three times as much Macro-F1 as
+XLM-R. On ArSarcasm-v2, for example, MARBERT loses 0.38 Macro-F1 points per point of flip
+rate, against 0.13 for XLM-R. This is consistent with an erased sentiment word
+removing the evidence for the label rather than merely adding noise. Dense typos cost the
+most: 5.4--10.9 points across all models.
+
+\section{Negation as a stress test}
+\label{sec:negation}
+
+Natural noise on a negation word is rare. In the training and validation tweets, at most
+five per corpus contain an elongated or tatweel-marked negation word. We therefore treat
+the cue conditions as a controlled probe of how models represent negation, not as an
+estimate of real-world risk.
+
+For each tweet with an editable negation word, we compare editing that word with editing
+another word in the same tweet (H3). Tatweel on the negation word, which turns it into
+\unk{}, changes more predictions in seven of the eight WordPiece model--dataset pairs. The
+increase is 2.4--3.3 points on ArSarcasm-v2 and 2.0--3.1 points on ArSAS. The exception
+is CAMeLBERT-DA on ArSarcasm-v2 (+0.3, interval spanning zero). The effect is consistent
+but modest. Losing the negation word changes the predicted class of roughly one additional
+tweet in thirty to forty, so these models evidently do not rest their decisions on the
+negation word alone.
+
+Elongating the negation word (\ar{لاااا}) increases flip rates significantly in only two
+of ten model--dataset pairs. The annotators read this edit very differently from tatweel.
+Annotator A judged the sentiment changed in 26 of 30 items, and annotator B in 16 (with 13
+marked unsure). In no item did both annotators judge it unchanged (\S\ref{sec:human}). An elongated \ar{لاااا} is an emphatic
+refusal, and a model that changes its prediction may be reading it correctly.
+
+\section{Does normalization help?}
+\label{sec:defenses}
+
+\begin{table*}[t]
+\centering\small
+\setlength{\tabcolsep}{4pt}
+\input{generated/defenses.tex}
+\caption{Flip rates (\%) under dense edits for each preprocessing defense, applied to both
+clean and edited text.}
+\label{tab:defenses}
+\end{table*}
+
+Table~\ref{tab:defenses} compares the defenses. \textsc{std} removes tatweel and collapses
+letter runs, and so reverses exactly the edits it targets. It brings flip rates under
+tatweel to zero and under dense elongation to at most 0.2\% (H4: 70 of 70 tests). It
+does not touch folding or typos.
+
+The more relevant question is what \textsc{std} costs on unedited text, where natural
+letter runs may carry emphasis. The cost is negligible. On the clean validation tweets used in the tatweel conditions
+(2,478 and 1,951), Macro-F1 under \textsc{std} differs from \textsc{raw} by at most 0.15
+points for every model and dataset.
+
+The two conservative normalizers from our earlier work remove most tatweel effects. They
+leave 0.5--1.0\% of flips, because they keep tatweel inside the words they treat as
+negation markers, which is a broader set than our cue list. They do not
+undo elongated long vowels, which their repetition rule excludes. The negation guard that
+distinguishes \textsc{nasn2} from \textsc{no\_ctx} changes nothing that matters. Across
+110 paired contrasts the two differ by at most 0.2 points. None favours \textsc{nasn2},
+and five favour \textsc{no\_ctx} by fractions of a point. Under the preregistered rule,
+the claim that negation-aware normalization improves robustness is not supported (H5).
+
+\section{Natural noise}
+\label{sec:natural}
+
+\begin{table}[t]
+\centering\small
+\setlength{\tabcolsep}{3pt}
 \begin{tabular}{lrr}
 \toprule
 & ArSarcasm-v2 & ArSAS \\
 \midrule
-Tweets (train + validation) & 12,546 & 15,704 \\
+Tweets (train + val.) & 12,546 & 15,704 \\
 with tatweel & 571 (4.6\%) & 502 (3.2\%) \\
-with a letter repeated $\geq$3$\times$ & 498 (4.0\%) & 436 (2.8\%) \\
+with a letter run $\geq$3 & 498 (4.0\%) & 436 (2.8\%) \\
 \quad of which a long vowel & 300 (2.4\%) & 294 (1.9\%) \\
-with tatweel on a negation cue & 1 & 1 \\
-with a repeated letter on a cue & 5 & 3 \\
+tatweel on a negation word & 1 & 1 \\
+letter run on a negation word & 5 & 3 \\
 \bottomrule
 \end{tabular}
 \caption{Naturally occurring noise. Test partitions were not read.}
 \label{tab:natural}
 \end{table}
 
-\section{Do defenses help?}
-\pending{STD vs.\ RAW (H4) and NASN2 vs.\ NO\_CONTEXT (H5). Our pilot found NASN2 and
-NO\_CONTEXT to produce identical predictions on all 394 reviewed variants for MARBERT;
-the preregistered rule claims an advantage for negation-aware abstention only if it
-holds for at least three of five encoders.}
+\begin{table*}[t]
+\centering\small
+\input{generated/natural_noise.tex}
+\caption{Validation tweets that already contain noise: flip rate (\%) between the tweet as
+written and its \textsc{std}-cleaned form, with 95\% intervals.}
+\label{tab:natural-flips}
+\end{table*}
 
-\section{Human validation}
-\pending{Two independent native-speaker annotators, 330 items (30 per condition), with
-the typo control as an attention check. Report Cohen's $\kappa$ and Gwet's AC1
-\citep{gwet2008computing}, the share of items judged meaning- and
-sentiment-preserving per family, and robustness restricted to human-confirmed items.}
+Controlled edits show what can happen; natural noise shows what does
+(Table~\ref{tab:natural}). For the validation tweets that already contain noise, we
+compare the prediction for the tweet as written with the prediction after \textsc{std}
+cleaning (Table~\ref{tab:natural-flips}). Cleaning a natural tatweel changes 0--5\% of
+predictions. Collapsing natural letter runs changes 11--15\% on ArSarcasm-v2 and 2--8\% on
+ArSAS. The Macro-F1 differences on these slices are not significant: they contain only
+42--123 tweets, and natural repetition carries genuine emphasis that cleaning removes.
+Natural noise thus moves a noticeable minority of predictions, but this sample is too
+small to show whether cleaning makes them more accurate.
 
-\section{Conclusion}
-\pending{Summary once predictions are in.} A practical recommendation already follows
-from the tokenizer audit. Anyone deploying an Arabic WordPiece model on social media
-text should strip tatweel before tokenization, because the model's own tokenizer will
-otherwise silently delete the word.
+\section{Discussion}
+
+The tokenizer view and the prediction view tell different stories. A WordPiece model
+receives an \unk{} in place of every tatweel word, which sounds catastrophic. Yet the
+prediction usually survives, because sentiment in a tweet rarely depends on a single
+word. Where the two views agree is in the cost of the predictions that do change. When an
+Arabic WordPiece model loses a word and changes its prediction, the change costs about
+three times as much Macro-F1 as a change made by XLM-R, which merely fragments the word.
+
+The families also call for different readings. Tatweel is pure typography. Annotators saw
+no change in 90 of 90 items, so every prediction change under tatweel is an error, and a
+trivial fix removes it. Elongation is not noise in the same sense: readers took it as a
+change of intensity in most items, and a model that responds to it is not necessarily
+wrong. Benchmarks that treat all orthographic variation as a meaning-preserving
+perturbation conflate these cases.
+
+The practical recommendation follows directly. Anyone deploying an Arabic WordPiece model
+on social media text should remove tatweel before tokenization. The cost on clean text
+was below 0.15 Macro-F1 points in every model we tested. Collapsing letter runs is equally
+cheap, but should be a deliberate choice, since it also removes emphasis. Negation-aware
+exceptions to these rules did not help in our experiments.
 
 \section*{Limitations}
-\begin{itemize}
-\item Edits are rule-based and placed one family at a time; real noise co-occurs.
-\item The negation cue lexicon is finite and excludes \ar{ما}.
-\item Validation partitions were used for checkpoint selection, which favours clean
-accuracy (but not flip rate); the frozen test evaluation addresses this.
-\item The LLM is evaluated with a single prompt.
-\item Both datasets are tweets, so other genres may behave differently.
-\end{itemize}
+
+The edits are rule-based and applied one family at a time, whereas real noise co-occurs.
+The negation lexicon is finite and leaves out \ar{ما}. Checkpoints were selected on the
+validation partitions, which favours clean accuracy but not the flip rate. The human
+validation covers one dataset and 30 items per condition. Both datasets consist of
+tweets, and other genres may behave differently. The preregistered LLM comparison and the
+test-partition evaluation are not yet reported.
 
 \section*{Ethics statement}
-We use public research datasets under their licenses and release only tweet IDs,
-hashes and labels, never tweet text. Two expert annotators
-labelled the human-validation sample.
+
+We use public research datasets under their licenses and release only tweet IDs, hashes,
+labels and aggregate results, never tweet text. Two expert annotators labelled the
+human-validation sample.
 
 \bibliography{references}
+
+\appendix
+
+\section{Full results tables}
+\label{app:tables}
+
+Tables~\ref{tab:full-arsarcasm} and~\ref{tab:full-arsas} list the flip rate for every
+condition and model. Table~\ref{tab:hypotheses} counts the supported tests for each
+preregistered hypothesis. Per-test estimates and intervals are in the released bundle.
+
+\begin{table*}[t]
+\centering\small
+\input{generated/flip_rates_arsarcasm.tex}
+\caption{ArSarcasm-v2 validation: flip rate (\%) for every condition, \textsc{raw} inputs.}
+\label{tab:full-arsarcasm}
+\vspace{1em}
+\input{generated/flip_rates_arsas.tex}
+\caption{ArSAS validation: flip rate (\%) for every condition, \textsc{raw} inputs.}
+\label{tab:full-arsas}
+\end{table*}
+
+\begin{table}[t]
+\centering\small
+\input{generated/hypotheses_table.tex}
+\caption{Supported tests per preregistered hypothesis (95\% interval excludes zero in the
+stated direction).}
+\label{tab:hypotheses}
+\end{table}
+
+\section{Reproducibility}
+
+Code, configurations and text-free artefacts are released with the paper. The artefacts
+include perturbation logs, split manifests, predictions keyed by text hash, bootstrap
+results and the preregistration. Every table in this paper is generated from the
+released analysis bundle by a script; no number was entered by hand. Training is
+deterministic for a fixed seed, GPU type and software stack, and checkpoint hashes are
+published so that regenerated weights can be verified.
 
 \end{document}

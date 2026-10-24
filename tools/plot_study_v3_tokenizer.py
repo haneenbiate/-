@@ -7,7 +7,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import pandas as pd
 
-MODELS = ['MARBERT', 'MARBERTv2', 'AraBERTv02-twitter', 'CAMeLBERT-DA', 'XLM-R-base', 'Qwen2.5-7B-Instruct']
+MODELS = ['MARBERT', 'MARBERTv2', 'AraBERTv02-twitter', 'CAMeLBERT-DA', 'XLM-R-base']
 LABELS = {'Qwen2.5-7B-Instruct': 'Qwen2.5-7B', 'AraBERTv02-twitter': 'AraBERTv02-tw'}
 # Fixed categorical order (reference palette slots 1-5) with a distinct marker as secondary encoding.
 SERIES = [('tatweel/single/non_cue', 'Tatweel', '#2a78d6', 'o'),
@@ -31,7 +31,7 @@ def panel(ax, summary, title):
             if unk and condition.startswith('tatweel'):
                 ax.annotate('→ [UNK]', (row.mean_fragmentation, y[model] + dy), xytext=(6, -1),
                             textcoords='offset points', fontsize=7, color=MUTED, va='center')
-    ax.axhline(1.5, color=MUTED, linewidth=.6, linestyle=(0, (2, 2)))
+    ax.axhline(.5, color=MUTED, linewidth=.6, linestyle=(0, (2, 2)))
     ax.axvline(1, color=MUTED, linewidth=.8)
     ax.set_yticks(list(y.values()), [LABELS.get(m, m) for m in y], fontsize=8, color=INK)
     ax.set_xlim(.5, 4.5)
@@ -43,8 +43,8 @@ def panel(ax, summary, title):
     for side in ['top', 'right', 'left']:
         ax.spines[side].set_visible(False)
     ax.spines['bottom'].set_color(MUTED)
-    ax.text(4.45, 1.62, 'Arabic WordPiece', fontsize=7, color=MUTED, ha='right', va='bottom')
-    ax.text(4.45, 1.38, 'Multilingual BPE', fontsize=7, color=MUTED, ha='right', va='top')
+    ax.text(4.45, .62, 'Arabic WordPiece', fontsize=7, color=MUTED, ha='right', va='bottom')
+    ax.text(4.45, .38, 'Multilingual', fontsize=7, color=MUTED, ha='right', va='top')
 
 
 def main():
