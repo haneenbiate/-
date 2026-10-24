@@ -35,6 +35,7 @@
   "primary_metric": "flip_rate",
   "secondary_metrics": ["macro_f1_drop", "clean_macro_f1", "perturbed_macro_f1"],
   "development_partition": "validation",
+  "test_defenses": ["RAW", "STD"],
   "test_unlocked": false,
   "test_unlock_rule": "Set true only after this file, orthography_v3.py and study_v3.py are committed and tagged study-v3-frozen; the official test is then evaluated exactly once."
 }

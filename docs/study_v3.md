@@ -138,6 +138,22 @@ stated direction. All results are reported regardless of direction.
 - RQ2 (descriptive): Spearman correlation between the per-model, per-condition
   edited-word `[UNK]` rate or fragmentation and the flip rate.
 
+## Test-partition evaluation (amendment, recorded before any test prediction)
+
+Written on 2026-10-24, after the validation analysis and before the official test
+partitions of either dataset were perturbed, predicted or read for this study.
+
+- The study is frozen at the Git tag `study-v3-frozen`. After that tag, only
+  `test_unlocked` changes in `configs/study_v3.json`.
+- Test variants use the same conditions and perturbation code as validation.
+- Every one of the 30 selected checkpoints is evaluated once, with the defenses RAW and
+  STD only (`test_defenses`).
+- NO_CONTEXT and NASN2 are dropped for test, because H5 was settled on validation (0 of
+  110 tests) and no claim depends on them. The test analysis therefore re-tests H1–H4.
+- The same bootstrap, minimum cell size and decision rule apply.
+- Test results are reported as the headline numbers whatever their direction. Validation
+  results stay in the paper as development results.
+
 ## Human validation
 
 The claim that a perturbation preserves meaning depends on the new annotation
