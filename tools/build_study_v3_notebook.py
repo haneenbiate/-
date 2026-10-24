@@ -219,12 +219,90 @@ print(shutil.make_archive(str(public), 'zip', public))
             'kernelspec': {'display_name': 'Python 3', 'name': 'python3'}}, 'nbformat': 4, 'nbformat_minor': 0}
 
 
+TEST_VARIANTS_CONTENT_SHA256 = {'arsarcasm': '58c10133f57f06c390aaf3ef299cac93eeffaa70672a0ee0567b4ac959965bc0',
+                                'arsas': '6eca44775bb31ac717f9cd301e28abfe0492997a508d216b62736bf395c992a6'}
+
+
+def build_test(reference):
+    """Single preregistered evaluation of the 30 frozen checkpoints on the test partitions."""
+    setup = ''.join(build(reference)['cells'][2]['source'])
+    cells = [
+        cell('markdown', '''# Study v3 — single test-partition evaluation
+
+Run once, after the freeze tag `study-v3-frozen`, on a T4 GPU runtime. It loads the 30
+selected checkpoints from Drive (no training), predicts the official test partitions
+with the RAW and STD defenses, and writes a text-free ZIP to `NASN/study-v3/test-analysis/`.
+Finished models are skipped, so a disconnected session resumes with Run all
+(about 2.5 hours in total).
+'''),
+        cell('code', f'''REF = '{reference}'
+DRIVE = '/content/drive/MyDrive/NASN/study-v3'
+FRESH_START = False
+DATASETS = ['arsarcasm', 'arsas']
+ENCODERS = ['MARBERT', 'MARBERTv2', 'AraBERTv02-twitter', 'CAMeLBERT-DA', 'XLM-R-base']
+SEEDS = [42, 43, 44]
+TEST_DEFENSES = ['RAW', 'STD']
+TEST_VARIANTS_CONTENT_SHA256 = {json.dumps(TEST_VARIANTS_CONTENT_SHA256)}
+'''),
+        cell('code', setup),
+        cell('code', '''# Test variants (must reproduce the hashes registered after the freeze).
+subprocess.run([sys.executable, '-m', 'arsarcasm_audit', 'fetch', '--destination', 'data/raw'], cwd=REPO, env=ENV, check=True)
+subprocess.run([sys.executable, '-m', 'nasn.arsas', 'fetch'], cwd=REPO, env=ENV, check=True)
+TEST = {}
+for dataset in DATASETS:
+    folder = ROOT / dataset / 'test-variants'
+    TEST[dataset] = folder / 'variants.csv.gz'
+    if TEST[dataset].exists() and content_sha(TEST[dataset]) != TEST_VARIANTS_CONTENT_SHA256[dataset]:
+        folder.rename(folder.with_name(f'test-variants-mismatch-{time.strftime("%Y%m%dT%H%M%S")}'))
+    if not TEST[dataset].exists():
+        call('prepare', '--dataset', dataset, '--partition', 'test', '--output', folder)
+    got = content_sha(TEST[dataset])
+    assert got == TEST_VARIANTS_CONTENT_SHA256[dataset], f'{dataset}: test variants {got} differ from the registered set'
+    log(f'{dataset} test variants verified')
+'''),
+        cell('code', '''# Predictions of every frozen checkpoint on the test variants.
+for dataset in DATASETS:
+    for model in ENCODERS:
+        for seed in SEEDS:
+            out = ROOT / dataset / 'test-predictions' / f'{model}-s{seed}'
+            if (out / 'evidence.json').exists():
+                continue
+            checkpoint = ROOT / dataset / 'train' / f'{model}-s{seed}' / 'best_checkpoint'
+            assert (checkpoint / 'model.safetensors').exists(), f'Missing weights: {checkpoint}'
+            need_gpu(f'Test predictions {dataset}/{model}-s{seed}')
+            if out.exists():
+                out.rename(out.with_name(out.name + f'-incomplete-{len(list(out.parent.glob(out.name + "-incomplete-*")))}'))
+            call('infer', '--variants', TEST[dataset], '--checkpoint', checkpoint, '--model', model, '--seed', seed,
+                 '--defenses', *TEST_DEFENSES, '--output', out)
+'''),
+        cell('code', '''# Test analysis and a ZIP of text-free results.
+import shutil
+stamp = time.strftime('%Y%m%dT%H%M%SZ', time.gmtime())
+public = ROOT / 'test-analysis' / f'{stamp}-test-public'
+public.mkdir(parents=True)
+for dataset in DATASETS:
+    files = sorted(str(p) for p in (ROOT / dataset / 'test-predictions').glob('*/predictions.csv.gz') if 'incomplete' not in str(p))
+    assert len(files) == len(ENCODERS) * len(SEEDS), f'{dataset}: only {len(files)} test prediction sets'
+    for suffix, extra in [('all', []), ('cue-tweets', ['--cue-only'])]:
+        out = ROOT / 'test-analysis' / f'{stamp}-{dataset}-{suffix}'
+        call('analyze', '--variants', TEST[dataset], '--predictions', *files, *extra, '--output', out)
+        for name in ['robustness_cells.csv', 'contrasts.csv', 'natural_noise_cells.csv', 'evidence.json']:
+            shutil.copy(out / name, public / f'{dataset}-{suffix}-{name}')
+print(shutil.make_archive(str(public), 'zip', public))
+'''),
+    ]
+    return {'cells': cells, 'metadata': {'accelerator': 'GPU', 'colab': {'provenance': []},
+            'kernelspec': {'display_name': 'Python 3', 'name': 'python3'}}, 'nbformat': 4, 'nbformat_minor': 0}
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--reference', required=True, help='Commit or tag to pin')
     parser.add_argument('--output', default='notebooks/study_v3_colab.ipynb')
+    parser.add_argument('--test', action='store_true', help='Build the single test-partition evaluation notebook')
     args = parser.parse_args()
-    Path(args.output).write_text(json.dumps(build(args.reference), indent=1, ensure_ascii=False) + '\n', encoding='utf-8', newline='\n')
+    notebook = build_test(args.reference) if args.test else build(args.reference)
+    Path(args.output).write_text(json.dumps(notebook, indent=1, ensure_ascii=False) + '\n', encoding='utf-8', newline='\n')
 
 
 if __name__ == '__main__':
