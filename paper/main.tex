@@ -276,8 +276,9 @@ sequence unchanged. The other models see nearly every folding edit.
 \centering\small
 \input{generated/human_preservation.tex}
 \caption{Items, out of 30 per condition, judged meaning-preserving by annotator A and by
-annotator B, and items for which both annotators judged meaning preserved, or both
-meaning and sentiment preserved.}
+annotator B; items for which both judged meaning preserved, or both meaning and sentiment
+preserved; and the final count of meaning- and sentiment-preserving items after a third
+annotator resolved the disagreements.}
 \label{tab:preservation}
 \end{table*}
 
@@ -287,9 +288,12 @@ ArSarcasm-v2 validation set, 30 per condition and one edit per tweet. They answe
 questions per item. Their first 20 items served as a pilot and are excluded from the
 agreement figures. Agreement (Table~\ref{tab:agreement}) is high on every field. Cohen's
 $\kappa$ is low for meaning preservation because almost every answer is ``yes''. Gwet's
-AC1 \citep{gwet2008computing} corrects for this skew and gives 0.88. The 87 items on which
-the annotators disagreed about preservation were sent to a third annotator. The counts
-below use the stricter criterion that both annotators agreed.
+AC1 \citep{gwet2008computing} corrects for this skew and gives 0.88. A third annotator resolved the 87 items on which the two disagreed about meaning or
+sentiment preservation. That annotator saw both earlier answers, without the
+annotators' identities or notes and in random order. The third annotator sided with each
+of the two about equally often on meaning (76\% and 75\%). On sentiment, the third
+annotator sided more often with annotator A (52\%) than with annotator B (21\%), who had
+marked many of these items unsure.
 
 The results (Table~\ref{tab:preservation}) separate the families clearly.
 \begin{itemize}
@@ -302,10 +306,14 @@ for one-word elongation by two and four letters, in 6 of 30 when 30\% of the wor
 elongated, and in none of the 30 items with an elongated negation word. Readers take
 repetition as emphasis, so a prediction change under elongation is not necessarily an
 error.
-\item \emph{Folding} preserved meaning in about 80\% of items.
-\item \emph{Typos}, meant as the control, were often read through: both annotators judged
-meaning preserved in 18 of 30 single-word items, though only in 8 of 30 dense items.
+\item \emph{Folding} preserved meaning in 48 of 60 items by agreement, and in all 60
+after adjudication. The disputed items wrote \ar{على} as \ar{علي} or dropped a hamza,
+which the third annotator judged cosmetic.
+\item \emph{Typos}, meant as the control, were often read through. After adjudication,
+19 of 30 single-word typos and 8 of 30 dense ones preserved meaning and sentiment.
 \end{itemize}
+Adjudication changed none of the counts for tatweel or elongation. Every elongation item
+it resolved was judged meaning-preserving but sentiment-changing.
 
 \section{How often do predictions change?}
 \label{sec:robustness}

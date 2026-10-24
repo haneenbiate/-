@@ -116,10 +116,14 @@ def build(package, path_a, path_b, output):
 
 
 def read_adjudication(path):
-    sheet = pd.read_excel(path, sheet_name='الحسم', dtype=str).fillna('')
+    """The returned workbook, either as built here or re-saved as one sheet with Arabic answers."""
+    sheets = pd.read_excel(path, sheet_name=None, dtype=str)
+    name = 'الحسم' if 'الحسم' in sheets else next(n for n, s in sheets.items() if COLUMNS['item'] in s.columns)
+    sheet = sheets[name].fillna('')
     sheet = sheet.rename(columns={v: k for k, v in COLUMNS.items()})
+    answers = {arabic: english for english, arabic in ARABIC.items()}
     for name in CORE:
-        sheet[name] = sheet[name].str.strip()
+        sheet[name] = sheet[name].str.strip().replace(answers)
         bad = sheet[~sheet[name].isin(FIELDS[name])]
         if not bad.empty:
             raise ValueError(f'{path}: {name} missing/invalid for {bad.item.head(5).tolist()}')
