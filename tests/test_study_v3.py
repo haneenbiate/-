@@ -81,8 +81,9 @@ def test_analyze_end_to_end(tmp_path):
 
 
 def test_test_partition_locked():
+    # The study config is unlocked after the freeze tag; the guard itself must still hold.
     with pytest.raises(Exception, match='locked'):
-        study_v3.load_split('test', load_config())
+        study_v3.load_split('test', {**load_config(), 'test_unlocked': False})
 
 
 def test_natural_noise_compares_raw_with_std():
