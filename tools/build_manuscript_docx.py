@@ -419,7 +419,36 @@ REFERENCES = [
     'Nabil M, Aly M, Atiya A (2015) ASTD: Arabic sentiment tweets dataset. In: Proceedings of the 2015 Conference on Empirical Methods in Natural Language Processing. Association for Computational Linguistics, pp 2515–2519. https://doi.org/10.18653/v1/D15-1299',
     'Pruthi D, Dhingra B, Lipton ZC (2019) Combating adversarial misspellings with robust word recognition. In: Proceedings of the 57th Annual Meeting of the Association for Computational Linguistics. Association for Computational Linguistics, pp 5582–5591. https://doi.org/10.18653/v1/P19-1561',
     'Ribeiro MT, Wu T, Guestrin C, Singh S (2020) Beyond accuracy: behavioral testing of NLP models with CheckList. In: Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics. Association for Computational Linguistics, pp 4902–4912. https://doi.org/10.18653/v1/2020.acl-main.442',
+    'Abu Farha I, Magdy W (2020) From Arabic sentiment analysis to sarcasm detection: the ArSarcasm dataset. In: Proceedings of the 4th Workshop on Open-Source Arabic Corpora and Processing Tools, with a Shared Task on Offensive Language Detection. European Language Resources Association, pp 32–39. https://aclanthology.org/2020.osact-1.5',
+    'Abu Farha I, Magdy W (2021) A comparative study of effective approaches for Arabic sentiment analysis. Inf Process Manag 58(2):102438. https://doi.org/10.1016/j.ipm.2020.102438',
+    'Badaro G, Baly R, Hajj H, El-Hajj W, Shaban KB, Habash N, Al-Sallab A, Hamdi A (2019) A survey of opinion mining in Arabic: a comprehensive system perspective covering challenges and advances in tools, resources, models, applications, and visualizations. ACM Trans Asian Low-Resour Lang Inf Process 18(3):1–52. https://doi.org/10.1145/3295662',
+    'Clark JH, Garrette D, Turc I, Wieting J (2022) Canine: pre-training an efficient tokenization-free encoder for language representation. Trans Assoc Comput Linguist 10:73–91. https://doi.org/10.1162/tacl_a_00448',
+    'Cohen J (1960) A coefficient of agreement for nominal scales. Educ Psychol Meas 20(1):37–46. https://doi.org/10.1177/001316446002000104',
+    'Darwish K, Habash N, Abbas M, Al-Khalifa H, Al-Natsheh HT, Bouamor H, Bouzoubaa K, Cavalli-Sforza V, El-Beltagy SR, El-Hajj W, Jarrar M, Mubarak H (2021) A panoramic survey of natural language processing in the Arab world. Commun ACM 64(4):72–81. https://doi.org/10.1145/3447735',
+    'Devlin J, Chang MW, Lee K, Toutanova K (2019) BERT: pre-training of deep bidirectional transformers for language understanding. In: Proceedings of the 2019 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies, Volume 1 (Long and Short Papers). Association for Computational Linguistics, pp 4171–4186. https://doi.org/10.18653/v1/N19-1423',
+    'Dror R, Baumer G, Shlomov S, Reichart R (2018) The hitchhiker’s guide to testing statistical significance in natural language processing. In: Proceedings of the 56th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers). Association for Computational Linguistics, pp 1383–1392. https://doi.org/10.18653/v1/P18-1128',
+    'Ebrahimi J, Rao A, Lowd D, Dou D (2018) HotFlip: white-box adversarial examples for text classification. In: Proceedings of the 56th Annual Meeting of the Association for Computational Linguistics (Volume 2: Short Papers). Association for Computational Linguistics, pp 31–36. https://doi.org/10.18653/v1/P18-2006',
+    'Efron B, Tibshirani RJ (1994) An introduction to the bootstrap. Chapman and Hall/CRC, New York. https://doi.org/10.1201/9780429246593',
+    'Ettinger A (2020) What BERT is not: lessons from a new suite of psycholinguistic diagnostics for language models. Trans Assoc Comput Linguist 8:34–48. https://doi.org/10.1162/tacl_a_00298',
+    'Gao J, Lanchantin J, Soffa ML, Qi Y (2018) Black-box generation of adversarial text sequences to evade deep learning classifiers. In: 2018 IEEE Security and Privacy Workshops (SPW). IEEE, pp 50–56. https://doi.org/10.1109/SPW.2018.00016',
+    'Habash NY (2010) Introduction to Arabic natural language processing. Synthesis Lectures on Human Language Technologies. Morgan & Claypool. https://doi.org/10.2200/S00277ED1V01Y201008HLT010',
+    'Jin D, Jin Z, Zhou JT, Szolovits P (2020) Is BERT really robust? A strong baseline for natural language attack on text classification and entailment. Proc AAAI Conf Artif Intell 34(05):8018–8025. https://doi.org/10.1609/aaai.v34i05.6311',
+    'Kassner N, Schütze H (2020) Negated and misprimed probes for pretrained language models: birds can talk, but cannot fly. In: Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics. Association for Computational Linguistics, pp 7811–7818. https://doi.org/10.18653/v1/2020.acl-main.698',
+    'Kudo T, Richardson J (2018) SentencePiece: a simple and language independent subword tokenizer and detokenizer for neural text processing. In: Proceedings of the 2018 Conference on Empirical Methods in Natural Language Processing: System Demonstrations. Association for Computational Linguistics, pp 66–71. https://doi.org/10.18653/v1/D18-2012',
+    'Kumar A, Makhija P, Gupta A (2020) Noisy text data: Achilles’ heel of BERT. In: Proceedings of the Sixth Workshop on Noisy User-generated Text (W-NUT 2020). Association for Computational Linguistics, pp 16–21. https://doi.org/10.18653/v1/2020.wnut-1.3',
+    'Moradi M, Samwald M (2021) Evaluating the robustness of neural language models to input perturbations. In: Proceedings of the 2021 Conference on Empirical Methods in Natural Language Processing. Association for Computational Linguistics, pp 1558–1570. https://doi.org/10.18653/v1/2021.emnlp-main.117',
+    'Obeid O, Zalmout N, Khalifa S, Taji D, Oudah M, Alhafni B, Inoue G, Eryani F, Erdmann A, Habash N (2020) CAMeL Tools: an open source Python toolkit for Arabic natural language processing. In: Proceedings of the Twelfth Language Resources and Evaluation Conference. European Language Resources Association, pp 7022–7032. https://aclanthology.org/2020.lrec-1.868',
+    'Rosenthal S, Farra N, Nakov P (2017) SemEval-2017 task 4: sentiment analysis in Twitter. In: Proceedings of the 11th International Workshop on Semantic Evaluation (SemEval-2017). Association for Computational Linguistics, pp 502–518. https://doi.org/10.18653/v1/S17-2088',
+    'Rust P, Pfeiffer J, Vulić I, Ruder S, Gurevych I (2021) How good is your tokenizer? On the monolingual performance of multilingual language models. In: Proceedings of the 59th Annual Meeting of the Association for Computational Linguistics and the 11th International Joint Conference on Natural Language Processing (Volume 1: Long Papers). Association for Computational Linguistics, pp 3118–3135. https://doi.org/10.18653/v1/2021.acl-long.243',
+    'Schuster M, Nakajima K (2012) Japanese and Korean voice search. In: 2012 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP). IEEE, pp 5149–5152. https://doi.org/10.1109/ICASSP.2012.6289079',
+    'Sennrich R, Haddow B, Birch A (2016) Neural machine translation of rare words with subword units. In: Proceedings of the 54th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers). Association for Computational Linguistics, pp 1715–1725. https://doi.org/10.18653/v1/P16-1162',
+    'van Miltenburg E, van der Lee C, Krahmer E (2021) Preregistering NLP research. In: Proceedings of the 2021 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies. Association for Computational Linguistics, pp 613–623. https://doi.org/10.18653/v1/2021.naacl-main.51',
+    'Wang X, Wang H, Yang D (2022) Measure and improve robustness in NLP models: a survey. In: Proceedings of the 2022 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies. Association for Computational Linguistics, pp 4569–4586. https://doi.org/10.18653/v1/2022.naacl-main.339',
+    'Wiegand M, Balahur A, Roth B, Klakow D, Montoyo A (2010) A survey on the role of negation in sentiment analysis. In: Proceedings of the Workshop on Negation and Speculation in Natural Language Processing. University of Antwerp, pp 60–68. https://aclanthology.org/W10-3111',
+    'Wolf T, Debut L, Sanh V, Chaumond J, Delangue C, Moi A, Cistac P, Rault T, Louf R, Funtowicz M, Davison J, Shleifer S, von Platen P, Ma C, Jernite Y, Plu J, Xu C, Le Scao T, Gugger S, Drame M, Lhoest Q, Rush A (2020) Transformers: state-of-the-art natural language processing. In: Proceedings of the 2020 Conference on Empirical Methods in Natural Language Processing: System Demonstrations. Association for Computational Linguistics, pp 38–45. https://doi.org/10.18653/v1/2020.emnlp-demos.6',
+    'Xue L, Barua A, Constant N, Al-Rfou R, Narang S, Kale M, Roberts A, Raffel C (2022) ByT5: towards a token-free future with pre-trained byte-to-byte models. Trans Assoc Comput Linguist 10:291–306. https://doi.org/10.1162/tacl_a_00461',
 ]
+REFERENCES.sort(key=str.casefold)
 
 ABSTRACT = (
     'Arabic tweets contain orthographic variation that readers barely notice: the elongation character tatweel, '
@@ -487,28 +516,55 @@ def manuscript(data, figures, output, anonymous=True):
         'earlier method adds nothing (Sections 8 and 9).'])
 
     heading(doc, '2 Related work', 1)
-    heading(doc, '2.1 Noise and robustness', 2)
+    heading(doc, '2.1 Arabic sentiment analysis', 2)
+    para(doc, 'Arabic sentiment analysis has moved from lexicon- and feature-based systems to fine-tuned '
+              'transformers, a development traced by several surveys (Badaro et al. 2019; Darwish et al. 2021). '
+              'Three-way sentiment on tweets became a standard task through SemEval, which included an Arabic '
+              'subtask (Rosenthal et al. 2017), and through dedicated corpora such as ASTD (Nabil et al. 2015), ArSAS '
+              '(Elmadany et al. 2018) and ArSarcasm (Abu Farha and Magdy 2020), later extended to ArSarcasm-v2 for '
+              'the WANLP 2021 shared task (Abu Farha et al. 2021). Comparative studies find that fine-tuned BERT-style '
+              'models outperform earlier approaches on these datasets (Abu Farha and Magdy 2021). This literature '
+              'reports accuracy on the text as distributed. It rarely asks how stable a model is when the same tweet '
+              'is written differently, although written Arabic tolerates a great deal of such variation: tatweel '
+              'is a purely typographic device, hamza is often omitted, and final ya and ta marbuta are written in '
+              'several ways (Habash 2010). Toolkits such as CAMeL Tools (Obeid et al. 2020) therefore provide '
+              'orthographic normalization, but whether a given model needs it is usually left to the user.')
+    heading(doc, '2.2 Subword tokenization and Arabic pretrained models', 2)
+    para(doc, 'BERT (Devlin et al. 2019) and its Arabic descendants segment text with WordPiece (Schuster and '
+              'Nakajima 2012), a greedy subword algorithm related to byte-pair encoding (Sennrich et al. 2016). A '
+              'word that contains a character outside the vocabulary cannot be segmented and is replaced by a single '
+              'unknown token. MARBERT (Abdul-Mageed et al. 2021), AraBERT (Antoun et al. 2020) and CAMeLBERT (Inoue '
+              'et al. 2021) use WordPiece vocabularies learned from Arabic text; MARBERT and its successor share a '
+              'vocabulary built from tweets. XLM-R (Conneau et al. 2020) instead uses a multilingual SentencePiece '
+              'model (Kudo and Richardson 2018) that falls back on individual characters and therefore never '
+              'produces an unknown token. Tokenizer quality has been shown to explain part of the gap between '
+              'monolingual and multilingual models, Arabic included (Rust et al. 2021), and tokenization-free '
+              'encoders have been proposed to remove the vocabulary bottleneck altogether (Clark et al. 2022; Xue et '
+              'al. 2022). The recommended preprocessing for some Arabic models removes tatweel, but nothing in the '
+              'model interface enforces this. We are not aware of work that measures what omitting that step costs '
+              'a fine-tuned model.')
+    heading(doc, '2.3 Robustness to noise', 2)
     para(doc, 'Both synthetic and natural character noise degrade neural models (Belinkov and Bisk 2018). '
-              'Character-level recognizers have been proposed to defend against misspellings (Pruthi et al. 2019), '
-              'and behavioural test suites probe whether a model is invariant to such edits (Ribeiro et al. 2020). '
-              'Our edits are specific to Arabic script. We separate edits presumed to preserve meaning from a typo '
-              'control and verify that separation with human judgments. We also report the costs of a defense '
-              'alongside its benefits.')
-    heading(doc, '2.2 Arabic pretrained models', 2)
-    para(doc, 'MARBERT (Abdul-Mageed et al. 2021), AraBERT (Antoun et al. 2020) and CAMeLBERT (Inoue et al. 2021) '
-              'use WordPiece vocabularies learned from Arabic text. MARBERT and its successor share a vocabulary '
-              'built from tweets. XLM-R (Conneau et al. 2020) uses a multilingual SentencePiece vocabulary that falls '
-              'back on individual characters and therefore never produces an unknown token. The recommended '
-              'preprocessing for some Arabic models removes tatweel, but nothing in the model interface enforces '
-              'this. We are not aware of work that measures what omitting that step costs a fine-tuned model.')
-    heading(doc, '2.3 Negation', 2)
-    para(doc, 'Benchmarks under-represent negation, and models trained on them often ignore it (Hossain et al. '
-              '2020). We do not parse negation scope. Instead, we compare an edit on the negation word with the same '
-              'edit on another word in the same tweet.')
+              'Adversarial work showed that a few character flips or word substitutions can change a classifier’s '
+              'decision (Ebrahimi et al. 2018; Gao et al. 2018; Jin et al. 2020), and non-adversarial studies found '
+              'that pretrained models lose accuracy under realistic spelling noise (Kumar et al. 2020; Moradi and '
+              'Samwald 2021). Character-level recognizers have been proposed to defend against misspellings (Pruthi '
+              'et al. 2019), and behavioural test suites probe whether a model is invariant to such edits (Ribeiro et '
+              'al. 2020); Wang et al. (2022) survey the field. Most of this work concerns English and treats every '
+              'perturbation as label-preserving. Our edits are specific to Arabic script. We separate edits presumed '
+              'to preserve meaning from a typo control and verify that separation with human judgments, and we '
+              'report the costs of a defense alongside its benefits.')
+    heading(doc, '2.4 Negation', 2)
+    para(doc, 'Negation is a classic difficulty in sentiment analysis (Wiegand et al. 2010). Pretrained language '
+              'models handle it poorly in diagnostic probes (Ettinger 2020; Kassner and Schütze 2020), and benchmarks '
+              'under-represent it, so models trained on them often ignore it (Hossain et al. 2020). We do not parse '
+              'negation scope. Instead, we compare an edit on the negation word with the same edit on another word '
+              'in the same tweet, which isolates the contribution of the negation word itself.')
 
     heading(doc, '3 Study design', 1)
     heading(doc, '3.1 Protocol', 2)
-    para(doc, 'We preregistered the conditions, metrics, hypotheses and decision rules before observing any model '
+    para(doc, 'Following the case for preregistration in NLP (van Miltenburg et al. 2021), we preregistered the '
+              'conditions, metrics, hypotheses and decision rules before observing any model '
               'prediction on the new edits, and we developed the analysis on the validation sets. A written amendment '
               'fixed the test protocol. The study was then frozen at a tagged commit, and only after that were the '
               'test sets perturbed and evaluated, once. We report the test sets as the main results; the validation '
@@ -549,7 +605,7 @@ def manuscript(data, figures, output, anonymous=True):
               'about 100,000 edited tweets per model.')
     heading(doc, '3.4 Models', 2)
     para(doc, 'We fine-tune MARBERT, MARBERTv2, AraBERTv02-twitter, CAMeLBERT-DA and XLM-R-base with one fixed '
-              'recipe: AdamW with a learning rate of 2×10⁻⁵, batch size 16 and at most five epochs; early stopping '
+              'recipe in the Transformers library (Wolf et al. 2020): AdamW with a learning rate of 2×10⁻⁵, batch size 16 and at most five epochs; early stopping '
               'and checkpoint selection on validation Macro-F1; and seeds 42, 43 and 44. This gives 30 models. '
               'Revisions of all pretrained weights are pinned. Table 2 reports clean performance. The official '
               'ArSarcasm-v2 test set is markedly harder than its validation split, and every model scores 8–12 '
@@ -571,7 +627,8 @@ def manuscript(data, figures, output, anonymous=True):
               'the prediction for the clean tweet. It needs no gold label and isolates the effect of the edit. We '
               'also report Macro-F1 on clean and edited versions of the same tweets and the difference between the '
               'two.')
-    para(doc, 'Intervals are 95% percentiles of 2,000 cluster-bootstrap resamples. Clusters are groups of duplicate '
+    para(doc, 'Intervals are 95% percentiles of 2,000 cluster-bootstrap resamples (Efron and Tibshirani 1994; Dror et '
+              'al. 2018). Clusters are groups of duplicate '
               'texts, and the rate for each resample is averaged over the three seeds. Contrasts are paired on '
               'identical tweets. The preregistered hypotheses are: H1, dense edits change more predictions than '
               'single edits for the three presumed-preserving families; H2, under dense tatweel each WordPiece model '
@@ -610,7 +667,7 @@ def manuscript(data, figures, output, anonymous=True):
               'annotators independently judged 330 edited tweets drawn from the ArSarcasm-v2 validation set, 30 per '
               'condition and one edit per tweet. They answered five questions per item. Their first 20 items served '
               'as a pilot and are excluded from the agreement figures. Agreement (Table 3) is high on every field. '
-              'Cohen’s κ is low for meaning preservation because almost every answer is “yes”. Gwet’s AC1 (Gwet '
+              'Cohen’s κ (Cohen 1960) is low for meaning preservation because almost every answer is “yes”. Gwet’s AC1 (Gwet '
               '2008) corrects for this skew and gives 0.88.')
     header, rows = agreement_table(data)
     table(doc, 3, 'Agreement between the two annotators on 310 items (20 pilot items excluded)', header, rows,
@@ -771,7 +828,8 @@ def manuscript(data, figures, output, anonymous=True):
               'condition. The natural-noise slices are small, and their accuracy effects are significant only for '
               'letter runs on ArSarcasm-v2. Both datasets consist of tweets, and other genres may behave '
               'differently. We did not evaluate instruction-tuned LLMs, whose byte-level tokenizers resemble '
-              'XLM-R’s but whose behaviour under these edits remains to be measured.')
+              'XLM-R’s but whose behaviour under these edits remains to be measured, as does that of '
+              'tokenization-free encoders (Clark et al. 2022; Xue et al. 2022).')
 
     heading(doc, '11 Conclusion', 1)
     para(doc, 'Orthographic variation that Arabic readers ignore reaches Arabic WordPiece models as missing words: a '
