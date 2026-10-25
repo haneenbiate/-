@@ -1,0 +1,117 @@
+dataset,hypothesis,model,test,n,difference,low,high,verdict
+arsarcasm,H1,AraBERTv02-twitter,tatweel/dense/non_cue minus tatweel/single/non_cue,2948,0.116010854816825,0.1055652225775008,0.1257353339798921,supported
+arsarcasm,H1,AraBERTv02-twitter,elongationx2/dense/non_cue minus elongationx2/single/non_cue,2950,0.0882485875706214,0.0804764326890471,0.09660782163881,supported
+arsarcasm,H1,AraBERTv02-twitter,fold/dense/non_cue minus fold/single/non_cue,2119,0.0141576215195847,0.0099056603773584,0.018265055977074,supported
+arsarcasm,H1,CAMeLBERT-DA,tatweel/dense/non_cue minus tatweel/single/non_cue,2948,0.1123925825418362,0.1027806754859752,0.1214794706481166,supported
+arsarcasm,H1,CAMeLBERT-DA,elongationx2/dense/non_cue minus elongationx2/single/non_cue,2950,0.0889265536723163,0.081101687696878,0.0966940317081063,supported
+arsarcasm,H1,CAMeLBERT-DA,fold/dense/non_cue minus fold/single/non_cue,2119,0.0295736982853547,0.0242138364779874,0.0349417281344094,supported
+arsarcasm,H1,MARBERT,tatweel/dense/non_cue minus tatweel/single/non_cue,2948,0.1023292627770239,0.0935585294269682,0.1108095884215287,supported
+arsarcasm,H1,MARBERT,elongationx2/dense/non_cue minus elongationx2/single/non_cue,2950,0.0605649717514124,0.0539563470964807,0.0668937899102331,supported
+arsarcasm,H1,MARBERT,fold/dense/non_cue minus fold/single/non_cue,2119,0.0146295422369042,0.0110216262442905,0.0180905076942981,supported
+arsarcasm,H1,MARBERTv2,tatweel/dense/non_cue minus tatweel/single/non_cue,2948,0.1222297602894617,0.1131790148541148,0.1316147267541245,supported
+arsarcasm,H1,MARBERTv2,elongationx2/dense/non_cue minus elongationx2/single/non_cue,2950,0.0605649717514124,0.0533557820799043,0.0675941077466639,supported
+arsarcasm,H1,MARBERTv2,fold/dense/non_cue minus fold/single/non_cue,2119,0.0132137800849457,0.0097436020434019,0.0168397859615989,supported
+arsarcasm,H1,XLM-R-base,tatweel/dense/non_cue minus tatweel/single/non_cue,2948,0.0644504748982361,0.0574400723654455,0.0719629780032906,supported
+arsarcasm,H1,XLM-R-base,elongationx2/dense/non_cue minus elongationx2/single/non_cue,2950,0.083954802259887,0.0766881574482525,0.0920398009950248,supported
+arsarcasm,H1,XLM-R-base,fold/dense/non_cue minus fold/single/non_cue,2119,0.0380682711971055,0.0317906227259014,0.0441097100528308,supported
+arsarcasm,H2,AraBERTv02-twitter,"AraBERTv02-twitter minus XLM-R-base, tatweel/dense",2948,0.0656942559927634,0.0525958601968103,0.0781055725104554,supported
+arsarcasm,H2,CAMeLBERT-DA,"CAMeLBERT-DA minus XLM-R-base, tatweel/dense",2948,0.0598145635459068,0.0469240707664243,0.0721641608780998,supported
+arsarcasm,H2,MARBERT,"MARBERT minus XLM-R-base, tatweel/dense",2948,0.038218000904568,0.0257751871910704,0.0496414215976292,supported
+arsarcasm,H2,MARBERTv2,"MARBERTv2 minus XLM-R-base, tatweel/dense",2948,0.0811849841700587,0.0679770071642328,0.092864049663186,supported
+arsarcasm,H3,AraBERTv02-twitter,tatweel/single/cue minus tatweel/single/non_cue,625,0.0245333333333333,0.0074666666666666,0.0410666666666666,supported
+arsarcasm,H3,CAMeLBERT-DA,tatweel/single/cue minus tatweel/single/non_cue,625,0.0031999999999999,-0.0106666666666666,0.0175999999999999,not supported
+arsarcasm,H3,MARBERT,tatweel/single/cue minus tatweel/single/non_cue,625,0.0133333333333333,-0.0005333333333333,0.0277333333333333,not supported
+arsarcasm,H3,MARBERTv2,tatweel/single/cue minus tatweel/single/non_cue,625,0.0138666666666666,-0.0015999999999999,0.0298799999999999,not supported
+arsarcasm,H4,AraBERTv02-twitter,"STD minus RAW, tatweel/single/non_cue",2948,-0.0840117593848937,-0.0914752219483757,-0.0764868295534619,supported
+arsarcasm,H4,AraBERTv02-twitter,"STD minus RAW, tatweel/dense/non_cue",2948,-0.2000226142017187,-0.2111166654222355,-0.1885083738022628,supported
+arsarcasm,H4,AraBERTv02-twitter,"STD minus RAW, tatweel/single/cue",626,-0.0867944621938232,-0.103314696485623,-0.0708067092651757,supported
+arsarcasm,H4,AraBERTv02-twitter,"STD minus RAW, elongationx2/single/non_cue",2950,-0.0644067796610169,-0.0709604519774011,-0.0583045908023135,supported
+arsarcasm,H4,AraBERTv02-twitter,"STD minus RAW, elongationx4/single/non_cue",2950,-0.0925423728813559,-0.1003395296743958,-0.0847977697414309,supported
+arsarcasm,H4,AraBERTv02-twitter,"STD minus RAW, elongationx2/dense/non_cue",2950,-0.1510734463276836,-0.1612478875297399,-0.1407909604519773,supported
+arsarcasm,H4,AraBERTv02-twitter,"STD minus RAW, elongationx2/single/cue",626,-0.0623003194888178,-0.077209797657082,-0.0484558040468583,supported
+arsarcasm,H4,CAMeLBERT-DA,"STD minus RAW, tatweel/single/non_cue",2948,-0.0817503392130257,-0.0892453682324105,-0.0743128605361384,supported
+arsarcasm,H4,CAMeLBERT-DA,"STD minus RAW, tatweel/dense/non_cue",2948,-0.194142921754862,-0.2045017531953397,-0.1833500168705183,supported
+arsarcasm,H4,CAMeLBERT-DA,"STD minus RAW, tatweel/single/cue",626,-0.0548455804046858,-0.0670926517571884,-0.04419595314164,supported
+arsarcasm,H4,CAMeLBERT-DA,"STD minus RAW, elongationx2/single/non_cue",2950,-0.0567231638418079,-0.0626699076102079,-0.0510557067758636,supported
+arsarcasm,H4,CAMeLBERT-DA,"STD minus RAW, elongationx4/single/non_cue",2950,-0.0641807909604519,-0.0704857765568258,-0.0580982981878372,supported
+arsarcasm,H4,CAMeLBERT-DA,"STD minus RAW, elongationx2/dense/non_cue",2950,-0.1445197740112994,-0.1540735841003782,-0.1350067842605156,supported
+arsarcasm,H4,CAMeLBERT-DA,"STD minus RAW, elongationx2/single/cue",626,-0.0362087326943556,-0.0452609158679446,-0.0271565495207667,supported
+arsarcasm,H4,MARBERT,"STD minus RAW, tatweel/single/non_cue",2948,-0.0702170963364993,-0.0770797962648557,-0.0635236859088948,supported
+arsarcasm,H4,MARBERT,"STD minus RAW, tatweel/dense/non_cue",2948,-0.1725463591135232,-0.1830039858383479,-0.1622555218067926,supported
+arsarcasm,H4,MARBERT,"STD minus RAW, tatweel/single/cue",626,-0.0553780617678381,-0.0681709265175719,-0.0420660276890308,supported
+arsarcasm,H4,MARBERT,"STD minus RAW, elongationx2/single/non_cue",2950,-0.0404519774011299,-0.0455521645755623,-0.0353912256897331,supported
+arsarcasm,H4,MARBERT,"STD minus RAW, elongationx4/single/non_cue",2950,-0.0585310734463276,-0.0644777012050385,-0.0525597444695415,supported
+arsarcasm,H4,MARBERT,"STD minus RAW, elongationx2/dense/non_cue",2950,-0.0999999999999999,-0.1077576696640066,-0.0918327864083666,supported
+arsarcasm,H4,MARBERT,"STD minus RAW, elongationx2/single/cue",626,-0.0388711395101171,-0.0495207667731629,-0.0287539936102236,supported
+arsarcasm,H4,MARBERTv2,"STD minus RAW, tatweel/single/non_cue",2948,-0.0932835820895522,-0.1010520607450125,-0.0856230720951801,supported
+arsarcasm,H4,MARBERTv2,"STD minus RAW, tatweel/dense/non_cue",2948,-0.2155133423790139,-0.2270179796886517,-0.203502348457399,supported
+arsarcasm,H4,MARBERTv2,"STD minus RAW, tatweel/single/cue",626,-0.0798722044728434,-0.0958599574014909,-0.0649627263045793,supported
+arsarcasm,H4,MARBERTv2,"STD minus RAW, elongationx2/single/non_cue",2950,-0.0484745762711864,-0.0537087290818634,-0.0432621710154749,supported
+arsarcasm,H4,MARBERTv2,"STD minus RAW, elongationx4/single/non_cue",2950,-0.0625988700564971,-0.0686308542485981,-0.0566078235847448,supported
+arsarcasm,H4,MARBERTv2,"STD minus RAW, elongationx2/dense/non_cue",2950,-0.1077966101694915,-0.1161581920903954,-0.0990821340920291,supported
+arsarcasm,H4,MARBERTv2,"STD minus RAW, elongationx2/single/cue",626,-0.0431309904153354,-0.0548455804046858,-0.0330138445154419,supported
+arsarcasm,H4,XLM-R-base,"STD minus RAW, tatweel/single/non_cue",2948,-0.0698778833107191,-0.0761607772292987,-0.0638844592501918,supported
+arsarcasm,H4,XLM-R-base,"STD minus RAW, tatweel/dense/non_cue",2948,-0.1343283582089552,-0.1431001700784804,-0.1264824818525095,supported
+arsarcasm,H4,XLM-R-base,"STD minus RAW, tatweel/single/cue",626,-0.0708200212992545,-0.0841320553780618,-0.0580404685835995,supported
+arsarcasm,H4,XLM-R-base,"STD minus RAW, elongationx2/single/non_cue",2950,-0.0759322033898305,-0.0825988700564971,-0.069198870624221,supported
+arsarcasm,H4,XLM-R-base,"STD minus RAW, elongationx4/single/non_cue",2950,-0.1031638418079096,-0.1113746752513272,-0.0952372875880338,supported
+arsarcasm,H4,XLM-R-base,"STD minus RAW, elongationx2/dense/non_cue",2950,-0.1579661016949152,-0.167908783473428,-0.1482102331806876,supported
+arsarcasm,H4,XLM-R-base,"STD minus RAW, elongationx2/single/cue",626,-0.0585729499467518,-0.0708200212992545,-0.047923322683706,supported
+arsas,H1,AraBERTv02-twitter,tatweel/dense/non_cue minus tatweel/single/non_cue,3898,0.073541987343937,0.0662569175372241,0.080810736790025,supported
+arsas,H1,AraBERTv02-twitter,elongationx2/dense/non_cue minus elongationx2/single/non_cue,3898,0.0656747049769112,0.0594560102677366,0.0720964276422544,supported
+arsas,H1,AraBERTv02-twitter,fold/dense/non_cue minus fold/single/non_cue,3303,0.0108991825613079,0.008277748773683,0.0135602140494776,supported
+arsas,H1,CAMeLBERT-DA,tatweel/dense/non_cue minus tatweel/single/non_cue,3898,0.0744826406704292,0.0675725084642961,0.0817153066540336,supported
+arsas,H1,CAMeLBERT-DA,elongationx2/dense/non_cue minus elongationx2/single/non_cue,3898,0.1128783991790662,0.1049979413446083,0.1210104274718854,supported
+arsas,H1,CAMeLBERT-DA,fold/dense/non_cue minus fold/single/non_cue,3303,0.0167524472701584,0.0132885233831789,0.0203096467339323,supported
+arsas,H1,MARBERT,tatweel/dense/non_cue minus tatweel/single/non_cue,3898,0.0666153583034034,0.0606831793292265,0.0730672748870899,supported
+arsas,H1,MARBERT,elongationx2/dense/non_cue minus elongationx2/single/non_cue,3898,0.0714896528134085,0.0652541547524405,0.07790976356635,supported
+arsas,H1,MARBERT,fold/dense/non_cue minus fold/single/non_cue,3303,0.0149359168432737,0.0122037317196167,0.0178214792363927,supported
+arsas,H1,MARBERTv2,tatweel/dense/non_cue minus tatweel/single/non_cue,3898,0.0743116127928852,0.06745379484356,0.0811949085508633,supported
+arsas,H1,MARBERTv2,elongationx2/dense/non_cue minus elongationx2/single/non_cue,3898,0.073627501282709,0.0671614204818794,0.0799558730265112,supported
+arsas,H1,MARBERTv2,fold/dense/non_cue minus fold/single/non_cue,3303,0.0132203047734382,0.0104195910643718,0.0160703456640388,supported
+arsas,H1,XLM-R-base,tatweel/dense/non_cue minus tatweel/single/non_cue,3898,0.0614845219770822,0.0549730853252134,0.0675214224507283,supported
+arsas,H1,XLM-R-base,elongationx2/dense/non_cue minus elongationx2/single/non_cue,3898,0.0868821617923721,0.079572429508476,0.0938574015422363,supported
+arsas,H1,XLM-R-base,fold/dense/non_cue minus fold/single/non_cue,3303,0.0268442829750731,0.0226987291793157,0.0310674632275513,supported
+arsas,H2,AraBERTv02-twitter,"AraBERTv02-twitter minus XLM-R-base, tatweel/dense",3898,0.0140242859586112,0.005901862379345,0.0224579204186505,supported
+arsas,H2,CAMeLBERT-DA,"CAMeLBERT-DA minus XLM-R-base, tatweel/dense",3898,0.01735932957072,0.0088837993032206,0.026160721770103,supported
+arsas,H2,MARBERT,"MARBERT minus XLM-R-base, tatweel/dense",3898,0.0011116812040362,-0.0067644173152647,0.0090462021304815,not supported
+arsas,H2,MARBERTv2,"MARBERTv2 minus XLM-R-base, tatweel/dense",3898,0.017530357448264,0.0089946555301628,0.0258017172036842,supported
+arsas,H3,AraBERTv02-twitter,tatweel/single/cue minus tatweel/single/non_cue,623,0.0117710005350454,-0.000539374325782,0.0248716973477356,not supported
+arsas,H3,CAMeLBERT-DA,tatweel/single/cue minus tatweel/single/non_cue,623,0.0133761369716425,0.0021366666666666,0.0254372019077901,supported
+arsas,H3,MARBERT,tatweel/single/cue minus tatweel/single/non_cue,623,0.0112359550561797,7.823056674675594e-20,0.0217639462634731,supported
+arsas,H3,MARBERTv2,tatweel/single/cue minus tatweel/single/non_cue,623,0.0165864098448368,0.0032413599576193,0.0299145299145299,supported
+arsas,H4,AraBERTv02-twitter,"STD minus RAW, tatweel/single/non_cue",3898,-0.0363434239781084,-0.0406214733693688,-0.0322989966308723,supported
+arsas,H4,AraBERTv02-twitter,"STD minus RAW, tatweel/dense/non_cue",3898,-0.1098854113220454,-0.1178237178874661,-0.1019501135062502,supported
+arsas,H4,AraBERTv02-twitter,"STD minus RAW, tatweel/single/cue",623,-0.0379882289994649,-0.0509625426861528,-0.0263866451265482,supported
+arsas,H4,AraBERTv02-twitter,"STD minus RAW, elongationx2/single/non_cue",3898,-0.0283906276723105,-0.0321951579208259,-0.0248372479066285,supported
+arsas,H4,AraBERTv02-twitter,"STD minus RAW, elongationx4/single/non_cue",3898,-0.0423293996921498,-0.0467752094405409,-0.0379115596836944,supported
+arsas,H4,AraBERTv02-twitter,"STD minus RAW, elongationx2/dense/non_cue",3898,-0.0930391653839575,-0.1002420112636781,-0.0861944888266059,supported
+arsas,H4,AraBERTv02-twitter,"STD minus RAW, elongationx2/single/cue",623,-0.0267522739432851,-0.0357905982905982,-0.018665178096757,supported
+arsas,H4,CAMeLBERT-DA,"STD minus RAW, tatweel/single/non_cue",3898,-0.0387378142637249,-0.0429723697769995,-0.0345919221180411,supported
+arsas,H4,CAMeLBERT-DA,"STD minus RAW, tatweel/dense/non_cue",3898,-0.1132204549341542,-0.1211896055591034,-0.1058615372162312,supported
+arsas,H4,CAMeLBERT-DA,"STD minus RAW, tatweel/single/cue",623,-0.0438737292669876,-0.0556461804623569,-0.0333858373721055,supported
+arsas,H4,CAMeLBERT-DA,"STD minus RAW, elongationx2/single/non_cue",3898,-0.0398494954677612,-0.0441468818848487,-0.0357568812040614,supported
+arsas,H4,CAMeLBERT-DA,"STD minus RAW, elongationx4/single/non_cue",3898,-0.0419873439370617,-0.0464821158126243,-0.0377104392208858,supported
+arsas,H4,CAMeLBERT-DA,"STD minus RAW, elongationx2/dense/non_cue",3898,-0.1522148110141953,-0.1607957823049485,-0.1434043362459103,supported
+arsas,H4,CAMeLBERT-DA,"STD minus RAW, elongationx2/single/cue",623,-0.0326377742108079,-0.0419354838709677,-0.0239224926096364,supported
+arsas,H4,MARBERT,"STD minus RAW, tatweel/single/non_cue",3898,-0.030357448264067,-0.0342473207647413,-0.026665212183436,supported
+arsas,H4,MARBERT,"STD minus RAW, tatweel/dense/non_cue",3898,-0.0969728065674705,-0.1039850865532146,-0.0900738806088888,supported
+arsas,H4,MARBERT,"STD minus RAW, tatweel/single/cue",623,-0.0337078651685393,-0.043270967094703,-0.0245726495726495,supported
+arsas,H4,MARBERT,"STD minus RAW, elongationx2/single/non_cue",3898,-0.0311270737130152,-0.0348759739806185,-0.0273869683317984,supported
+arsas,H4,MARBERT,"STD minus RAW, elongationx4/single/non_cue",3898,-0.043099025141098,-0.0475219770822644,-0.0386713984824554,supported
+arsas,H4,MARBERT,"STD minus RAW, elongationx2/dense/non_cue",3898,-0.1016760731999315,-0.1086863966753408,-0.0944686325830332,supported
+arsas,H4,MARBERT,"STD minus RAW, elongationx2/single/cue",623,-0.0219368646334938,-0.0296788647891589,-0.015029522275899,supported
+arsas,H4,MARBERTv2,"STD minus RAW, tatweel/single/non_cue",3898,-0.039079870018813,-0.0435145296615068,-0.034970204670612,supported
+arsas,H4,MARBERTv2,"STD minus RAW, tatweel/dense/non_cue",3898,-0.1133914828116983,-0.121314608366217,-0.1055194361777979,supported
+arsas,H4,MARBERTv2,"STD minus RAW, tatweel/single/cue",623,-0.0454788657035847,-0.0581583198707592,-0.0342975819800018,supported
+arsas,H4,MARBERTv2,"STD minus RAW, elongationx2/single/non_cue",3898,-0.038994356080041,-0.0433376981084921,-0.0347314218886334,supported
+arsas,H4,MARBERTv2,"STD minus RAW, elongationx4/single/non_cue",3898,-0.0540448093039165,-0.0590005775817604,-0.04873208026985,supported
+arsas,H4,MARBERTv2,"STD minus RAW, elongationx2/dense/non_cue",3898,-0.1115101761587138,-0.1192068830855095,-0.1041876333077382,supported
+arsas,H4,MARBERTv2,"STD minus RAW, elongationx2/single/cue",623,-0.0278223649010165,-0.036021505376344,-0.0202983333333333,supported
+arsas,H4,XLM-R-base,"STD minus RAW, tatweel/single/non_cue",3898,-0.0343766033863519,-0.0382546633353634,-0.030808368519934,supported
+arsas,H4,XLM-R-base,"STD minus RAW, tatweel/dense/non_cue",3898,-0.0958611253634342,-0.1025776059602956,-0.0890644202274689,supported
+arsas,H4,XLM-R-base,"STD minus RAW, tatweel/single/cue",623,-0.0465489566613162,-0.0580662365591397,-0.035255,supported
+arsas,H4,XLM-R-base,"STD minus RAW, elongationx2/single/non_cue",3898,-0.0355737985291602,-0.0396385550457439,-0.0317532456585987,supported
+arsas,H4,XLM-R-base,"STD minus RAW, elongationx4/single/non_cue",3898,-0.051992474773388,-0.0568399973890025,-0.0471151877930238,supported
+arsas,H4,XLM-R-base,"STD minus RAW, elongationx2/dense/non_cue",3898,-0.1213442791174961,-0.1294352505793532,-0.1132778908002519,supported
+arsas,H4,XLM-R-base,"STD minus RAW, elongationx2/single/cue",623,-0.0422685928303905,-0.0531406744793472,-0.032051282051282,supported

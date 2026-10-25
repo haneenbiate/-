@@ -1,0 +1,8 @@
+- ArSarcasm-v2 H1: 5/5 models supported in every test; 15/15 individual tests supported
+- ArSarcasm-v2 H2: 4/4 models supported in every test; 4/4 individual tests supported
+- ArSarcasm-v2 H3: 1/4 models supported in every test; 1/4 individual tests supported
+- ArSarcasm-v2 H4: 5/5 models supported in every test; 35/35 individual tests supported
+- ArSAS H1: 5/5 models supported in every test; 15/15 individual tests supported
+- ArSAS H2: 3/4 models supported in every test; 3/4 individual tests supported
+- ArSAS H3: 3/4 models supported in every test; 3/4 individual tests supported
+- ArSAS H4: 5/5 models supported in every test; 35/35 individual tests supported

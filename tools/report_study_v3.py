@@ -233,7 +233,8 @@ def latex_drops(cells_by_dataset, conditions=('tatweel/dense/non_cue', 'elongati
 def latex_defenses(cells_by_dataset, conditions=('tatweel/dense/non_cue', 'elongationx2/dense/non_cue', 'fold/dense/non_cue')):
     """Flip rate (%) per defense for the dense presumed-preserving conditions."""
     short = {'tatweel/dense/non_cue': 'Tatweel', 'elongationx2/dense/non_cue': 'Elongation $\\times$2', 'fold/dense/non_cue': 'Folding'}
-    defenses = ['RAW', 'STD', 'NO_CONTEXT', 'NASN2']
+    present = set(pd.concat(cells_by_dataset.values()).defense)
+    defenses = [d for d in ['RAW', 'STD', 'NO_CONTEXT', 'NASN2'] if d in present]
     names = {'RAW': 'RAW', 'STD': 'STD', 'NO_CONTEXT': 'NO\\_CTX', 'NASN2': 'NASN2'}
     lines = ['\\begin{tabular}{ll' + 'r' * len(defenses) * len(cells_by_dataset) + '}', '\\toprule',
              ' & & ' + ' & '.join(f'\\multicolumn{{{len(defenses)}}}{{c}}{{{DATASETS[d]}}}' for d in cells_by_dataset) + ' \\\\',
@@ -292,6 +293,38 @@ def latex_verdicts(verdicts):
     return '\n'.join(lines) + '\n'
 
 
+def latex_clean_cells(cells_by_dataset, condition='tatweel/single/non_cue'):
+    """Clean Macro-F1 (%) with 95% intervals on the tweets eligible for single-word tatweel."""
+    lines = ['\\begin{tabular}{l' + 'r' * len(cells_by_dataset) + '}', '\\toprule',
+             'Model & ' + ' & '.join(DATASETS[d] for d in cells_by_dataset) + ' \\\\', '\\midrule']
+    models = ordered(pd.concat(cells_by_dataset.values()).model)
+    for model in models:
+        values = []
+        for cells in cells_by_dataset.values():
+            row = cells[(cells.model == model) & (cells.defense == 'RAW') & (cells.condition == condition)]
+            values.append('--' if row.empty else f"{pct(row.clean_macro_f1.iloc[0])} "
+                          f"{{\\scriptsize[{pct(row.clean_macro_f1_low.iloc[0])}, {pct(row.clean_macro_f1_high.iloc[0])}]}}")
+        lines.append(f"{SHORT.get(model, model)} & {' & '.join(values)} \\\\")
+    lines += ['\\bottomrule', '\\end{tabular}']
+    return '\n'.join(lines) + '\n'
+
+
+def latex_verdicts_compared(validation, test):
+    """Supported/total tests per hypothesis on validation and test, side by side."""
+    lines = ['\\begin{tabular}{lrrrr}', '\\toprule',
+             ' & \\multicolumn{2}{c}{Validation} & \\multicolumn{2}{c}{Test} \\\\',
+             'Hypothesis & ' + ' & '.join(list(DATASETS.values()) * 2) + ' \\\\', '\\midrule']
+    for hypothesis in sorted(set(validation.hypothesis) | set(test.hypothesis)):
+        cells = []
+        for frame in (validation, test):
+            for dataset in DATASETS:
+                part = frame[(frame.hypothesis == hypothesis) & (frame.dataset == dataset)]
+                cells.append('--' if part.empty else f"{int(part.verdict.eq('supported').sum())}/{len(part)}")
+        lines.append(f"{hypothesis} & {' & '.join(cells)} \\\\")
+    lines += ['\\bottomrule', '\\end{tabular}']
+    return '\n'.join(lines) + '\n'
+
+
 def write(path, text):
     Path(path).write_text(text, encoding='utf-8', newline='\n')
 
@@ -325,6 +358,7 @@ def report(public, output, tokenizer=TOKENIZER):
         write(output / 'macro_f1_drops.tex', latex_drops(cells_by_dataset))
         write(output / 'defenses.tex', latex_defenses(cells_by_dataset))
         write(output / 'natural_noise.tex', latex_natural(bundle))
+        write(output / 'clean_from_cells.tex', latex_clean_cells(cells_by_dataset))
     if not verdicts.empty:
         write(output / 'hypotheses_table.tex', latex_verdicts(verdicts))
     return verdicts, correlations
@@ -334,8 +368,16 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('--public', required=True, help='Public analysis folder or ZIP from the notebook')
     parser.add_argument('--output', default='paper/generated')
+    parser.add_argument('--tokenizer-arsarcasm', default=TOKENIZER['arsarcasm'],
+                        help='Tokenizer summary for the same partition as the bundle')
+    parser.add_argument('--tokenizer-arsas', default=TOKENIZER['arsas'])
+    parser.add_argument('--validation-hypotheses', help='hypotheses.csv of the validation report, for a side-by-side table')
     args = parser.parse_args()
-    verdicts, correlations = report(args.public, args.output)
+    verdicts, correlations = report(args.public, args.output,
+                                    {'arsarcasm': args.tokenizer_arsarcasm, 'arsas': args.tokenizer_arsas})
+    if args.validation_hypotheses:
+        write(Path(args.output) / 'hypotheses_compared.tex',
+              latex_verdicts_compared(pd.read_csv(args.validation_hypotheses), verdicts))
     print((Path(args.output) / 'hypotheses_summary.md').read_text(encoding='utf-8'))
     print(pd.DataFrame(correlations).to_string(index=False))
 
